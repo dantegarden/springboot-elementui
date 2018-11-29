@@ -1,3 +1,17 @@
 spring:
   profiles:
     active: dev
+
+mybatis:
+  config-location: classpath:mybatis/mybatis-config.xml
+  mapper-locations: classpath:mybatis/mapper/*.xml
+  type-aliases-package: com.dvt.elementui.domain
+mapper:
+  mappers: com.dvt.elementui.common.mapper.BaseMapper
+  not-empty: false
+  identity: MYSQL
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql

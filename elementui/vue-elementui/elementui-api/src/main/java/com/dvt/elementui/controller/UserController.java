@@ -5,7 +5,10 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.apache.log4j.Logger;
 
+import com.dvt.elementui.service.UserInfoService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +24,11 @@ import com.dvt.elementui.vo.UserVo;
 @RestController
 @RequestMapping("/user")
 public class UserController {
+
+	private static final Logger LOGGER = Logger.getLogger(UserController.class);
+
+	@Autowired
+	private UserInfoService userInfoService;
 
 	@PostMapping("/login")
 	public ResponseData login(String username, String password) {

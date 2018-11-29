@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dvt.elementui.repository.mapper.MenuMapper">
+  <resultMap id="BaseResultMap" type="com.dvt.elementui.domain.Menu">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="icon" jdbcType="VARCHAR" property="icon" />
+    <result column="index" jdbcType="VARCHAR" property="index" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="pid" jdbcType="INTEGER" property="pid" />
+    <result column="enabled" jdbcType="INTEGER" property="enabled" />
+  </resultMap>
+</mapper>
