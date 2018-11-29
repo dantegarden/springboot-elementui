@@ -1,0 +1,24 @@
+server:
+  port: 8088
+  context-path: /
+  tomcat:
+    uri-encoding: UTF-8
+
+debug: false
+
+spring:
+  datasource:
+    druid:
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/spring_db?useUnicode=true&characterEncoding=utf-8
+      username: test
+      password: 123456
+      initial-size: 3
+      min-idle: 3
+      max-active: 20
+      max-wait: 60000
+
+mybatis:
+  config-location: classpath:mybatis/mybatis-config.xml
+  mapper-locations: classpath:mybatis/mapper/*.xml
+  type-aliases-package: com.dvt.elementui.domain
