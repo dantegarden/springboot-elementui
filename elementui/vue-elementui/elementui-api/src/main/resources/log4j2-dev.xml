@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO" monitorInterval="30">
+    <!-- 参数配置 -->
+    <Properties>
+        <Property name="LOG_HOME">/logs/sys</Property>
+        <property name="FILE_NAME">log</property>
+        <property name="console_pattern_layout">
+            %highlight{%d{yyyy-MM-dd HH:mm:ss.SSS} [%5level][%logger{36}]-(%t)} %m%n
+        </property>
+        <property name="pattern_layout">
+            %d{yyyy-MM-dd HH:mm:ss.SSS} [%5level][%logger{36}]-(%t) %m%n
+        </property>
+    </Properties>
+
+    <!-- 日志配置Appender -->
+    <Appenders>
+        <!-- 输出控制台的配置 -->
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="${console_pattern_layout}"/>
+        </Console>
+        <!--循环日志文件配置：日志文件大于阀值的时候，就开始写一个新的日志文件-->
+        <RollingRandomAccessFile name="ALL"
+                                 fileName="${LOG_HOME}/${FILE_NAME}.log"
+                                 filePattern="${LOG_HOME}/${FILE_NAME}.log.%d{yyyy-MM-dd}_%i">
+            <PatternLayout pattern="${pattern_layout}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1"/>
+                <!--<SizeBasedTriggeringPolicy size="100MB"/>-->
+            </Policies>
+            <DefaultRolloverStrategy max="20"/>
+        </RollingRandomAccessFile>
+
+        <!-- 异步日志配置 -->
+        <Async name="AsyncAll">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="ALL"/>
+        </Async>
+
+    </Appenders>
+
+
+    <!-- 日志记录Logger -->
+    <Loggers>
+        <Logger name="druid.sql" level="DEBUG" additivity="false">
+            <AppenderRef ref="AsyncAll"/>
+        </Logger>
+        <Logger name="druid.sql.Connection" level="INFO" additivity="false">
+            <AppenderRef ref="AsyncAll"/>
+        </Logger>
+        <Logger name="net.sf.ehcache" level="INFO" additivity="false">
+            <AppenderRef ref="AsyncAll"/>
+        </Logger>
+        <Root level="INFO">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="ALL"/>
+        </Root>
+    </Loggers>
+</Configuration>
