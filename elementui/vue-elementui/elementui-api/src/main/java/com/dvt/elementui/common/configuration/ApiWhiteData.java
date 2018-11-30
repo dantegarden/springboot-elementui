@@ -1,4 +1,4 @@
-package com.dvt.elementui.common.config;
+package com.dvt.elementui.common.configuration;
 
 import java.util.ArrayList;
 import java.util.List;

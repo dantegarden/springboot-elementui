@@ -1,11 +1,12 @@
+###############################################################################
+## dev 开发环境
+###############################################################################
+
+## 服务配置
 server:
   port: 8088
-  context-path: /
-  tomcat:
-    uri-encoding: UTF-8
 
-debug: false
-
+## 数据库设置
 spring:
   datasource:
     druid:
@@ -17,3 +18,17 @@ spring:
       min-idle: 3
       max-active: 20
       max-wait: 60000
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      pool-prepared-statements: true
+      validation-query: SELECT 1
+      max-pool-prepared-statement-per-connection-size: 20
+      filters: log4j
+
+##日志配置路径
+logging:
+  config: classpath:log4j2-dev.xml
+
+## swagger配置
+swagger:
+  enable: false

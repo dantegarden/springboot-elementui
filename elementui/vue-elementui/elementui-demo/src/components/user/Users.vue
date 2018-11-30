@@ -29,9 +29,9 @@
 
     <el-table :data="tableData" style="width: 100%" v-loading="loading2" element-loading-text="拼命加载中" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55"></el-table-column>
-      <el-table-column prop="name" label="姓名" width="180"></el-table-column>
+      <el-table-column prop="userName" label="姓名" width="180"></el-table-column>
       <el-table-column prop="address" label="地址"></el-table-column>
-      <el-table-column prop="date" label="日期" width="180"></el-table-column>
+      <el-table-column prop="tel" label="电话" width="180"></el-table-column>
       <el-table-column fixed="right" label="操作" width="140">
         <template scope="scope">
           <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
@@ -137,7 +137,7 @@
         this.loading2 = true;
         var params = {
           page: this.currentPage,
-          pageSize: this.pageSize,
+          size: this.pageSize,
           name: this.formInline.name,
           address: this.formInline.address
         };

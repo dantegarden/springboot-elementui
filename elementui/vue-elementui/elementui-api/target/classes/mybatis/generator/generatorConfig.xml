@@ -16,8 +16,17 @@
         <property name="endingDelimiter" value="`"/>
 
         <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
-            <property name="mappers" value="com.dvt.elementui.common.mapper.BaseMapper"/>
+            <property name="mappers" value="com.dvt.elementui.common.base.BaseMapper"/>
         </plugin>
+
+        <commentGenerator>
+            <!-- 注释里不添加日期 -->
+            <property name="suppressDate" value="true" />
+            <property name="suppressAllComments" value="false"/>
+            <!-- 将数据库中表的字段描述信息添加到注释 -->
+            <property name="addRemarkComments" value="true"/>
+        </commentGenerator>
+
         <!--数据库-->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
                         connectionURL="jdbc:mysql://localhost:3306/spring_db?useUnicode=true&amp;characterEncoding=utf-8"
@@ -26,19 +35,23 @@
         </jdbcConnection>
         <!-- java类型处理器 -->
         <javaTypeResolver type="org.mybatis.generator.internal.types.JavaTypeResolverDefaultImpl">
-            <property name="forceBigDecimals" value="true"/>
+            <property name="forceBigDecimals" value="false"/>
         </javaTypeResolver>
 
-        <javaModelGenerator targetPackage="com.dvt.elementui.domain" targetProject="src/main/java">
+        <javaModelGenerator targetPackage="com.dvt.elementui.biz.model" targetProject="src/main/java">
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
-        <sqlMapGenerator targetPackage="mybatis/mapper" targetProject="src/main/resources"/>
-        <javaClientGenerator targetPackage="com.dvt.elementui.repository.mapper" targetProject="src/main/java"
+        <sqlMapGenerator targetPackage="mybatis/mapper" targetProject="src/main/resources">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+        <javaClientGenerator targetPackage="com.dvt.elementui.biz.dao" targetProject="src/main/java"
                              type="XMLMAPPER"/>
         <!--通配符%来匹配所有表-->
         <table tableName="%">
             <!--mysql 配置，generatedKey意味着所有的表都有一个id自增的主键-->
-            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/><!-- 数据库中表名有时我们都会带个前缀，而实体又不想带前缀，这个配置可以把实体的前缀去掉 -->
+
+            <!--<domainObjectRenamingRule searchString="^Tbl" replaceString=""/>-->
         </table>
     </context>
 </generatorConfiguration>

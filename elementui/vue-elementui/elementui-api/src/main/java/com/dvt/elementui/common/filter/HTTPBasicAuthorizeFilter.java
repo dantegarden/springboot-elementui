@@ -13,13 +13,13 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.dvt.elementui.common.config.ApiWhiteData;
+import com.dvt.elementui.common.configuration.ApiWhiteData;
 import org.springframework.context.ApplicationContext;
 import org.springframework.util.StringUtils;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import com.dvt.elementui.common.base.ResponseCode;
-import com.dvt.elementui.common.base.ResponseData;
+import com.dvt.elementui.common.bean.Result;
+import com.dvt.elementui.common.enums.HttpStatusCodeEnum;
 import com.dvt.elementui.common.utils.JWTUtils;
 import com.dvt.elementui.common.utils.JsonUtils;
 
@@ -58,13 +58,13 @@ public class HTTPBasicAuthorizeFilter implements Filter {
         //验证TOKEN
         if (!StringUtils.hasText(auth)) {
 			PrintWriter print = httpResponse.getWriter();
-        	print.write(JsonUtils.toJson(ResponseData.fail("非法请求【缺少Authorization信息】", ResponseCode.NO_AUTH_CODE.getCode())));  
+        	print.write(JsonUtils.toJson(Result.fail("非法请求【缺少Authorization信息】", HttpStatusCodeEnum.NO_AUTH.getCode())));
             return;  
 		}
         JWTUtils.JWTResult jwt = JWTUtils.checkToken(auth);
 		if (!jwt.isStatus()) {
 			PrintWriter print = httpResponse.getWriter();
-			print.write(JsonUtils.toJson(ResponseData.fail(jwt.getMsg(), jwt.getCode())));  
+			print.write(JsonUtils.toJson(Result.fail(jwt.getMsg(), jwt.getCode())));
 			return;
 		}
 		

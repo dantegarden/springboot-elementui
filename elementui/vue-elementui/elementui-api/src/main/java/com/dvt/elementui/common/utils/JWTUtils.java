@@ -3,7 +3,7 @@ package com.dvt.elementui.common.utils;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.util.Date;
-import com.dvt.elementui.common.base.ResponseCode;
+import com.dvt.elementui.common.enums.HttpStatusCodeEnum;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -42,7 +42,6 @@ public class JWTUtils {
 	/**
 	 * 获取Token
 	 * @param uid 用户ID
-	 * @param exp 默认失效时间为1天
 	 * @return
 	 */
 	public static String getToken(String uid) {
@@ -60,15 +59,15 @@ public class JWTUtils {
 		try {
 			Claims claims = Jwts.parser().setSigningKey(pubKey).parseClaimsJws(token).getBody();
 			String sub = claims.get("sub", String.class);
-			return new JWTResult(true, sub, "合法请求", ResponseCode.SUCCESS_CODE.getCode());
+			return new JWTResult(true, sub, "合法请求", HttpStatusCodeEnum.SUCCESS.getCode());
 		} catch (ExpiredJwtException e) {
 			// 在解析JWT字符串时，如果‘过期时间字段’已经早于当前时间，将会抛出ExpiredJwtException异常，说明本次请求已经失效
-			return new JWTResult(false, null, "token已过期", ResponseCode.TOKEN_TIMEOUT_CODE.getCode());
+			return new JWTResult(false, null, "token已过期", HttpStatusCodeEnum.TOKEN_TIMEOUT.getCode());
 		} catch (SignatureException e) {
 			// 在解析JWT字符串时，如果密钥不正确，将会解析失败，抛出SignatureException异常，说明该JWT字符串是伪造的
-			return new JWTResult(false, null, "非法请求", ResponseCode.NO_AUTH_CODE.getCode());
+			return new JWTResult(false, null, "非法请求", HttpStatusCodeEnum.NO_AUTH.getCode());
 		} catch (Exception e) {
-			return new JWTResult(false, null, "非法请求", ResponseCode.NO_AUTH_CODE.getCode());
+			return new JWTResult(false, null, "非法请求", HttpStatusCodeEnum.NO_AUTH.getCode());
 		}
 	}
 

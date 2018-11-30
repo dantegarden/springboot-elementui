@@ -2,16 +2,26 @@ spring:
   profiles:
     active: dev
 
+project:
+  name: elementui-api
+  version: 0.0.1
+  author:
+    name: lij
+
 mybatis:
   config-location: classpath:mybatis/mybatis-config.xml
-  mapper-locations: classpath:mybatis/mapper/*.xml
-  type-aliases-package: com.dvt.elementui.domain
+  mapper-locations: classpath:mybatis/mapper/**/*.xml
+  type-aliases-package: com.dvt.elementui.biz.model
+  type-handlers-package: com.dvt.elementui.biz.dao
+
 mapper:
-  mappers: com.dvt.elementui.common.mapper.BaseMapper
+  mappers: com.dvt.elementui.common.base.BaseMapper
   not-empty: false
-  identity: MYSQL
+  identity: Mysql
+
 pagehelper:
-  helperDialect: mysql
+  helper-dialect: mysql
   reasonable: true
-  supportMethodsArguments: true
+  support-methods-arguments: true
   params: count=countSql
+  auto-runtime-dialect: true
