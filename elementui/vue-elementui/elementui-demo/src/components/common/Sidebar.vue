@@ -2,14 +2,14 @@
     <div class="sidebar">
         <el-menu :default-active="onRoutes" class="el-menu-vertical-demo" theme="light" unique-opened router>
             <template v-for="item in items">
-                <template v-if="item.subs">
-                    <el-submenu :index="item.index">
+                <template v-if="item.subMenus">
+                    <el-submenu :index="item.route">
                         <template slot="title"><i :class="item.icon"></i>{{ item.title }}</template>
-                        <el-menu-item v-for="(subItem,i) in item.subs" :key="i" :index="subItem.index">{{ subItem.title }}</el-menu-item>
+                        <el-menu-item v-for="(subItem,i) in item.subMenus" :key="i" :index="subItem.route">{{ subItem.title }}</el-menu-item>
                     </el-submenu>
                 </template>
                 <template v-else>
-                    <el-menu-item :index="item.index">
+                    <el-menu-item :index="item.route">
                         <i :class="item.icon"></i>{{ item.title }}
                     </el-menu-item>
                 </template>
@@ -22,24 +22,7 @@
     export default {
         data() {
             return {
-                items: [
-                    // {
-                    //     icon: 'el-icon-setting',
-                    //     index: '/home',
-                    //     title: '首页'
-                    // },
-                    // {
-                    //     icon: 'el-icon-menu',
-                    //     index: '2',
-                    //     title: '用户管理',
-                    //     subs: [
-                    //         {
-                    //             index: '/users',
-                    //             title: '用户列表'
-                    //         }
-                    //     ]
-                    // }
-                ]
+                items: []
             }
         },
         beforeMount() {

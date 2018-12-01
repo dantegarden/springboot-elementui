@@ -78,3 +78,23 @@ CREATE TABLE `sys_role_permission` (
   `permission_id` bigint(20) NOT NULL COMMENT '权限ID',
   PRIMARY KEY (`id`)
 ) COMMENT '角色权限表' ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for sys_menu
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_menu`;
+CREATE TABLE `sys_menu` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `title` varchar(255) NOT NULL COMMENT '菜单名',
+  `icon` varchar(255) DEFAULT NULL COMMENT'图标',
+  `route` varchar(255) NOT NULL COMMENT '路由',
+	`index` int(11) DEFAULT NULL COMMENT '排序',
+	`enable` int(1) DEFAULT 0 COMMENT '是否生效',
+	`pid` bigint(20) NOT NULL COMMENT 'PID',
+  PRIMARY KEY (`id`)
+) COMMENT '菜单表' ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+insert into sys_menu values(null, "首页", "el-icon-setting", "/home", 1, 0, null);
+insert into sys_menu values(null, "用户管理", "el-icon-menu", "", 2, 0, null);
+insert into sys_menu values(null, "用户列表", null, "/users", 1, 0, 2);
+insert into sys_menu values(null, "用户信息", null, "/users/info", 2, 0, 2);

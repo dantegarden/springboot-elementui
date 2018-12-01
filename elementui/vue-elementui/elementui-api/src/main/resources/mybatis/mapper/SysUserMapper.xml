@@ -18,4 +18,19 @@
     <result column="mobile" jdbcType="VARCHAR" property="mobile" />
     <result column="last_login_time" jdbcType="TIMESTAMP" property="lastLoginTime" />
   </resultMap>
+
+  <select id="queryByCondition" parameterType="Map" resultMap="BaseResultMap">
+    select * from sys_user
+    <where>
+      <choose>
+        <when test="userName!=null">
+          user_name like CONCAT('%',#{userName},'%')
+        </when>
+        <otherwise>
+          1=1
+        </otherwise>
+      </choose>
+    </where>
+  </select>
+
 </mapper>
