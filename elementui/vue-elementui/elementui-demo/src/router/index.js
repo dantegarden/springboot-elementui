@@ -1,36 +1,57 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-
+const _import = file => () => import('@/views/' + file + '.vue')
 Vue.use(Router)
+
+export const constantRoutes = [
+  {
+    path: '/',
+    redirect: '/login',
+    meta: { hidden:true }
+  },
+  {
+    path: '/login',
+    component: _import('Login'),
+    meta: { hidden:true }
+  },
+  {
+    path: '/home',
+    component: _import('Home'),
+    meta: { hidden: false },
+    children:[
+      {
+        path: '',
+        meta: { title: '主页', el_icon: 'el-icon-location' },
+        component: _import('dashboard/Dashboard')
+      }
+    ]
+  }
+]
+
+export const optionalRoutes = [
+  {
+    path: '/user',
+    component: _import('Home'),
+    meta: { title:'用户管理', el_icon:'el-icon-menu'},
+    children: [
+      {
+        path: '',
+        component: _import('user/User'),
+        meta: {title: '用户列表', icon: 'user'},
+        menu: 'user'
+      },
+      {
+        path: 'role',
+        component: _import('user/Role'),
+        meta: {title: '权限管理', icon: 'password'},
+        menu: 'role'
+      }
+    ]
+  },
+]
 
 export default new Router({
   mode: 'history',
-  routes: [
-    {
-      path: '/',
-      redirect: '/login'
-    },
-    {
-      path: '/login',
-      component: resolve => require(['../components/user/Login.vue'], resolve)
-    },
-    {
-      path: '/home',
-      component: resolve => require(['../components/Home.vue'], resolve),
-      children:[
-        {
-          path: '/',
-          component: resolve => require(['../components/Index.vue'], resolve)
-        },
-        {
-          path: '/users',
-          component: resolve => require(['../components/user/Users.vue'], resolve)
-        },
-        {
-          path: '/user/info',
-          component: resolve => require(['../components/user/UserInfo.vue'], resolve)
-        }
-      ]
-    }
-  ]
+  scrollBehavior:() => ({y: 0}), //路由时y轴归位
+  routes: constantRoutes
 })

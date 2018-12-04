@@ -9,7 +9,9 @@ import java.util.Map;
 
 public interface UserService {
 
-    public List<SysMenu> getMenus();
 
-    public PageInfo<SysUser> queryByPage(Map<String,Object> condition, Integer page, Integer size);
+
+//    public List<SysMenu> getMenus();
+//
+//    public PageInfo<SysUser> queryByPage(Map<String,Object> condition, Integer page, Integer size);
 }

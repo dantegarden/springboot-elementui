@@ -1,8 +1,12 @@
 export default {
-  showHeader:({commit}) => {
-    commit('showHeader');
+  ToggleSideBar: ({commit}) => {
+    commit('TOGGLE_SIDEBAR')
   },
-  hideHeader:({commit}) => {
-    commit('hideHeader');
+  addVisitedViews: ({commit}, view) => {
+    commit('ADD_VISITED_VIEWS', view)
+  },
+  delVisitedViews: async ({commit, state}, view) => {
+      commit('DEL_VISITED_VIEWS', view)
+      return [...state.visitedViews]
   }
 }

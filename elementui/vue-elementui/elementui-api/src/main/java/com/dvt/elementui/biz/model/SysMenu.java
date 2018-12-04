@@ -1,7 +1,6 @@
 package com.dvt.elementui.biz.model;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Table(name = "sys_menu")
 public class SysMenu {
@@ -41,11 +40,6 @@ public class SysMenu {
      * PID
      */
     private Long pid;
-
-    /**
-     * 子菜单列表
-     * */
-    private List<SysMenu> subMenus; //子菜单列表
 
     /**
      * 获取ID
@@ -171,13 +165,5 @@ public class SysMenu {
      */
     public void setPid(Long pid) {
         this.pid = pid;
-    }
-
-    public List<SysMenu> getSubMenus() {
-        return this.subMenus;
-    }
-
-    public void setSubMenus(List<SysMenu> subMenus) {
-        this.subMenus = subMenus;
     }
 }

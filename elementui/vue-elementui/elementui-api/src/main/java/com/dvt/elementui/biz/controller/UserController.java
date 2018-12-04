@@ -34,7 +34,7 @@ public class UserController {
             return Result.fail("密码不能为空", HttpStatusCodeEnum.PARAM_ERROR.getCode());
         }
         if (username.equals("admin") && password.equals("admin")) {
-            List<SysMenu> menus = userService.getMenus();
+            List<SysMenu> menus = null; //userService.getMenus();
             Map<String, Object> result = new HashMap<>();
             result.put("token", JWTUtils.getToken("1002"));
             result.put("meuns", menus);
@@ -46,7 +46,7 @@ public class UserController {
 
     @GetMapping("/list")
     public Result queryUsers(Map<String,Object> queryCondition, @RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "10") Integer size){
-        PageInfo<SysUser> pageInfo = userService.queryByPage(queryCondition, page, size);
+        PageInfo<SysUser> pageInfo = null; //userService.queryByPage(queryCondition, page, size);
         return Result.ok(pageInfo);
     }
 

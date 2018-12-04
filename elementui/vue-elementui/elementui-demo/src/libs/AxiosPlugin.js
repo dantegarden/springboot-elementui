@@ -1,13 +1,15 @@
 import axios from 'axios'
+import {getStore} from "./mUtils";
 
 const Axios = axios.create({
-  timeout: 10000
+  timeout: 10000,
+  withCredentials: true
 })
 
 //POST传参序列化(添加请求拦截器)
 Axios.interceptors.request.use(config => {
     // 在发送请求之前做某件事
-    if(config.method  === 'post'){
+    if(config.method  === 'post' && config.data){
         // JSON 转换为 FormData
         const formData = new FormData()
         Object.keys(config.data).forEach(key => formData.append(key, config.data[key]))
@@ -15,9 +17,10 @@ Axios.interceptors.request.use(config => {
     }
 
     // 下面会说在什么时候存储 token
-    if (sessionStorage.token) {
-        config.headers.Authorization = sessionStorage.token
-    }
+    // let token = getStore('token')
+    // if (token) {
+    //     config.headers.Authorization = token
+    // }
     return config
 },error =>{
     return Promise.reject(error)

@@ -12,7 +12,6 @@
     <result column="index" jdbcType="INTEGER" property="index" />
     <result column="enable" jdbcType="INTEGER" property="enable" />
     <result column="pid" jdbcType="BIGINT" property="pid" />
-    <collection property="subMenus" ofType="com.dvt.elementui.biz.model.SysMenu" column="id" select="findMenuByPid" />
   </resultMap>
 
   <select id="getRootMenu" resultMap="BaseResultMap">
