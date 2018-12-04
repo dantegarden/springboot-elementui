@@ -17,7 +17,7 @@ export const constantRoutes = [
   {
     path: '/home',
     component: _import('Home'),
-    meta: { hidden: false },
+    meta: { hidden: true },
     children:[
       {
         path: '',

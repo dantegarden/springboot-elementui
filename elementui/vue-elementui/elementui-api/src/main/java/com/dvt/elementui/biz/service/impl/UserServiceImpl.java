@@ -1,10 +1,13 @@
 package com.dvt.elementui.biz.service.impl;
 
 import com.dvt.elementui.biz.dao.SysMenuMapper;
+import com.dvt.elementui.biz.dao.SysRoleMapper;
 import com.dvt.elementui.biz.dao.SysUserMapper;
 import com.dvt.elementui.biz.model.SysMenu;
+import com.dvt.elementui.biz.model.SysRole;
 import com.dvt.elementui.biz.model.SysUser;
 import com.dvt.elementui.biz.service.UserService;
+import com.dvt.elementui.common.bean.UserPermission;
 import com.dvt.elementui.common.exception.BusinessException;
 import com.dvt.elementui.common.utils.PasswordUtils;
 import com.dvt.elementui.common.utils.RandomUtils;
@@ -25,17 +28,22 @@ public class UserServiceImpl implements UserService {
     private SysUserMapper userMapper;
 
     @Autowired
-    private SysMenuMapper menuMapper;
+    private SysRoleMapper roleMapper;
 
 //    @Override
 //    public List<SysMenu> getMenus() {
 //        return menuMapper.getRootMenu();
 //    }
 
-//    @Override
-//    public PageInfo<SysUser> queryByPage(Map<String, Object> condition, Integer page, Integer size) {
-//        PageHelper.startPage(page,size);
-//        List<SysUser> list = userMapper.queryByCondition(condition);
-//        return new PageInfo<SysUser>(list);
-//    }
+    @Override
+    public PageInfo<UserPermission> queryByPage(Map<String, Object> condition, Integer page, Integer size) {
+        PageHelper.startPage(page,size);
+        List<UserPermission> list = userMapper.queryUserPermission(condition);
+        return new PageInfo<UserPermission>(list);
+    }
+
+    @Override
+    public List<SysRole> getAllRoles() {
+        return roleMapper.getAllRoles();
+    }
 }

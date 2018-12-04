@@ -24,3 +24,11 @@
     }
   }
 </script>
+<style>
+  .el-menu-item{
+    padding: 0;
+  }
+  .hideSidebar .el-submenu > .el-submenu__title{
+    padding-left: 5px !important;
+  }
+</style>

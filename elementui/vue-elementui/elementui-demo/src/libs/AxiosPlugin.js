@@ -1,44 +1,44 @@
 import axios from 'axios'
 import {getStore} from "./mUtils";
 
-const Axios = axios.create({
-  timeout: 10000,
-  withCredentials: true
-})
+const $http = async function(url, data={}, method='GET') {
+  let config = {
+    url,
+    method,
+    timeout:15000,
+    withCredentials: true
+  }
+  if(config.method.toUpperCase()==="POST"){
+    const formData = new FormData()
+    Object.keys(data).forEach(key => formData.append(key, data[key]))
+    config.data = formData
+  }else{
+    config.params = data;
+  }
+  return axios.request(config)
+}
 
 //POST传参序列化(添加请求拦截器)
-Axios.interceptors.request.use(config => {
+axios.interceptors.request.use(config => {
     // 在发送请求之前做某件事
-    if(config.method  === 'post' && config.data){
-        // JSON 转换为 FormData
-        const formData = new FormData()
-        Object.keys(config.data).forEach(key => formData.append(key, config.data[key]))
-        config.data = formData
-    }
-
-    // 下面会说在什么时候存储 token
-    // let token = getStore('token')
-    // if (token) {
-    //     config.headers.Authorization = token
-    // }
     return config
 },error =>{
     return Promise.reject(error)
 })
 
 //返回状态判断(添加响应拦截器)
-Axios.interceptors.response.use(res =>{
+axios.interceptors.response.use(res =>{
     //需要登陆
     if(res.data.code == 401 || res.data.code == 402 || res.data.code == 403) {
       window.location = "/login";
     }
-    return res
+    return res.data
 }, error => {
     return Promise.reject(error)
 })
 
-Axios.install = (Vue) => {
-  Vue.prototype.$http = Axios
+$http.install = (Vue) => {
+  Vue.prototype.$http = $http
 }
 
-export default Axios
+export default $http
