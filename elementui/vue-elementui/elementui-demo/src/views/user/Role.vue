@@ -181,8 +181,10 @@
         }).then(() => {
           let role = this.list[$index]
           api.deleteRole(role.roleId).then(res=>{
-            if(res.code==200){
+            if(res.status){
               this.getList()
+            }else{
+              this.$message.error(res.message);
             }
           })
         })
@@ -204,6 +206,7 @@
         }
         let roles = this.list;
         let result = true;
+        if(this.dialogStatus=='create')
         for (let j = 0; j < roles.length; j++) {
           if (roles[j].roleName === roleName && (!roleId || roles[j].id !== roleId  )) {
             this.$message.error("角色名称已存在");
@@ -282,7 +285,7 @@
           this.makeReuqiredPermissionChecked(_index);
         } else {
           //取消选中事件
-          if (_perm.requiredPerm === 1) {
+          if (_perm.requiredPermission === 1) {
             //如果是必勾权限,就把本菜单的权限全部移出
             //(其实也可以提示用户本权限是菜单里的必选,请先取消勾选另外几个权限,交互太麻烦,此处就直接全部取消选中了)
             this.noPerm(_index);
@@ -309,4 +312,7 @@
 </script>
 
 <style scoped>
+  .requiredPerm {
+    color: #ff0e13;
+  }
 </style>

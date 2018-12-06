@@ -4,6 +4,7 @@ import com.dvt.elementui.biz.dao.*;
 import com.dvt.elementui.biz.model.*;
 import com.dvt.elementui.biz.service.UserService;
 import com.dvt.elementui.biz.vo.RoleVO;
+import com.dvt.elementui.common.base.BaseServiceImpl;
 import com.dvt.elementui.common.bean.UserPermission;
 import com.dvt.elementui.common.exception.BusinessException;
 import com.dvt.elementui.common.utils.CommonHelper;
@@ -11,19 +12,21 @@ import com.dvt.elementui.common.utils.PasswordUtils;
 import com.dvt.elementui.common.utils.RandomUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang.StringUtils;
 import org.assertj.core.util.Lists;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import tk.mybatis.mapper.entity.Example;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
     @Autowired
     private SysUserMapper userMapper;
@@ -126,15 +129,36 @@ public class UserServiceImpl implements UserService {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public int updateRole(RoleVO role) {
-        return 0;
+        Date now = new Date();
+        SysRole oldRole = roleMapper.selectByPrimaryKey(role.getId());
+        rolePermissionMapper.deleteByExample(this.getExample(SysRolePermission.class, ImmutableList.of("role_id=" + role.getId())));
+        CommonHelper.copyPropertiesIgnoreNull(role, oldRole, true);
+        List<SysRolePermission> rpList = Lists.newArrayList();
+        role.getPermissions().forEach(permId -> {
+            SysRolePermission rolePermission = new SysRolePermission();
+            rolePermission.setRoleId(oldRole.getId());
+            rolePermission.setPermissionId(permId);
+            rolePermission.setDeleteStatus("1");
+            rolePermission.setCreateTime(now);
+            rolePermission.setUpdateTime(now);
+            rpList.add(rolePermission);
+        });
+        rolePermissionMapper.insertList(rpList);
+        oldRole.setUpdateTime(now);
+        return roleMapper.updateByPrimaryKey(oldRole);
     }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
     public int deleteRole(Integer id) {
         SysRole role = roleMapper.selectByPrimaryKey(id);
-        userMapper.selectByCondition()
-        return 0;
+        List<SysUser> users = userMapper.selectByExample(this.getExample(SysUser.class, ImmutableList.of("role_id=" + id)));
+        if(users!=null && users.size()>0){
+            throw new BusinessException("仍有用户使用此角色，无法删除");
+        }
+        rolePermissionMapper.deleteByExample(this.getExample(SysRolePermission.class, ImmutableList.of("role_id=" + id)));
+        roleMapper.deleteByPrimaryKey(id);
+        return 1;
     }
 
     private Integer countEffectiveUsers(){

@@ -33,7 +33,7 @@ export default {
   //修改角色
   updateRole: params => $post('/user/updateRole', params),
   //删除角色
-  deleteRole: params => $get('/user/deleteRole/' + params),
+  deleteRole: params => $post('/user/deleteRole/' + params),
 
   // 文件上传地址
   uploadFile : `${BASE_PATH}/file/upload`,

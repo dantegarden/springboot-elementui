@@ -9,6 +9,7 @@ import com.dvt.elementui.biz.vo.RoleVO;
 import com.dvt.elementui.common.bean.Result;
 import com.dvt.elementui.common.bean.UserPermission;
 import com.dvt.elementui.common.enums.HttpStatusCodeEnum;
+import com.dvt.elementui.common.exception.BusinessException;
 import com.dvt.elementui.common.utils.JWTUtils;
 import com.dvt.elementui.common.utils.JsonUtils;
 import com.github.pagehelper.PageInfo;
@@ -147,6 +148,12 @@ public class UserController {
     @RequiresPermissions("role:delete")
     @PostMapping("/deleteRole/{id}")
     public Result deleteRole(@PathVariable Integer id) {
-        return Result.ok(userService.deleteRole(id));
+        try{
+            int exist = userService.deleteRole(id);
+            return Result.ok(exist);
+        }catch (BusinessException e){
+            return Result.fail(e.getErrorMessage());
+        }
+
     }
 }
