@@ -1,11 +1,20 @@
 #  vue + elementui 新手入门案例
 
+## 前台
 - vue
 - vue-router
 - axios
 - vuex
 - webpack
 - elementui
+- echarts
+
+## 后台
+- mybatis
+- mybatis-generator
+- pagehelper
+- shiro
+- swagger (未开启)
 
 接口在elementui-api中，采用spring boot 开发
 
@@ -20,5 +29,3 @@
 - 分页功能
 - 文件上传
 
-效果图如下：
-![](https://github.com/yinjihuan/vue-elementui/blob/master/demo.png)
