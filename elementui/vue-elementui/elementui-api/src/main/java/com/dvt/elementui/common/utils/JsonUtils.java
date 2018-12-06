@@ -1,12 +1,16 @@
 package com.dvt.elementui.common.utils;
 
+import java.io.IOException;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 /**
  * Json 工具类
- * @author yinjihuan
  *
  */
 public class JsonUtils {
@@ -33,7 +37,26 @@ public class JsonUtils {
 			throw new RuntimeException("JSON【"+jsonString+"】转对象时出错", e);
 		}
 	}
-	
+
+	public static <T> List<T> toList(Class<T> listClass, String jsonString){
+		try {
+			JavaType javaType =  mapper.getTypeFactory().constructParametricType(ArrayList.class, listClass);
+			return (List<T>)mapper.readValue(jsonString, javaType);
+		} catch (IOException e) {
+			throw new RuntimeException("JSON【"+jsonString+"】转对象时出错", e);
+		}
+	}
+
+	public static <T> Map<String,T> toMap(Class<T> valueClass, String jsonString){
+		try {
+			JavaType javaType = mapper.getTypeFactory().constructParametricType(HashMap.class, String.class, valueClass);;
+			return (Map<String,T>) mapper.readValue(jsonString, javaType);
+		} catch (IOException e) {
+			throw new RuntimeException("JSON【"+jsonString+"】转对象时出错", e);
+		}
+	}
+
+
 	/**
 	 * 用于对象通过其他工具已转为JSON的字符形式，这里不需要再加上引号
 	 * @param obj

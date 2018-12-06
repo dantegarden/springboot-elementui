@@ -1,16 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dvt.elementui.biz.dao.SysRoleMapper">
-  <resultMap id="BaseResultMap" type="com.dvt.elementui.biz.model.SysRole">
-    <!--
-      WARNING - @mbg.generated
-    -->
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
-    <result column="state_code" jdbcType="INTEGER" property="stateCode" />
-    <result column="role_name" jdbcType="VARCHAR" property="roleName" />
-    <result column="role_code" jdbcType="VARCHAR" property="roleCode" />
-    <result column="description" jdbcType="VARCHAR" property="description" />
-  </resultMap>
+    <resultMap id="BaseResultMap" type="com.dvt.elementui.biz.model.SysRole">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="role_name" jdbcType="VARCHAR" property="roleName"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="delete_status" jdbcType="VARCHAR" property="deleteStatus"/>
+    </resultMap>
+
+    <select id="getAllRoles" resultMap="BaseResultMap">
+        SELECT
+            id,
+            role_name
+        FROM sys_role
+        WHERE delete_status='1'
+    </select>
+
+    <resultMap id="roleMap" type="com.dvt.elementui.common.bean.UserPermission">
+        <id column="roleId" property="roleId"/>
+        <result column="roleName" property="roleName"/>
+        <collection property="users" ofType="com.dvt.elementui.biz.model.SysUser">
+            <id column="userId" property="id"/>
+            <result column="nickname" property="nickname"/>
+        </collection>
+        <collection property="menus" ofType="com.dvt.elementui.common.bean.UserPermission">
+            <id column="menuCode" property="menuCode"/>
+            <result column="menuName" property="menuName"/>
+            <collection property="permissions" ofType="com.dvt.elementui.biz.model.SysPermission">
+                <id column="permissionId" property="id"/>
+                <result column="permissionName" property="permissionName"/>
+            </collection>
+        </collection>
+    </resultMap>
+
+    <select id="listRole" resultMap="roleMap">
+        SELECT
+            r.id              roleId,
+            r.role_name       roleName,
+            u.id              userId,
+            u.nickname        nickname,
+            p.id              permissionId,
+            p.menu_code       menuCode,
+            p.menu_name       menuName,
+            p.permission_name permissionName
+        FROM sys_role r
+            LEFT JOIN sys_user u ON r.id = u.role_id AND u.delete_status = '1'
+            LEFT JOIN sys_role_permission rp ON r.id = rp.role_id AND rp.delete_status = '1'
+            LEFT JOIN sys_permission p ON rp.permission_id = p.id
+        WHERE r.delete_status = '1'
+        <if test="condition.roleName != null and condition.roleName !='' ">
+            and r.role_name like '%${condition.roleName}%'
+        </if>
+        ORDER BY r.id, p.id
+    </select>
 </mapper>

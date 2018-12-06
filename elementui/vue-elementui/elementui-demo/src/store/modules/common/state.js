@@ -1,3 +1,8 @@
+import {getStore} from "@/libs/mUtils";
+
 export default {
-  headerStatus : true
+  sidebar: {
+    opened: !+getStore('sidebarStatus')
+  },
+  visitedViews: []
 }

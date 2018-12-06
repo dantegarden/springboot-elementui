@@ -8,7 +8,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@MapperScan(basePackages = {"com.dvt.elementui.biz.dao"})
+@MapperScan("com.dvt.elementui.biz.dao")
 @EnableCaching
 public class App {
 	private static final Logger logger = LoggerFactory.getLogger(App.class);

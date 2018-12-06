@@ -5,30 +5,9 @@ import javax.persistence.*;
 
 @Table(name = "sys_role")
 public class SysRole {
-    /**
-     * 角色ID
-     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    /**
-     * 创建时间
-     */
-    @Column(name = "create_time")
-    private Date createTime;
-
-    /**
-     * 修改时间
-     */
-    @Column(name = "modify_time")
-    private Date modifyTime;
-
-    /**
-     * 启用状态
-     */
-    @Column(name = "state_code")
-    private Integer stateCode;
+    private Integer id;
 
     /**
      * 角色名
@@ -36,87 +15,30 @@ public class SysRole {
     @Column(name = "role_name")
     private String roleName;
 
-    /**
-     * 角色编码
-     */
-    @Column(name = "role_code")
-    private String roleCode;
+    @Column(name = "create_time")
+    private Date createTime;
+
+    @Column(name = "update_time")
+    private Date updateTime;
 
     /**
-     * 角色描述
+     * 是否有效  1有效  2无效
      */
-    private String description;
+    @Column(name = "delete_status")
+    private String deleteStatus;
 
     /**
-     * 获取角色ID
-     *
-     * @return id - 角色ID
+     * @return id
      */
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
     /**
-     * 设置角色ID
-     *
-     * @param id 角色ID
+     * @param id
      */
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
-    }
-
-    /**
-     * 获取创建时间
-     *
-     * @return create_time - 创建时间
-     */
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    /**
-     * 设置创建时间
-     *
-     * @param createTime 创建时间
-     */
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    /**
-     * 获取修改时间
-     *
-     * @return modify_time - 修改时间
-     */
-    public Date getModifyTime() {
-        return modifyTime;
-    }
-
-    /**
-     * 设置修改时间
-     *
-     * @param modifyTime 修改时间
-     */
-    public void setModifyTime(Date modifyTime) {
-        this.modifyTime = modifyTime;
-    }
-
-    /**
-     * 获取启用状态
-     *
-     * @return state_code - 启用状态
-     */
-    public Integer getStateCode() {
-        return stateCode;
-    }
-
-    /**
-     * 设置启用状态
-     *
-     * @param stateCode 启用状态
-     */
-    public void setStateCode(Integer stateCode) {
-        this.stateCode = stateCode;
     }
 
     /**
@@ -138,38 +60,48 @@ public class SysRole {
     }
 
     /**
-     * 获取角色编码
-     *
-     * @return role_code - 角色编码
+     * @return create_time
      */
-    public String getRoleCode() {
-        return roleCode;
+    public Date getCreateTime() {
+        return createTime;
     }
 
     /**
-     * 设置角色编码
-     *
-     * @param roleCode 角色编码
+     * @param createTime
      */
-    public void setRoleCode(String roleCode) {
-        this.roleCode = roleCode == null ? null : roleCode.trim();
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
     /**
-     * 获取角色描述
-     *
-     * @return description - 角色描述
+     * @return update_time
      */
-    public String getDescription() {
-        return description;
+    public Date getUpdateTime() {
+        return updateTime;
     }
 
     /**
-     * 设置角色描述
-     *
-     * @param description 角色描述
+     * @param updateTime
      */
-    public void setDescription(String description) {
-        this.description = description == null ? null : description.trim();
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    /**
+     * 获取是否有效  1有效  2无效
+     *
+     * @return delete_status - 是否有效  1有效  2无效
+     */
+    public String getDeleteStatus() {
+        return deleteStatus;
+    }
+
+    /**
+     * 设置是否有效  1有效  2无效
+     *
+     * @param deleteStatus 是否有效  1有效  2无效
+     */
+    public void setDeleteStatus(String deleteStatus) {
+        this.deleteStatus = deleteStatus == null ? null : deleteStatus.trim();
     }
 }

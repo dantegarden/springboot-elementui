@@ -1,175 +1,151 @@
 package com.dvt.elementui.biz.model;
 
-import java.util.Date;
 import javax.persistence.*;
 
 @Table(name = "sys_permission")
 public class SysPermission {
     /**
-     * 权限ID
+     * 自定id,主要供前端展示权限列表分类排序使用.
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     /**
-     * 创建时间
+     * 归属菜单,前端判断并展示菜单使用,
      */
-    @Column(name = "create_time")
-    private Date createTime;
+    @Column(name = "menu_code")
+    private String menuCode;
 
     /**
-     * 修改时间
+     * 菜单的中文释义
      */
-    @Column(name = "modify_time")
-    private Date modifyTime;
+    @Column(name = "menu_name")
+    private String menuName;
 
     /**
-     * 启用状态
-     */
-    @Column(name = "state_code")
-    private Integer stateCode;
-
-    /**
-     * 权限名
-     */
-    @Column(name = "permission_name")
-    private String permissionName;
-
-    /**
-     * 权限编码
+     * 权限的代码/通配符,对应代码中@RequiresPermissions 的value
      */
     @Column(name = "permission_code")
     private String permissionCode;
 
     /**
-     * 权限描述
+     * 本权限的中文释义
      */
-    private String description;
+    @Column(name = "permission_name")
+    private String permissionName;
 
     /**
-     * 获取权限ID
-     *
-     * @return id - 权限ID
+     * 是否本菜单必选权限, 1.必选 2非必选 通常是"列表"权限是必选
      */
-    public Long getId() {
+    @Column(name = "required_permission")
+    private Boolean requiredPermission;
+
+    /**
+     * 获取自定id,主要供前端展示权限列表分类排序使用.
+     *
+     * @return id - 自定id,主要供前端展示权限列表分类排序使用.
+     */
+    public Integer getId() {
         return id;
     }
 
     /**
-     * 设置权限ID
+     * 设置自定id,主要供前端展示权限列表分类排序使用.
      *
-     * @param id 权限ID
+     * @param id 自定id,主要供前端展示权限列表分类排序使用.
      */
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
     /**
-     * 获取创建时间
+     * 获取归属菜单,前端判断并展示菜单使用,
      *
-     * @return create_time - 创建时间
+     * @return menu_code - 归属菜单,前端判断并展示菜单使用,
      */
-    public Date getCreateTime() {
-        return createTime;
+    public String getMenuCode() {
+        return menuCode;
     }
 
     /**
-     * 设置创建时间
+     * 设置归属菜单,前端判断并展示菜单使用,
      *
-     * @param createTime 创建时间
+     * @param menuCode 归属菜单,前端判断并展示菜单使用,
      */
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+    public void setMenuCode(String menuCode) {
+        this.menuCode = menuCode == null ? null : menuCode.trim();
     }
 
     /**
-     * 获取修改时间
+     * 获取菜单的中文释义
      *
-     * @return modify_time - 修改时间
+     * @return menu_name - 菜单的中文释义
      */
-    public Date getModifyTime() {
-        return modifyTime;
+    public String getMenuName() {
+        return menuName;
     }
 
     /**
-     * 设置修改时间
+     * 设置菜单的中文释义
      *
-     * @param modifyTime 修改时间
+     * @param menuName 菜单的中文释义
      */
-    public void setModifyTime(Date modifyTime) {
-        this.modifyTime = modifyTime;
+    public void setMenuName(String menuName) {
+        this.menuName = menuName == null ? null : menuName.trim();
     }
 
     /**
-     * 获取启用状态
+     * 获取权限的代码/通配符,对应代码中@RequiresPermissions 的value
      *
-     * @return state_code - 启用状态
-     */
-    public Integer getStateCode() {
-        return stateCode;
-    }
-
-    /**
-     * 设置启用状态
-     *
-     * @param stateCode 启用状态
-     */
-    public void setStateCode(Integer stateCode) {
-        this.stateCode = stateCode;
-    }
-
-    /**
-     * 获取权限名
-     *
-     * @return permission_name - 权限名
-     */
-    public String getPermissionName() {
-        return permissionName;
-    }
-
-    /**
-     * 设置权限名
-     *
-     * @param permissionName 权限名
-     */
-    public void setPermissionName(String permissionName) {
-        this.permissionName = permissionName == null ? null : permissionName.trim();
-    }
-
-    /**
-     * 获取权限编码
-     *
-     * @return permission_code - 权限编码
+     * @return permission_code - 权限的代码/通配符,对应代码中@RequiresPermissions 的value
      */
     public String getPermissionCode() {
         return permissionCode;
     }
 
     /**
-     * 设置权限编码
+     * 设置权限的代码/通配符,对应代码中@RequiresPermissions 的value
      *
-     * @param permissionCode 权限编码
+     * @param permissionCode 权限的代码/通配符,对应代码中@RequiresPermissions 的value
      */
     public void setPermissionCode(String permissionCode) {
         this.permissionCode = permissionCode == null ? null : permissionCode.trim();
     }
 
     /**
-     * 获取权限描述
+     * 获取本权限的中文释义
      *
-     * @return description - 权限描述
+     * @return permission_name - 本权限的中文释义
      */
-    public String getDescription() {
-        return description;
+    public String getPermissionName() {
+        return permissionName;
     }
 
     /**
-     * 设置权限描述
+     * 设置本权限的中文释义
      *
-     * @param description 权限描述
+     * @param permissionName 本权限的中文释义
      */
-    public void setDescription(String description) {
-        this.description = description == null ? null : description.trim();
+    public void setPermissionName(String permissionName) {
+        this.permissionName = permissionName == null ? null : permissionName.trim();
+    }
+
+    /**
+     * 获取是否本菜单必选权限, 1.必选 2非必选 通常是"列表"权限是必选
+     *
+     * @return required_permission - 是否本菜单必选权限, 1.必选 2非必选 通常是"列表"权限是必选
+     */
+    public Boolean getRequiredPermission() {
+        return requiredPermission;
+    }
+
+    /**
+     * 设置是否本菜单必选权限, 1.必选 2非必选 通常是"列表"权限是必选
+     *
+     * @param requiredPermission 是否本菜单必选权限, 1.必选 2非必选 通常是"列表"权限是必选
+     */
+    public void setRequiredPermission(Boolean requiredPermission) {
+        this.requiredPermission = requiredPermission;
     }
 }

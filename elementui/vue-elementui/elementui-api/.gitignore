@@ -3,7 +3,7 @@
 
 # Built application files and Maven
 *.class
-target/
+target
 pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.versionsBackup
@@ -15,8 +15,8 @@ buildNumber.properties
 
 # About IntelliJ
 *.iml
-/.idea/
-/out/
+.idea
+out
 
 # Log Files
 *.log

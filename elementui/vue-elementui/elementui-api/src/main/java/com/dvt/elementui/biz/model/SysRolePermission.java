@@ -5,100 +5,127 @@ import javax.persistence.*;
 
 @Table(name = "sys_role_permission")
 public class SysRolePermission {
-    /**
-     * 角色权限关系ID
-     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     /**
-     * 插入时间
-     */
-    @Column(name = "insert_time")
-    private Date insertTime;
-
-    /**
-     * 角色ID
+     * 角色id
      */
     @Column(name = "role_id")
-    private Long roleId;
+    private Integer roleId;
 
     /**
-     * 权限ID
+     * 权限id
      */
     @Column(name = "permission_id")
-    private Long permissionId;
+    private Integer permissionId;
+
+    @Column(name = "create_time")
+    private Date createTime;
+
+    @Column(name = "update_time")
+    private Date updateTime;
 
     /**
-     * 获取角色权限关系ID
-     *
-     * @return id - 角色权限关系ID
+     * 是否有效 1有效     2无效
      */
-    public Long getId() {
+    @Column(name = "delete_status")
+    private String deleteStatus;
+
+    /**
+     * @return id
+     */
+    public Integer getId() {
         return id;
     }
 
     /**
-     * 设置角色权限关系ID
-     *
-     * @param id 角色权限关系ID
+     * @param id
      */
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
     /**
-     * 获取插入时间
+     * 获取角色id
      *
-     * @return insert_time - 插入时间
+     * @return role_id - 角色id
      */
-    public Date getInsertTime() {
-        return insertTime;
-    }
-
-    /**
-     * 设置插入时间
-     *
-     * @param insertTime 插入时间
-     */
-    public void setInsertTime(Date insertTime) {
-        this.insertTime = insertTime;
-    }
-
-    /**
-     * 获取角色ID
-     *
-     * @return role_id - 角色ID
-     */
-    public Long getRoleId() {
+    public Integer getRoleId() {
         return roleId;
     }
 
     /**
-     * 设置角色ID
+     * 设置角色id
      *
-     * @param roleId 角色ID
+     * @param roleId 角色id
      */
-    public void setRoleId(Long roleId) {
+    public void setRoleId(Integer roleId) {
         this.roleId = roleId;
     }
 
     /**
-     * 获取权限ID
+     * 获取权限id
      *
-     * @return permission_id - 权限ID
+     * @return permission_id - 权限id
      */
-    public Long getPermissionId() {
+    public Integer getPermissionId() {
         return permissionId;
     }
 
     /**
-     * 设置权限ID
+     * 设置权限id
      *
-     * @param permissionId 权限ID
+     * @param permissionId 权限id
      */
-    public void setPermissionId(Long permissionId) {
+    public void setPermissionId(Integer permissionId) {
         this.permissionId = permissionId;
+    }
+
+    /**
+     * @return create_time
+     */
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    /**
+     * @param createTime
+     */
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    /**
+     * @return update_time
+     */
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    /**
+     * @param updateTime
+     */
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    /**
+     * 获取是否有效 1有效     2无效
+     *
+     * @return delete_status - 是否有效 1有效     2无效
+     */
+    public String getDeleteStatus() {
+        return deleteStatus;
+    }
+
+    /**
+     * 设置是否有效 1有效     2无效
+     *
+     * @param deleteStatus 是否有效 1有效     2无效
+     */
+    public void setDeleteStatus(String deleteStatus) {
+        this.deleteStatus = deleteStatus == null ? null : deleteStatus.trim();
     }
 }

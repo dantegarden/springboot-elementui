@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dvt.elementui.biz.dao.SysMenuMapper">
+  <resultMap id="BaseResultMap" type="com.dvt.elementui.biz.model.SysMenu">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="icon" jdbcType="VARCHAR" property="icon" />
+    <result column="route" jdbcType="VARCHAR" property="route" />
+    <result column="index" jdbcType="INTEGER" property="index" />
+    <result column="enable" jdbcType="INTEGER" property="enable" />
+    <result column="pid" jdbcType="BIGINT" property="pid" />
+  </resultMap>
+
+  <select id="getRootMenu" resultMap="BaseResultMap">
+        SELECT * FROM sys_menu WHERE pid ='' or pid is NULL
+  </select>
+  <select id="findMenuByPid" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT * from sys_menu where pid = #{value}
+  </select>
+</mapper>
