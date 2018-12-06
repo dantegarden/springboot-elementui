@@ -10,7 +10,6 @@ import java.util.List;
 public class ApiWhiteData {
 	private static List<String> whiteApis = new ArrayList<String>();
 	static {
-		whiteApis.add("/user/login");
 		whiteApis.add("/file/upload");
 	}
 	public static List<String> getWhiteApis() {

@@ -11,7 +11,6 @@ public enum SessionEnum {
     /**
      * CURRENT_USER: session中存储的当前用户
      */
-    CURRENT_USER("CURRENT_USER"),
     USER_INFO("USER_INFO"),
     USER_PERMISSION("USER_PERMISSION");
 

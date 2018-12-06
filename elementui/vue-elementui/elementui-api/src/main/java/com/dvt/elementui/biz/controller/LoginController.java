@@ -21,7 +21,9 @@ public class LoginController {
      * @return
      */
     @PostMapping("/auth")
-    public Result authLogin(String username, String password) {
+    public Result authLogin(String username, String password) { //@RequestBody JSONObject requestJson
+//        String username = requestJson.getString("username");
+//        String password = requestJson.getString("password");
         //TODO 校验username, password非空
         return Result.ok(loginService.authLogin(username, password));
     }

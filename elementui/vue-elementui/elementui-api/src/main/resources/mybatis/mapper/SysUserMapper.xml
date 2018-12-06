@@ -59,11 +59,22 @@
                      DATE_FORMAT(update_time, '%Y.%m.%d %T') updateTime
                  FROM sys_user
                  WHERE delete_status = '1'
+                 <if test="condition.username != null and condition.username !='' ">
+                     and username like '%${condition.username}%'
+                 </if>
                  ORDER BY id
+                 LIMIT #{offset}, #{stepSize}
              ) u
             LEFT JOIN sys_role r ON r.id = u.roleId
             LEFT JOIN sys_role_permission rp ON rp.role_id = r.id
             LEFT JOIN sys_permission p ON p.id = rp.permission_id
         ORDER BY u.userId
     </select>
+
+    <select id="countUser" resultType="Integer">
+        SELECT count(0)
+        FROM sys_user u
+        WHERE u.delete_status = '1'
+    </select>
+
 </mapper>

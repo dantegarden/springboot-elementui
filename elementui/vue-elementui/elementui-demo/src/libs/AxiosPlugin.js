@@ -6,7 +6,11 @@ const $http = async function(url, data={}, method='GET') {
     url,
     method,
     timeout:15000,
-    withCredentials: true
+    withCredentials: true,
+    responseType:'json',
+    headers: {
+      'Content-Type':'application/json; charset=UTF-8', //get时是json, post时是multipart/formdata
+    }
   }
   if(config.method.toUpperCase()==="POST"){
     const formData = new FormData()

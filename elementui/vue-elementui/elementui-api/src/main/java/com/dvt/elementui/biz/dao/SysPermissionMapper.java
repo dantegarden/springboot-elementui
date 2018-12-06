@@ -6,6 +6,7 @@ import com.dvt.elementui.common.base.BaseMapper;
 import com.dvt.elementui.common.bean.UserPermission;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Set;
 
 @Repository
@@ -31,4 +32,8 @@ public interface SysPermissionMapper extends BaseMapper<SysPermission> {
      * @return
      */
     Set<String> getAllPermission();
+    /**
+     * 查询结构化的权限
+     * */
+    List<UserPermission> listAllPermission();
 }

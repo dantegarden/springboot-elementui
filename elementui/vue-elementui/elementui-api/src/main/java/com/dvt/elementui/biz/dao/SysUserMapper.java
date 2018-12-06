@@ -25,5 +25,5 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
      * @param condition
      * @return
      */
-    List<UserPermission> queryUserPermission(@Param("condition") Map<String,Object> condition);
+    List<UserPermission> queryUserPermission(@Param("condition") Map<String,Object> condition, @Param("offset") Integer offset, @Param("stepSize") Integer stepSize);
 }
