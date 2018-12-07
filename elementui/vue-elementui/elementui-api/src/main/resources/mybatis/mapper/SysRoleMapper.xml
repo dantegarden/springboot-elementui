@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dvt.elementui.biz.dao.SysRoleMapper">
-    <resultMap id="BaseResultMap" type="com.dvt.elementui.biz.model.SysRole">
-        <!--
-          WARNING - @mbg.generated
-        -->
-        <id column="id" jdbcType="INTEGER" property="id"/>
-        <result column="role_name" jdbcType="VARCHAR" property="roleName"/>
-        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
-        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
-        <result column="delete_status" jdbcType="VARCHAR" property="deleteStatus"/>
-    </resultMap>
+  <resultMap id="BaseResultMap" type="com.dvt.elementui.biz.model.SysRole">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="role_name" jdbcType="VARCHAR" property="roleName" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="delete_status" jdbcType="VARCHAR" property="deleteStatus" />
+  </resultMap>
 
     <select id="getAllRoles" resultMap="BaseResultMap">
         SELECT
@@ -21,18 +21,18 @@
     </select>
 
     <resultMap id="roleMap" type="com.dvt.elementui.common.bean.UserPermission">
-        <id column="roleId" property="roleId"/>
-        <result column="roleName" property="roleName"/>
-        <collection property="users" ofType="com.dvt.elementui.biz.model.SysUser">
-            <id column="userId" property="id"/>
-            <result column="nickname" property="nickname"/>
+        <id column="roleId" property="roleId" />
+        <result column="roleName" property="roleName" />
+        <collection ofType="com.dvt.elementui.biz.model.SysUser" property="users">
+            <id column="userId" property="id" />
+            <result column="nickname" property="nickname" />
         </collection>
-        <collection property="menus" ofType="com.dvt.elementui.common.bean.UserPermission">
-            <id column="menuCode" property="menuCode"/>
-            <result column="menuName" property="menuName"/>
-            <collection property="permissions" ofType="com.dvt.elementui.biz.model.SysPermission">
-                <id column="permissionId" property="id"/>
-                <result column="permissionName" property="permissionName"/>
+        <collection ofType="com.dvt.elementui.common.bean.UserPermission" property="menus">
+            <id column="menuCode" property="menuCode" />
+            <result column="menuName" property="menuName" />
+            <collection ofType="com.dvt.elementui.biz.model.SysPermission" property="permissions">
+                <id column="permissionId" property="id" />
+                <result column="permissionName" property="permissionName" />
             </collection>
         </collection>
     </resultMap>

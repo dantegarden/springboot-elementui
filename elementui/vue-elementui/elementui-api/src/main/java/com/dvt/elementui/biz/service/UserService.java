@@ -1,7 +1,5 @@
 package com.dvt.elementui.biz.service;
 
-import com.dvt.elementui.biz.model.SysMenu;
-import com.dvt.elementui.biz.model.SysPermission;
 import com.dvt.elementui.biz.model.SysRole;
 import com.dvt.elementui.biz.model.SysUser;
 import com.dvt.elementui.biz.vo.RoleVO;

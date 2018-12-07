@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dvt.elementui.biz.dao.SysUserMapper">
-    <resultMap id="BaseResultMap" type="com.dvt.elementui.biz.model.SysUser">
-        <!--
-          WARNING - @mbg.generated
-        -->
-        <id column="id" jdbcType="INTEGER" property="id"/>
-        <result column="username" jdbcType="VARCHAR" property="username"/>
-        <result column="password" jdbcType="VARCHAR" property="password"/>
-        <result column="nickname" jdbcType="VARCHAR" property="nickname"/>
-        <result column="role_id" jdbcType="INTEGER" property="roleId"/>
-        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
-        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
-        <result column="delete_status" jdbcType="VARCHAR" property="deleteStatus"/>
-    </resultMap>
+  <resultMap id="BaseResultMap" type="com.dvt.elementui.biz.model.SysUser">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+    <result column="role_id" jdbcType="INTEGER" property="roleId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="delete_status" jdbcType="VARCHAR" property="deleteStatus" />
+  </resultMap>
 
     <resultMap id="userMap" type="com.dvt.elementui.common.bean.UserPermission">
-        <id column="userId" property="userId"/>
-        <result column="username" property="username"/>
-        <result column="nickname" property="nickname"/>
-        <result column="roleId" property="roleId"/>
-        <result column="roleName" property="roleName"/>
-        <result column="createTime" property="createTime"/>
-        <result column="updateTime" property="updateTime"/>
-        <result column="lastLoginTime" property="lastLoginTime"/>
-        <result column="deleteStatus" property="deleteStatus"/>
-        <collection property="permissionList" ofType="String">
-            <id column="permissionName" property="permissionName"/>
+        <id column="userId" property="userId" />
+        <result column="username" property="username" />
+        <result column="nickname" property="nickname" />
+        <result column="roleId" property="roleId" />
+        <result column="roleName" property="roleName" />
+        <result column="createTime" property="createTime" />
+        <result column="updateTime" property="updateTime" />
+        <result column="lastLoginTime" property="lastLoginTime" />
+        <result column="deleteStatus" property="deleteStatus" />
+        <collection ofType="String" property="permissionList">
+            <id column="permissionName" property="permissionName" />
         </collection>
     </resultMap>
 

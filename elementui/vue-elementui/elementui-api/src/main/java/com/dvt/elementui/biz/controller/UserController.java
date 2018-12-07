@@ -1,28 +1,20 @@
 package com.dvt.elementui.biz.controller;
 
-import com.alibaba.fastjson.JSONObject;
-import com.dvt.elementui.biz.model.SysMenu;
-import com.dvt.elementui.biz.model.SysRole;
 import com.dvt.elementui.biz.model.SysUser;
 import com.dvt.elementui.biz.service.UserService;
 import com.dvt.elementui.biz.vo.RoleVO;
 import com.dvt.elementui.common.bean.Result;
 import com.dvt.elementui.common.bean.UserPermission;
-import com.dvt.elementui.common.enums.HttpStatusCodeEnum;
 import com.dvt.elementui.common.exception.BusinessException;
-import com.dvt.elementui.common.utils.JWTUtils;
 import com.dvt.elementui.common.utils.JsonUtils;
 import com.github.pagehelper.PageInfo;
 import org.apache.log4j.Logger;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @RestController
