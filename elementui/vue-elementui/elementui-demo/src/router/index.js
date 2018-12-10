@@ -30,6 +30,19 @@ export const constantRoutes = [
 
 export const optionalRoutes = [
   {
+    path: '/demo',
+    component: _import('Home'),
+    meta: { title:'基本示例', el_icon:'el-icon-news'},
+    children: [
+      {
+        path: '',
+        component: _import('demo/Order'),
+        meta: {title: '订单管理', icon: 'user'},
+        menu: 'demo'
+      }
+    ]
+  },
+  {
     path: '/user',
     component: _import('Home'),
     meta: { title:'用户管理', el_icon:'el-icon-menu'},

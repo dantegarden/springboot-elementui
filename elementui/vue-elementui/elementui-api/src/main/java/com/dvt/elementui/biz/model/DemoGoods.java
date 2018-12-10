@@ -65,7 +65,9 @@ public class DemoGoods {
      * @param goodsName 商品名称
      */
     public void setGoodsName(String goodsName) {
+
         this.goodsName = goodsName == null ? null : goodsName.trim();
+
     }
 
     /**

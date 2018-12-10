@@ -18,6 +18,9 @@
         <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
             <property name="mappers" value="com.dvt.elementui.common.base.BaseMapper"/>
         </plugin>
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin">
+            <property name="suppressJavaInterface" value="false" />
+        </plugin>
 
         <commentGenerator>
             <!-- 注释里不添加日期 -->
@@ -40,12 +43,15 @@
 
         <javaModelGenerator targetPackage="com.dvt.elementui.biz.model" targetProject="src/main/java">
             <property name="trimStrings" value="true"/>
+            <property name="enableSubPackages" value="true" />
         </javaModelGenerator>
         <sqlMapGenerator targetPackage="mybatis/mapper" targetProject="src/main/resources">
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
         <javaClientGenerator targetPackage="com.dvt.elementui.biz.dao" targetProject="src/main/java"
-                             type="XMLMAPPER"/>
+                             type="XMLMAPPER">
+            <property name="enableSubPackages" value="true" />
+        </javaClientGenerator>
         <!--通配符%来匹配所有表-->
         <table tableName="%">
             <!--mysql 配置，generatedKey意味着所有的表都有一个id自增的主键-->

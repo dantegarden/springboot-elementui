@@ -14,4 +14,37 @@
     <result column="order_time" jdbcType="TIMESTAMP" property="orderTime" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
+
+  <resultMap id="RelationResultMap" type="com.dvt.elementui.biz.model.DemoOrder" extends="BaseResultMap">
+    <association property="customer" column="customer_id" select="getCustomer"></association>
+    <collection property="goodsList" ofType="com.dvt.elementui.biz.model.DemoGoods"
+                select="getGoods"
+                column="id">
+      <result column="id" jdbcType="int" property="id" />
+      <result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
+      <result column="price" jdbcType="DOUBLE" property="price" />
+      <result column="detail" jdbcType="VARCHAR" property="detail" />
+      <result column="picture" jdbcType="VARCHAR" property="picture" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    </collection>
+  </resultMap>
+
+  <select id="getCustomer" parameterType="int" resultType="com.dvt.elementui.biz.model.DemoCustomer">
+    select * from demo_customer where id = #{customer_id}
+  </select>
+  <select id="getGoods" parameterType="int" resultType="com.dvt.elementui.biz.model.DemoGoods">
+    select g.id as id, g.goods_name as goods_name, g.price as price, g.detail as detail,
+           g.picture as picture, g.create_time as create_time
+    from demo_order_goods og
+    left join demo_goods g on og.goods_id = g.id
+    where og.order_id = #{id}
+  </select>
+
+
+  <select id="queryOrders" resultMap="RelationResultMap">
+    select * from demo_order o where 1=1
+    <if test="condition.orderSn != null and condition.orderSn !='' ">
+      and o.order_sn like '%${condition.orderSn}%'
+    </if>
+  </select>
 </mapper>

@@ -10,6 +10,9 @@
     <result column="sex" jdbcType="VARCHAR" property="sex" />
     <result column="address" jdbcType="VARCHAR" property="address" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+
+  <resultMap id="RelationResultMap" type="com.dvt.elementui.biz.model.DemoCustomer" extends="BaseResultMap">
     <collection property="orderList" ofType="com.dvt.elementui.biz.model.DemoOrder"
                 select="selectOrders"
                 column="id">

@@ -9,11 +9,17 @@ import java.util.Map;
 
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.collect.Maps;
+import org.apache.log4j.Logger;
+
 /**
  * Json 工具类
  *
  */
 public class JsonUtils {
+
+	private static final Logger LOGGER = Logger.getLogger(JsonUtils.class);
+
 	private static ObjectMapper mapper = new ObjectMapper();
 	
 	public static String toString(Object obj){
@@ -42,6 +48,9 @@ public class JsonUtils {
 		try {
 			JavaType javaType =  mapper.getTypeFactory().constructParametricType(ArrayList.class, listClass);
 			return (List<T>)mapper.readValue(jsonString, javaType);
+		} catch( NullPointerException e){
+			LOGGER.info("无法将null转换成对象，将返回无数据的ArrayList");
+			return new ArrayList<T>();
 		} catch (IOException e) {
 			throw new RuntimeException("JSON【"+jsonString+"】转对象时出错", e);
 		}
@@ -51,6 +60,9 @@ public class JsonUtils {
 		try {
 			JavaType javaType = mapper.getTypeFactory().constructParametricType(HashMap.class, String.class, valueClass);;
 			return (Map<String,T>) mapper.readValue(jsonString, javaType);
+		} catch( NullPointerException e){
+			LOGGER.info("无法将null转换成对象，将返回无数据的HashMap");
+			return new HashMap<String, T>();
 		} catch (IOException e) {
 			throw new RuntimeException("JSON【"+jsonString+"】转对象时出错", e);
 		}

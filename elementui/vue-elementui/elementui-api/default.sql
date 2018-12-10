@@ -45,6 +45,10 @@ INSERT INTO `sys_permission` VALUES ('701', 'role', '角色权限', 'role:list',
 INSERT INTO `sys_permission` VALUES ('702', 'role', '角色权限', 'role:add', '新增', '2');
 INSERT INTO `sys_permission` VALUES ('703', 'role', '角色权限', 'role:update', '修改', '2');
 INSERT INTO `sys_permission` VALUES ('704', 'role', '角色权限', 'role:delete', '删除', '2');
+INSERT INTO `sys_permission` VALUES ('100', 'demo', '示例', 'demo:list', '列表', '1');
+INSERT INTO `sys_permission` VALUES ('101', 'demo', '示例', 'demo:add', '新增', '2');
+INSERT INTO `sys_permission` VALUES ('102', 'demo', '示例', 'demo:update', '修改', '2');
+INSERT INTO `sys_permission` VALUES ('103', 'demo', '示例', 'demo:delete', '删除', '2');
 
 -- ----------------------------
 -- Table structure for sys_role
@@ -95,6 +99,11 @@ INSERT INTO `sys_role_permission` VALUES ('38', '3', '603', '2018-12-07 11:52:43
 INSERT INTO `sys_role_permission` VALUES ('39', '3', '701', '2018-12-07 11:52:43', '2018-12-07 11:52:43', '1');
 INSERT INTO `sys_role_permission` VALUES ('40', '3', '702', '2018-12-07 11:52:43', '2018-12-07 11:52:43', '1');
 INSERT INTO `sys_role_permission` VALUES ('41', '3', '704', '2018-12-07 11:52:43', '2018-12-07 11:52:43', '1');
+INSERT INTO `sys_role_permission` VALUES ('42', '1', '100', '2018-12-07 11:52:43', '2018-12-07 11:52:43', '1');
+INSERT INTO `sys_role_permission` VALUES ('43', '1', '101', '2018-12-07 11:52:43', '2018-12-07 11:52:43', '1');
+INSERT INTO `sys_role_permission` VALUES ('44', '1', '102', '2018-12-07 11:52:43', '2018-12-07 11:52:43', '1');
+INSERT INTO `sys_role_permission` VALUES ('45', '1', '103', '2018-12-07 11:52:43', '2018-12-07 11:52:43', '1');
+
 
 -- ----------------------------
 -- Table structure for sys_user
@@ -160,6 +169,7 @@ CREATE TABLE `demo_goods` (
 
 INSERT INTO `demo_goods` VALUES (null, '小米8', '3799', '小米8 全面屏游戏智能手机 6GB+64GB 黑色 全网通4G 双卡双待','https://imgservice.suning.cn/uimg1/b2c/image/vZXxfEEZ1yYg2Cw2p9Yk0w.jpg_800w_800h_4e', sysdate());
 INSERT INTO `demo_goods` VALUES (null, '华为Mate20 pro', '5999', 'HUAWEI/华为Mate 20 极光色 6GB+128GB 麒麟980芯片全面屏徕卡三摄移动联通电信4G手机','https://imgservice.suning.cn/uimg1/b2c/image/FGsGbl26_-wt2dcYaweaPA.jpg_800w_800h_4e', sysdate());
+INSERT INTO `demo_goods` VALUES (null, '魅族 16th', '2698.00', '骁龙845 AI加速 屏幕下指纹 AI双摄光学防抖','https://openfile.meizu.com/group1/M00/05/E1/Cgbj0FtqgmuAHzQbAAflWG0_wvs749.png680x680.jpg', sysdate());
 
 -- ----------------------------
 -- Table structure for demo_order
@@ -194,3 +204,4 @@ CREATE TABLE `demo_order_goods` (
 
 INSERT INTO `demo_order_goods` VALUES (null,10000, 10000, sysdate());
 INSERT INTO `demo_order_goods` VALUES (null,10001, 10001, sysdate());
+INSERT INTO `demo_order_goods` VALUES (null,10001, 10002, sysdate());

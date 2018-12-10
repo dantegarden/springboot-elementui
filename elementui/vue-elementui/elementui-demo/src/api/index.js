@@ -7,6 +7,8 @@ const $get = (url, params) => $http(BASE_PATH + url, params)
 const $post = (url, params) => $http(BASE_PATH + url, params, 'POST')
 
 export default {
+
+  /**登录登出**/
   //用户登录
   login : params => $post('/login/auth', params),
   //获取用户信息
@@ -14,6 +16,7 @@ export default {
   //登出
   logout: params=> $post('/login/logout',{}),
 
+  /**用户和权限**/
   //获取用户列表
   getUserList : params => $get('/user/list', params),
   //获取全部角色
@@ -34,6 +37,9 @@ export default {
   updateRole: params => $post('/user/updateRole', params),
   //删除角色
   deleteRole: params => $post('/user/deleteRole/' + params),
+
+  /**示例**/
+  getOrderList: params => $get('/demo/listOrders', params),
 
   // 文件上传地址
   uploadFile : `${BASE_PATH}/file/upload`,

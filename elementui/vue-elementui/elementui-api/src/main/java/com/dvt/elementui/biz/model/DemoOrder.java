@@ -1,6 +1,7 @@
 package com.dvt.elementui.biz.model;
 
 import java.util.Date;
+import java.util.List;
 import javax.persistence.*;
 
 @Table(name = "demo_order")
@@ -53,6 +54,11 @@ public class DemoOrder {
     /**多对一 顾客**/
     @Transient
     private DemoCustomer customer;
+
+    /**多对多 商品**/
+    @Transient
+    private List<DemoGoods> goodsList;
+
     /**
      * @return id
      */
@@ -199,5 +205,13 @@ public class DemoOrder {
 
     public void setCustomer(DemoCustomer customer) {
         this.customer = customer;
+    }
+
+    public List<DemoGoods> getGoodsList() {
+        return this.goodsList;
+    }
+
+    public void setGoodsList(List<DemoGoods> goodsList) {
+        this.goodsList = goodsList;
     }
 }
