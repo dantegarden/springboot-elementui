@@ -6,6 +6,7 @@ import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
 
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class CommonHelper {
@@ -34,5 +35,19 @@ public class CommonHelper {
 
     public static void copyPropertiesIgnoreNull(Object src, Object target, Boolean doNotCopyBlankStr){
         BeanUtils.copyProperties(src, target, getNullPropertyNames(src, doNotCopyBlankStr));
+    }
+
+    public static <T> T map2JavaBean(Map<String, T> map, Class<T> beanClass) throws Exception {
+        if (map == null)
+            return null;
+        T obj = beanClass.newInstance();
+        org.apache.commons.beanutils.BeanUtils.populate(obj, map);
+        return obj;
+    }
+
+    public static <String, T> Map<String, T> javaBean2Map(Object obj) {
+        if(obj == null)
+            return null;
+        return new org.apache.commons.beanutils.BeanMap(obj);
     }
 }

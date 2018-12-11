@@ -39,7 +39,7 @@ export default {
   deleteRole: params => $post('/user/deleteRole/' + params),
 
   /**示例**/
-  getOrderList: params => $get('/demo/listOrders', params),
+  getOrderList: params => $post('/demo/listOrders', params),
 
   // 文件上传地址
   uploadFile : `${BASE_PATH}/file/upload`,

@@ -1,5 +1,7 @@
 import axios from 'axios'
-import {getStore} from "./mUtils";
+import qs from 'qs'
+import { Message } from "element-ui";
+import { getStore } from "./mUtils";
 
 const $http = async function(url, data={}, method='GET') {
   let config = {
@@ -13,11 +15,9 @@ const $http = async function(url, data={}, method='GET') {
     }
   }
   if(config.method.toUpperCase()==="POST"){
-    const formData = new FormData()
-    Object.keys(data).forEach(key => formData.append(key, data[key]))
-    config.data = formData
+    config.data = data
   }else{
-    config.params = data;
+    config.params = qs.stringify(data);
   }
   return axios.request(config)
 }

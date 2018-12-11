@@ -1,11 +1,7 @@
 package com.dvt.elementui.common.configuration;
 
-import java.util.ArrayList;
-import java.util.List;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import com.dvt.elementui.common.filter.HTTPBasicAuthorizeFilter;
+
 /**全局注册Filter**/
 @Configuration
 public class FilterConfig {

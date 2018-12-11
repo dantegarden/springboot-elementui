@@ -57,3 +57,12 @@ a:hover {
 .app-container {
   padding: 20px;
 }
+
+//解决el表头错位
+body .el-table th.gutter{
+  display: table-cell!important;
+}
+
+body .el-table colgroup.gutter{
+  display: table-cell!important;
+}

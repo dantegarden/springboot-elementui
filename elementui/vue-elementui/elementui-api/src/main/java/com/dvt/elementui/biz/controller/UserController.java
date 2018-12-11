@@ -54,7 +54,7 @@ public class UserController {
      * **/
     @RequiresPermissions("user:add")
     @PostMapping("/addUser")
-    public Result addUser(@ModelAttribute SysUser user) {
+    public Result addUser(@RequestBody SysUser user) {
         //TODO 字段校验
         int count = userService.addUser(user);
         if(count>0){
@@ -68,7 +68,7 @@ public class UserController {
      * **/
     @RequiresPermissions("user:update")
     @PostMapping("/updateUser")
-    public Result updateUser(@ModelAttribute SysUser user) {
+    public Result updateUser(@RequestBody SysUser user) {
         //TODO 字段校验
         return Result.ok(userService.updateUser(user));
     }
@@ -112,7 +112,7 @@ public class UserController {
      */
     @RequiresPermissions("role:add")
     @PostMapping("/addRole")
-    public Result addRole(@ModelAttribute RoleVO role) {
+    public Result addRole(@RequestBody RoleVO role) {
         int count = userService.addRole(role);
         if(count>0){
             return Result.ok(Boolean.TRUE);
@@ -128,7 +128,7 @@ public class UserController {
      */
     @RequiresPermissions("role:update")
     @PostMapping("/updateRole")
-    public Result updateRole(@ModelAttribute RoleVO role) {
+    public Result updateRole(@RequestBody RoleVO role) {
         return Result.ok(userService.updateRole(role));
     }
 
