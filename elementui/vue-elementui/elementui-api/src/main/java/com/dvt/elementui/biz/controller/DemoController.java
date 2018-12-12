@@ -19,6 +19,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/demo")
 public class DemoController {
+
     private static final Logger LOGGER = Logger.getLogger(DemoController.class);
 
     @Autowired

@@ -38,6 +38,9 @@ export default {
   //删除角色
   deleteRole: params => $post('/user/deleteRole/' + params),
 
+  /**数据字典**/
+  code: params => $post('/code/type', params),
+
   /**示例**/
   getOrderList: params => $post('/demo/listOrders', params),
 

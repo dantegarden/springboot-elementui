@@ -15,7 +15,7 @@ public class DemoQueryForm {
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private List<Date> orderTime;
 
-    private Map<String, Object> orderStatus;
+    private String orderStatus;
 
     public DemoQueryForm() {
     }
@@ -36,11 +36,11 @@ public class DemoQueryForm {
         this.orderTime = orderTime;
     }
 
-    public Map<String, Object> getOrderStatus() {
+    public String getOrderStatus() {
         return this.orderStatus;
     }
 
-    public void setOrderStatus(Map<String, Object> orderStatus) {
+    public void setOrderStatus(String orderStatus) {
         this.orderStatus = orderStatus;
     }
 }

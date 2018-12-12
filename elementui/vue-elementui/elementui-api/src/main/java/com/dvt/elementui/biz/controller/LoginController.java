@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.dvt.elementui.biz.service.LoginService;
 import com.dvt.elementui.biz.vo.AuthVO;
 import com.dvt.elementui.common.bean.Result;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/login")
 public class LoginController {
+
+    private static final Logger LOGGER = Logger.getLogger(LoginController.class);
 
     @Autowired
     private LoginService loginService;

@@ -53,7 +53,7 @@
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
         <!--通配符%来匹配所有表-->
-        <table tableName="%">
+        <table tableName="sys_code">
             <!--mysql 配置，generatedKey意味着所有的表都有一个id自增的主键-->
             <generatedKey column="id" sqlStatement="Mysql" identity="true"/><!-- 数据库中表名有时我们都会带个前缀，而实体又不想带前缀，这个配置可以把实体的前缀去掉 -->
 

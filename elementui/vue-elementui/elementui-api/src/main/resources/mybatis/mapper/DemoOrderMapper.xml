@@ -46,6 +46,9 @@
     <if test="condition.orderSn != null and condition.orderSn !='' ">
       and o.order_sn like '%${condition.orderSn}%'
     </if>
+    <if test="condition.orderStatus != null and condition.orderStatus !='' ">
+      and o.order_status = #{condition.orderStatus}
+    </if>
     <if test="condition.orderTime != null ">
       and o.order_time &gt;= #{condition.orderTime[0]}
       and o.order_time &lt;= #{condition.orderTime[1]}

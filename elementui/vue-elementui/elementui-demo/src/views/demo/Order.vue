@@ -6,6 +6,16 @@
         <el-form-item label="订单编号">
           <el-input v-model="queryCondition.orderSn" placeholder="订单编号"></el-input>
         </el-form-item>
+        <el-form-item label="订单状态">
+          <el-select v-model="queryCondition.orderStatus" filterable placeholder="请选择">
+            <el-option
+              v-for="item in dataDict['OrderStatus']"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="下单时间">
           <el-date-picker
             v-model="queryCondition.orderTime"
@@ -37,7 +47,9 @@
         <el-table-column align="center" label="客户" prop="customer.name" ></el-table-column>
         <el-table-column align="center" label="收货地址" width="220" prop="customer.address" ></el-table-column>
         <el-table-column align="center" label="订单总价" prop="orderPrice"></el-table-column>
-        <el-table-column align="center" label="订单状态" prop="orderStatus" ></el-table-column>
+        <el-table-column align="center" label="订单状态" >
+          <template slot-scope="scope">{{ $dataTrans(scope.row.orderStatus, 'OrderStatus') }}</template>
+        </el-table-column>
         <el-table-column align="center" label="下单时间" prop="orderTime" ></el-table-column>
         <el-table-column align="center" label="管理" width="160" fixed="right">
           <template slot-scope="scope">
@@ -65,6 +77,7 @@
       </el-pagination>
     </div>
 
+    <div id="sss">sss</div>
   </div>
 </template>
 
@@ -75,6 +88,8 @@
     props: [],
     data() {
       return {
+        dataDict: [],
+
         orderList:[],
         listLoading: false,
         pageNum: 1,
@@ -84,7 +99,7 @@
         queryCondition: {
           orderSn : '',
           orderTime: ['2017-10-01', '2018-12-11'],
-          orderStatus: {id:1}
+          orderStatus: ''
         },
 
 
@@ -94,7 +109,7 @@
       getOrderList(){
         this.listLoading = true;
         api.getOrderList({queryCondition: this.queryCondition, page: this.pageNum, size: this.pageSize}).then(res=>{
-          if(res.code==200){
+          if(res.status){
             this.listLoading = false;
             this.orderList = res.data.list;
             this.total = res.data.total;
@@ -131,8 +146,10 @@
         this.multipleSelection = val;
       }
     },
-    created(){
+    created: async function(){
       this.getOrderList()
+      this.dataDict = await this.$dataDict(['OrderStatus'])
+      console.log($("#id"))
     }
   }
 </script>

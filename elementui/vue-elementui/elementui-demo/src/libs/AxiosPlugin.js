@@ -17,7 +17,7 @@ const $http = async function(url, data={}, method='GET') {
   if(config.method.toUpperCase()==="POST"){
     config.data = data
   }else{
-    config.params = qs.stringify(data);
+    config.params = data;
   }
   return axios.request(config)
 }
