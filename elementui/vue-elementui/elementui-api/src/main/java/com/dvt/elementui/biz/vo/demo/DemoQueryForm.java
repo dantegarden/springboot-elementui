@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 public class DemoQueryForm {
+
     private String orderSn;
 
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")

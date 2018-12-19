@@ -8,5 +8,5 @@ import java.util.Map;
 public interface DemoService {
 
     /**分页条件查询**/
-    PageInfo<DemoOrder> queryByPage(Map<String, Object> condition, Integer page, Integer size);
+    PageInfo<DemoOrder> queryByPage(Map<String, Object> condition, Integer page, Integer size, String orderBy);
 }

@@ -29,7 +29,7 @@ public class DemoController {
     @PostMapping("/listOrders")
     public Result listOrders(@RequestBody DemoQueryVO vo) {
         Map<String,Object> queryCondition = CommonHelper.javaBean2Map(vo.getQueryCondition());
-        PageInfo<DemoOrder> pageInfo =demoService.queryByPage(queryCondition, vo.getPage(), vo.getSize());
+        PageInfo<DemoOrder> pageInfo =demoService.queryByPage(queryCondition, vo.getPage(), vo.getSize(), vo.getOrderBy());
         return Result.ok(pageInfo);
     }
 }

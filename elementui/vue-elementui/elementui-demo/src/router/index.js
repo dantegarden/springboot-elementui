@@ -39,6 +39,12 @@ export const optionalRoutes = [
         component: _import('demo/Order'),
         meta: {title: '订单管理', icon: 'user'},
         menu: 'demo'
+      },
+      {
+        path: 'pivot',
+        component: _import('demo/Pivot'),
+        meta: {title: '交叉表', icon: 'user'},
+        menu: 'demo'
       }
     ]
   },

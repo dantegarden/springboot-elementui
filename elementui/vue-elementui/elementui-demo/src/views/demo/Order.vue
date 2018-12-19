@@ -41,16 +41,16 @@
 
     <div class="table-container">
       <el-table ref="table" v-loading.body="listLoading" :data="orderList" border class="full"
-                height="500" @selection-change="onSelectionChange">
+                height="500" @selection-change="onSelectionChange" @sort-change='onSortChange'>
         <el-table-column type="selection" width="55" fixed="left"></el-table-column>
-        <el-table-column align="center" label="订单号" prop="orderSn" ></el-table-column>
+        <el-table-column align="center" sortable='custom' label="订单号" prop="orderSn" ></el-table-column>
         <el-table-column align="center" label="客户" prop="customer.name" ></el-table-column>
         <el-table-column align="center" label="收货地址" width="220" prop="customer.address" ></el-table-column>
-        <el-table-column align="center" label="订单总价" prop="orderPrice"></el-table-column>
+        <el-table-column align="center" sortable='custom' label="订单总价" prop="orderPrice"></el-table-column>
         <el-table-column align="center" label="订单状态" >
           <template slot-scope="scope">{{ $dataTrans(scope.row.orderStatus, 'OrderStatus') }}</template>
         </el-table-column>
-        <el-table-column align="center" label="下单时间" prop="orderTime" ></el-table-column>
+        <el-table-column align="center" sortable='custom' label="下单时间" prop="orderTime" ></el-table-column>
         <el-table-column align="center" label="管理" width="160" fixed="right">
           <template slot-scope="scope">
             <el-button-group>
@@ -77,7 +77,6 @@
       </el-pagination>
     </div>
 
-    <div id="sss">sss</div>
   </div>
 </template>
 
@@ -95,6 +94,7 @@
         pageNum: 1,
         pageSize: 10,
         total: 0, //分页组件--数据总条数
+        orderBy: '',
         multipleSelection: [],
         queryCondition: {
           orderSn : '',
@@ -108,7 +108,7 @@
     methods: {
       getOrderList(){
         this.listLoading = true;
-        api.getOrderList({queryCondition: this.queryCondition, page: this.pageNum, size: this.pageSize}).then(res=>{
+        api.getOrderList({queryCondition: this.queryCondition, page: this.pageNum, size: this.pageSize, orderBy: this.orderBy}).then(res=>{
           if(res.status){
             this.listLoading = false;
             this.orderList = res.data.list;
@@ -121,7 +121,7 @@
         this.getOrderList()
       },
       add(){
-        window.ttt=this.$refs['table']
+
       },
       update($index){
 
@@ -144,12 +144,16 @@
       },
       onSelectionChange(val){
         this.multipleSelection = val;
+      },
+      onSortChange(column){
+        console.log(column)
+        this.orderBy = [column.prop, column.order.startsWith("asc")?'asc':'desc'].join(' ')
+        this.query()
       }
     },
     created: async function(){
       this.getOrderList()
       this.dataDict = await this.$dataDict(['OrderStatus'])
-      console.log($("#id"))
     }
   }
 </script>
