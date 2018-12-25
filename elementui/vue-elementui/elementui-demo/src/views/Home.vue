@@ -1,11 +1,15 @@
 <template>
-  <div class="app-wrapper" :class="{hideSidebar:!sidebar.opened}">
-    <sidebar class="sidebar-container"></sidebar>
-    <div class="main-container">
+  <el-container class="mainPage">
+    <el-header height="120px">
       <navbar></navbar>
-      <app-main></app-main>
-    </div>
-  </div>
+    </el-header>
+    <el-container>
+      <el-aside width="200px">Aside</el-aside>
+      <el-main>
+        <app-main></app-main>
+      </el-main>
+    </el-container>
+  </el-container>
 </template>
 
 <script>
@@ -40,11 +44,17 @@
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-  @import "../styles/mixin.scss";
-  .app-wrapper {
-    @include clearfix;
-    position: relative;
+  .mainPage,
+  .pageR{
     height: 100%;
-    width: 100%;
   }
+  .mainPage{
+
+  }
+  .mainPage:after{
+    content: "";
+    clear: both;
+    display: block;
+  }
+
 </style>

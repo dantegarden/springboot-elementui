@@ -70,7 +70,7 @@
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-  @import "../styles/mixin";
+  @import "../styles/theme/mixin";
   $bg: #2d3a4b;
   $dark_gray: #889aa4;
   $light_gray: #eee;
