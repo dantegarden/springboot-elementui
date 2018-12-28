@@ -1,8 +1,5 @@
 package com.dvt.elementui.common.datadict;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.util.Collection;
 
 public interface DataDictLoader {

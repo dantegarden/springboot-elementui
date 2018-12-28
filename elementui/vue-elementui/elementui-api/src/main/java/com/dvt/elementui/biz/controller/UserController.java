@@ -2,16 +2,17 @@ package com.dvt.elementui.biz.controller;
 
 import com.dvt.elementui.biz.model.SysUser;
 import com.dvt.elementui.biz.service.UserService;
-import com.dvt.elementui.biz.vo.RoleVO;
+import com.dvt.elementui.biz.vo.auth.RoleVO;
+import com.dvt.elementui.biz.vo.auth.UserVO;
+import com.dvt.elementui.common.bean.PageData;
 import com.dvt.elementui.common.bean.Result;
-import com.dvt.elementui.common.bean.UserPermission;
 import com.dvt.elementui.common.exception.BusinessException;
 import com.dvt.elementui.common.utils.JsonUtils;
-import com.github.pagehelper.PageInfo;
 import org.apache.log4j.Logger;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -35,8 +36,8 @@ public class UserController {
     @GetMapping("/list")
     public Result queryUsers(HttpServletRequest request, @RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "10") Integer size){
         Map<String,Object> queryCondition = JsonUtils.toMap(Object.class, request.getParameter("queryCondition"));
-        PageInfo<UserPermission> pageInfo = userService.queryByPage(queryCondition, page, size);
-        return Result.ok(pageInfo);
+        Page<UserVO> pageInfo = userService.queryByPage(queryCondition, page, size);
+        return Result.ok(new PageData(pageInfo));
     }
      /**
      * 查询全部角色

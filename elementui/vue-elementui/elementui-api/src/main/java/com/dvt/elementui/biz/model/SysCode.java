@@ -1,12 +1,17 @@
 package com.dvt.elementui.biz.model;
 
-import java.io.Serializable;
-import javax.persistence.*;
+import com.dvt.elementui.common.base.BaseEntity;
 
-@Table(name = "sys_code")
-public class SysCode implements Serializable {
+import javax.persistence.*;
+import java.io.Serializable;
+
+@Entity
+@Table(name="sys_code")
+public class SysCode extends BaseEntity {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "ID", unique = true, nullable = false, precision = 12, scale = 0)
     private Integer id;
 
     /**
@@ -42,129 +47,65 @@ public class SysCode implements Serializable {
     /**
      * 生效标志
      */
-    private String enabled;
+    @Column(name = "enabled")
+    private Integer enabled;
 
-    private static final long serialVersionUID = 1L;
-
-    /**
-     * @return id
-     */
-    public Integer getId() {
-        return id;
+    public SysCode() {
     }
 
-    /**
-     * @param id
-     */
+    public Integer getId() {
+        return this.id;
+    }
+
     public void setId(Integer id) {
         this.id = id;
     }
 
-    /**
-     * 获取字典键
-     *
-     * @return code_key - 字典键
-     */
     public String getCodeKey() {
-        return codeKey;
+        return this.codeKey;
     }
 
-    /**
-     * 设置字典键
-     *
-     * @param codeKey 字典键
-     */
     public void setCodeKey(String codeKey) {
-        this.codeKey = codeKey == null ? null : codeKey.trim();
+        this.codeKey = codeKey;
     }
 
-    /**
-     * 获取字典类型
-     *
-     * @return code_type - 字典类型
-     */
     public String getCodeType() {
-        return codeType;
+        return this.codeType;
     }
 
-    /**
-     * 设置字典类型
-     *
-     * @param codeType 字典类型
-     */
     public void setCodeType(String codeType) {
-        this.codeType = codeType == null ? null : codeType.trim();
+        this.codeType = codeType;
     }
 
-    /**
-     * 获取字典名
-     *
-     * @return code_name - 字典名
-     */
     public String getCodeName() {
-        return codeName;
+        return this.codeName;
     }
 
-    /**
-     * 设置字典名
-     *
-     * @param codeName 字典名
-     */
     public void setCodeName(String codeName) {
-        this.codeName = codeName == null ? null : codeName.trim();
+        this.codeName = codeName;
     }
 
-    /**
-     * 获取字典值
-     *
-     * @return code_value - 字典值
-     */
     public String getCodeValue() {
-        return codeValue;
+        return this.codeValue;
     }
 
-    /**
-     * 设置字典值
-     *
-     * @param codeValue 字典值
-     */
     public void setCodeValue(String codeValue) {
-        this.codeValue = codeValue == null ? null : codeValue.trim();
+        this.codeValue = codeValue;
     }
 
-    /**
-     * 获取排序
-     *
-     * @return order_number - 排序
-     */
     public Integer getOrderNumber() {
-        return orderNumber;
+        return this.orderNumber;
     }
 
-    /**
-     * 设置排序
-     *
-     * @param orderNumber 排序
-     */
     public void setOrderNumber(Integer orderNumber) {
         this.orderNumber = orderNumber;
     }
 
-    /**
-     * 获取生效标志
-     *
-     * @return enabled - 生效标志
-     */
-    public String getEnabled() {
-        return enabled;
+    public Integer getEnabled() {
+        return this.enabled;
     }
 
-    /**
-     * 设置生效标志
-     *
-     * @param enabled 生效标志
-     */
-    public void setEnabled(String enabled) {
-        this.enabled = enabled == null ? null : enabled.trim();
+    public void setEnabled(Integer enabled) {
+        this.enabled = enabled;
     }
 }

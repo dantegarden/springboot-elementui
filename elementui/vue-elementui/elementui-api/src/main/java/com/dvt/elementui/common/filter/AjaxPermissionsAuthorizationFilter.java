@@ -1,6 +1,5 @@
 package com.dvt.elementui.common.filter;
 
-import com.alibaba.fastjson.JSONObject;
 import com.dvt.elementui.common.bean.Result;
 import com.dvt.elementui.common.enums.HttpStatusCodeEnum;
 import com.dvt.elementui.common.utils.JsonUtils;

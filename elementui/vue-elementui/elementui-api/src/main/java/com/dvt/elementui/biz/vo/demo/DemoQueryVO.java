@@ -1,8 +1,9 @@
 package com.dvt.elementui.biz.vo.demo;
 
-import com.dvt.elementui.common.PageVO;
+public class DemoQueryVO {
 
-public class DemoQueryVO extends PageVO {
+    private Integer page;
+    private Integer size;
 
     private DemoQueryForm queryCondition;
 
@@ -12,5 +13,21 @@ public class DemoQueryVO extends PageVO {
 
     public void setQueryCondition(DemoQueryForm queryCondition) {
         this.queryCondition = queryCondition;
+    }
+
+    public Integer getPage() {
+        return this.page;
+    }
+
+    public void setPage(Integer page) {
+        this.page = page;
+    }
+
+    public Integer getSize() {
+        return this.size;
+    }
+
+    public void setSize(Integer size) {
+        this.size = size;
     }
 }

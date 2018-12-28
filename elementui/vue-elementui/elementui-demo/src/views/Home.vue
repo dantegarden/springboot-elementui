@@ -1,10 +1,11 @@
 <template>
   <el-container class="mainPage">
-    <el-header height="120px">
+    <el-header height="60px">
       <navbar></navbar>
     </el-header>
     <el-container>
-      <el-aside width="200px">Aside</el-aside>
+      <!--暂时不加侧边栏-->
+      <!--<el-aside width="200px">Aside</el-aside>-->
       <el-main>
         <app-main></app-main>
       </el-main>

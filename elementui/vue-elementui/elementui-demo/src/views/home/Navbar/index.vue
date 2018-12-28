@@ -3,9 +3,11 @@
     <el-row type="flex" justify="center" class="navi-menu">
       <navi-menu></navi-menu>
     </el-row>
-    <el-row class="navi-info">
-      <navi-info></navi-info>
-    </el-row>
+
+    <!--暂时不显示登录状态栏-->
+    <!--<el-row class="navi-info">-->
+      <!--<navi-info></navi-info>-->
+    <!--</el-row>-->
   </div>
 </template>
 

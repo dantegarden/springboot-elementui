@@ -1,11 +1,20 @@
 package com.dvt.elementui.common.utils;
 
+import com.google.common.collect.ImmutableList;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
 
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -60,7 +69,7 @@ public class CommonHelper {
     public static <String, T> Map<String, T> javaBean2Map(Object obj) {
         if(obj == null)
             return null;
-        return new org.apache.commons.beanutils.BeanMap(obj);
+        return (Map<String, T>) new org.apache.commons.beanutils.BeanMap(obj);
     }
 
     /**
@@ -112,4 +121,97 @@ public class CommonHelper {
         return sb.toString();
     }
 
+    public static <T> void clearFields(T obj, String...targetFields){
+        List<T> objs = ImmutableList.of(obj);
+        if(targetFields!=null && targetFields.length>0){
+            clearToMany(objs, targetFields);
+        }else{
+            clearToMany(objs);
+        }
+    }
+
+    public static <T> void clearFields(List<T> list, String...targetFields){
+        if(targetFields!=null && targetFields.length>0){
+            clearToMany(list, targetFields);
+        }else{
+            clearToMany(list);
+        }
+    }
+
+    private static <T> void clearToMany(List<T> list) {
+        if(CollectionUtils.isEmpty(list)){ return; }
+        Class clazz = list.get(0).getClass();
+        Field[] fields = clazz.getDeclaredFields();
+        for (Field field : fields) {
+            Annotation oneToManyAnno = field.getAnnotation(OneToMany.class);
+            Annotation manyToManyAnno = field.getAnnotation(ManyToMany.class);
+            if(oneToManyAnno!=null || manyToManyAnno!=null){
+                for(Method m : clazz.getMethods()){
+                    if(m.getName().equalsIgnoreCase("set" + field.getName())){
+                        System.out.println(m.getName());
+                        list.forEach(el -> {
+                            try {
+                                m.invoke(el, (Object)null);
+                            } catch (IllegalAccessException e) {
+                                e.printStackTrace();
+                            } catch (InvocationTargetException e) {
+                                e.printStackTrace();
+                            }
+                        });
+                    }
+                }
+            }
+        }
+    }
+
+    private static <T> void clearToMany(List<T> list, String...targetFields) {
+        if(CollectionUtils.isEmpty(list)){ return; }
+        Class clazz = list.get(0).getClass();
+        Field[] fields = clazz.getDeclaredFields();
+        try {
+            for (String targetField: targetFields){
+                Field field =  clazz.getField(targetField);
+                Annotation oneToManyAnno = field.getAnnotation(OneToMany.class);
+                Annotation manyToManyAnno = field.getAnnotation(ManyToMany.class);
+                if(oneToManyAnno!=null || manyToManyAnno!=null){
+                    Method m = clazz.getMethod("set" + StringUtils.capitalize(field.getName()));
+                    list.forEach(el -> {
+                        try {
+                            m.invoke(el, (Object)null);
+                        } catch (IllegalAccessException e) {
+                            e.printStackTrace();
+                        } catch (InvocationTargetException e) {
+                            e.printStackTrace();
+                        }
+                    });
+                }
+            }
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+
+
+        for (Field field : fields) {
+            Annotation oneToManyAnno = field.getAnnotation(OneToMany.class);
+            Annotation manyToManyAnno = field.getAnnotation(ManyToMany.class);
+            if(oneToManyAnno!=null || manyToManyAnno!=null){
+                for(Method m : clazz.getMethods()){
+                    if(m.getName().equalsIgnoreCase("set" + field.getName())){
+                        System.out.println(m.getName());
+                        list.forEach(el -> {
+                            try {
+                                m.invoke(el, (Object)null);
+                            } catch (IllegalAccessException e) {
+                                e.printStackTrace();
+                            } catch (InvocationTargetException e) {
+                                e.printStackTrace();
+                            }
+                        });
+                    }
+                }
+            }
+        }
+    }
 }

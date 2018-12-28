@@ -1,21 +1,15 @@
 package com.dvt.elementui.common.base;
 
-import org.apache.commons.lang.StringUtils;
-import tk.mybatis.mapper.entity.Example;
+import com.dvt.elementui.common.query.DynamicQuery;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.servlet.Registration;
 
-public class BaseServiceImpl implements BaseSerivce {
+public class BaseServiceImpl implements BaseService {
 
-    @Override
-    public Example getExample(Class entityClass, List<String> conditions) {
-        Example example = new Example(entityClass);
-        Example.Criteria criteria = example.createCriteria();
-        for(String condition: conditions){
-            if(StringUtils.isNotBlank(condition)){
-                criteria.andCondition(condition);
-            }
-        }
-        return example;
-    }
+    @Autowired
+    public DynamicQuery dynamicQuery;
+
 }

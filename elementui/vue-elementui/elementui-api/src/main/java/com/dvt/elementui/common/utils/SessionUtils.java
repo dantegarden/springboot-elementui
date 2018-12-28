@@ -5,10 +5,9 @@ import com.dvt.elementui.common.enums.SessionEnum;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
-/**
- * Shiro上下文工具
- * **/
+
 public class SessionUtils {
+
     /**
      * 获取当前Session
      *
@@ -68,5 +67,4 @@ public class SessionUtils {
     public static void setAttribute(SessionEnum sessionEnum, Object value) {
         setAttribute(sessionEnum.getValue(), value);
     }
-
 }

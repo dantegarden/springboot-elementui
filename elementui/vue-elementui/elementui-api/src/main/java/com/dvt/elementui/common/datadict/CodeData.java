@@ -1,6 +1,7 @@
 package com.dvt.elementui.common.datadict;
 
 public class CodeData {
+
     private String codeName;
     private String codeValue;
 

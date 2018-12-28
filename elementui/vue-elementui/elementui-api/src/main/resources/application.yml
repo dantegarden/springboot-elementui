@@ -4,6 +4,8 @@ spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
+    # 属性值为空时不做序列化
+    default-property-inclusion: non_null
 
 project:
   name: elementui-api
@@ -11,20 +13,3 @@ project:
   author:
     name: lij
 
-mybatis:
-  config-location: classpath:mybatis/mybatis-config.xml
-  mapper-locations: classpath:mybatis/mapper/**/*.xml
-  type-aliases-package: com.dvt.elementui.biz.model
-  type-handlers-package: com.dvt.elementui.biz.dao
-
-mapper:
-  mappers: com.dvt.elementui.common.base.BaseMapper
-  not-empty: false
-  identity: Mysql
-
-pagehelper:
-  helper-dialect: mysql
-  reasonable: true
-  support-methods-arguments: true
-  params: count=countSql
-  auto-runtime-dialect: true

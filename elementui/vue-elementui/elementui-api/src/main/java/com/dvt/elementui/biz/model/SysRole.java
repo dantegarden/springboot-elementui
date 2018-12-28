@@ -1,12 +1,23 @@
 package com.dvt.elementui.biz.model;
 
-import java.util.Date;
-import javax.persistence.*;
+import com.dvt.elementui.common.base.BaseEntity;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-@Table(name = "sys_role")
-public class SysRole {
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+
+@Entity
+@Table(name="sys_role")
+public class SysRole extends BaseEntity {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "ID", unique = true, nullable = false, precision = 12, scale = 0)
     private Integer id;
 
     /**
@@ -15,93 +26,53 @@ public class SysRole {
     @Column(name = "role_name")
     private String roleName;
 
-    @Column(name = "create_time")
-    private Date createTime;
-
-    @Column(name = "update_time")
-    private Date updateTime;
-
     /**
      * 是否有效  1有效  2无效
      */
     @Column(name = "delete_status")
-    private String deleteStatus;
+    private Integer deleteStatus;
 
-    /**
-     * @return id
-     */
-    public Integer getId() {
-        return id;
+    @OneToMany(mappedBy = "role", fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+    private Set<SysRolePermission> rolePermissions;
+
+
+    public SysRole() {
     }
 
-    /**
-     * @param id
-     */
+    public SysRole(Integer id, String roleName){
+        this.id = id;
+        this.roleName = roleName;
+    }
+
+    public Integer getId() {
+        return this.id;
+    }
+
     public void setId(Integer id) {
         this.id = id;
     }
 
-    /**
-     * 获取角色名
-     *
-     * @return role_name - 角色名
-     */
     public String getRoleName() {
-        return roleName;
+        return this.roleName;
     }
 
-    /**
-     * 设置角色名
-     *
-     * @param roleName 角色名
-     */
     public void setRoleName(String roleName) {
-        this.roleName = roleName == null ? null : roleName.trim();
+        this.roleName = roleName;
     }
 
-    /**
-     * @return create_time
-     */
-    public Date getCreateTime() {
-        return createTime;
+    public Integer getDeleteStatus() {
+        return this.deleteStatus;
     }
 
-    /**
-     * @param createTime
-     */
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+    public void setDeleteStatus(Integer deleteStatus) {
+        this.deleteStatus = deleteStatus;
     }
 
-    /**
-     * @return update_time
-     */
-    public Date getUpdateTime() {
-        return updateTime;
+    public Set<SysRolePermission> getRolePermissions() {
+        return this.rolePermissions;
     }
 
-    /**
-     * @param updateTime
-     */
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    /**
-     * 获取是否有效  1有效  2无效
-     *
-     * @return delete_status - 是否有效  1有效  2无效
-     */
-    public String getDeleteStatus() {
-        return deleteStatus;
-    }
-
-    /**
-     * 设置是否有效  1有效  2无效
-     *
-     * @param deleteStatus 是否有效  1有效  2无效
-     */
-    public void setDeleteStatus(String deleteStatus) {
-        this.deleteStatus = deleteStatus == null ? null : deleteStatus.trim();
+    public void setRolePermissions(Set<SysRolePermission> rolePermissions) {
+        this.rolePermissions = rolePermissions;
     }
 }

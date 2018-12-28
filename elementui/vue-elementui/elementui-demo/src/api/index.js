@@ -41,8 +41,13 @@ export default {
   /**数据字典**/
   code: params => $post('/code/type', params),
 
-  /**示例**/
+  /**示例 正常表**/
   getOrderList: params => $post('/demo/listOrders', params),
+  /**示例 交叉表**/
+  getTableConfig: params => $get('/demo/pivot/config', params),
+  getPivotData: params => $post('/demo/pivot/list', params),
+  addCollection: params => $post('/demo/pivot/collect/add', params),
+  delCollection: params => $get('/demo/pivot/collect/del/' + params),
 
   // 文件上传地址
   uploadFile : `${BASE_PATH}/file/upload`,

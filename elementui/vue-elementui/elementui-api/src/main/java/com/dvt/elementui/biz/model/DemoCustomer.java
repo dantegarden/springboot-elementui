@@ -1,132 +1,89 @@
 package com.dvt.elementui.biz.model;
 
-import java.util.Date;
-import java.util.List;
-import javax.persistence.*;
+import com.dvt.elementui.common.base.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.nutz.dao.entity.annotation.One;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-@Table(name = "demo_customer")
-public class DemoCustomer {
+import javax.persistence.*;
+import java.util.Date;
+import java.util.Set;
+
+@Entity
+@Table(name="demo_customer")
+public class DemoCustomer extends BaseEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID", unique = true, nullable = false, precision = 12, scale = 0)
     private Integer id;
 
     /**
      * 用户名
      */
+    @Column(name = "name")
     private String name;
 
     /**
      * 性别  1男  2女
      */
-    private String sex;
+    @Column(name = "sex")
+    private Integer sex;
 
     /**
      * 地址
      */
+    @Column(name = "address")
     private String address;
 
-    /**
-     * 创建时间
-     */
-    @Column(name = "create_time")
-    private Date createTime;
 
-    /**订单列表 一对多*/
-    @Transient
-    private List<DemoOrder> orderList;
+    /**一对多**/
+    @JsonIgnoreProperties(value = {"customer", "hibernateLazyInitializer", "handler"})
+    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
+    private Set<DemoOrder> orders;
 
-    /**
-     * @return id
-     */
-    public Integer getId() {
-        return id;
+    public DemoCustomer() {
     }
 
-    /**
-     * @param id
-     */
+    public Integer getId() {
+        return this.id;
+    }
+
     public void setId(Integer id) {
         this.id = id;
     }
 
-    /**
-     * 获取用户名
-     *
-     * @return name - 用户名
-     */
     public String getName() {
-        return name;
+        return this.name;
     }
 
-    /**
-     * 设置用户名
-     *
-     * @param name 用户名
-     */
     public void setName(String name) {
-        this.name = name == null ? null : name.trim();
+        this.name = name;
     }
 
-    /**
-     * 获取性别  1男  2女
-     *
-     * @return sex - 性别  1男  2女
-     */
-    public String getSex() {
-        return sex;
+    public Integer getSex() {
+        return this.sex;
     }
 
-    /**
-     * 设置性别  1男  2女
-     *
-     * @param sex 性别  1男  2女
-     */
-    public void setSex(String sex) {
-        this.sex = sex == null ? null : sex.trim();
+    public void setSex(Integer sex) {
+        this.sex = sex;
     }
 
-    /**
-     * 获取地址
-     *
-     * @return address - 地址
-     */
     public String getAddress() {
-        return address;
+        return this.address;
     }
 
-    /**
-     * 设置地址
-     *
-     * @param address 地址
-     */
     public void setAddress(String address) {
-        this.address = address == null ? null : address.trim();
+        this.address = address;
     }
 
-    /**
-     * 获取创建时间
-     *
-     * @return create_time - 创建时间
-     */
-    public Date getCreateTime() {
-        return createTime;
+    public Set<DemoOrder> getOrders() {
+        return this.orders;
     }
 
-    /**
-     * 设置创建时间
-     *
-     * @param createTime 创建时间
-     */
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-
-    public List<DemoOrder> getOrderList() {
-        return this.orderList;
-    }
-
-    public void setOrderList(List<DemoOrder> orderList) {
-        this.orderList = orderList;
+    public void setOrders(Set<DemoOrder> orders) {
+        this.orders = orders;
     }
 }

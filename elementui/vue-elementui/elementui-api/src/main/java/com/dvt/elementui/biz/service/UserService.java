@@ -2,20 +2,23 @@ package com.dvt.elementui.biz.service;
 
 import com.dvt.elementui.biz.model.SysRole;
 import com.dvt.elementui.biz.model.SysUser;
-import com.dvt.elementui.biz.vo.RoleVO;
-import com.dvt.elementui.common.bean.UserPermission;
-import com.github.pagehelper.PageInfo;
+import com.dvt.elementui.biz.vo.auth.PermissionVO;
+import com.dvt.elementui.biz.vo.auth.RolePermissionVO;
+import com.dvt.elementui.biz.vo.auth.RoleVO;
+import com.dvt.elementui.biz.vo.auth.UserVO;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 import java.util.Map;
 
 public interface UserService {
+
     /**
      * 用户列表
      *
      * @return
      */
-    PageInfo<UserPermission> queryByPage(Map<String,Object> condition, Integer page, Integer size);
+    Page<UserVO> queryByPage(Map<String,Object> condition, Integer page, Integer size);
     /**
      * 获取全部角色
      *
@@ -47,14 +50,14 @@ public interface UserService {
      *
      * @return
      */
-    List<UserPermission> listRole(Map<String,Object> condition);
+    List<RolePermissionVO> listRole(Map<String,Object> condition);
 
     /**
      * 查询所有权限, 给角色分配权限时调用
      *
      * @return
      */
-    List<UserPermission> getAllPermission();
+    List<PermissionVO> getAllPermission();
     /**
      * 创建角色
      *
@@ -73,5 +76,4 @@ public interface UserService {
      * @return
      */
     int deleteRole(Integer id);
-
 }

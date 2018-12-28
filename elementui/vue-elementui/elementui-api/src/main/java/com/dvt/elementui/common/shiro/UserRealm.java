@@ -3,6 +3,7 @@ package com.dvt.elementui.common.shiro;
 import com.alibaba.fastjson.JSONObject;
 import com.dvt.elementui.biz.model.SysUser;
 import com.dvt.elementui.biz.service.LoginService;
+import com.dvt.elementui.biz.vo.auth.UserPermissionVO;
 import com.dvt.elementui.common.enums.SessionEnum;
 import org.apache.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
@@ -27,12 +28,12 @@ public class UserRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         Session session = SecurityUtils.getSubject().getSession();
         //查询用户的权限
-        JSONObject permission = (JSONObject) session.getAttribute(SessionEnum.USER_PERMISSION.getValue());
+        UserPermissionVO permission = (UserPermissionVO) session.getAttribute(SessionEnum.USER_PERMISSION.getValue());
         LOGGER.info("permission的值为:" + permission);
-        LOGGER.info("本用户权限为:" + permission.get("permissionList"));
+        LOGGER.info("本用户权限为:" + permission.getPermissionList());
         //为当前用户设置角色和权限
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
-        authorizationInfo.addStringPermissions((Collection<String>) permission.get("permissionList"));
+        authorizationInfo.addStringPermissions(permission.getPermissionList());
         return authorizationInfo;
     }
 

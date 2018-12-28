@@ -1,169 +1,216 @@
 package com.dvt.elementui.biz.service.impl;
 
-import com.dvt.elementui.biz.dao.*;
-import com.dvt.elementui.biz.model.*;
+import com.dvt.elementui.biz.dao.SysPermissionDao;
+import com.dvt.elementui.biz.dao.SysRoleDao;
+import com.dvt.elementui.biz.dao.SysRolePermissionDao;
+import com.dvt.elementui.biz.dao.SysUserDao;
+import com.dvt.elementui.biz.model.SysRole;
+import com.dvt.elementui.biz.model.SysRolePermission;
+import com.dvt.elementui.biz.model.SysUser;
 import com.dvt.elementui.biz.service.UserService;
-import com.dvt.elementui.biz.vo.RoleVO;
+import com.dvt.elementui.biz.vo.auth.PermissionVO;
+import com.dvt.elementui.biz.vo.auth.RolePermissionVO;
+import com.dvt.elementui.biz.vo.auth.RoleVO;
+import com.dvt.elementui.biz.vo.auth.UserVO;
 import com.dvt.elementui.common.base.BaseServiceImpl;
-import com.dvt.elementui.common.bean.UserPermission;
 import com.dvt.elementui.common.exception.BusinessException;
 import com.dvt.elementui.common.utils.CommonHelper;
-import com.dvt.elementui.common.utils.PasswordUtils;
-import com.dvt.elementui.common.utils.RandomUtils;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.assertj.core.util.Lists;
-import org.springframework.beans.BeanUtils;
+import org.assertj.core.util.Sets;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import tk.mybatis.mapper.entity.Example;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Service
+@Transactional
 public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
     @Autowired
-    private SysUserMapper userMapper;
-
+    private SysUserDao userDao;
     @Autowired
-    private SysRoleMapper roleMapper;
-
+    private SysRoleDao roleDao;
     @Autowired
-    private SysPermissionMapper permissionMapper;
-
+    private SysPermissionDao permissionDao;
     @Autowired
-    private SysRolePermissionMapper rolePermissionMapper;
+    private SysRolePermissionDao rolePermissionDao;
 
     @Override
-    public PageInfo<UserPermission> queryByPage(Map<String, Object> condition, Integer page, Integer size) {
-        //不使用PageHelper的原始分页方式, 需要手动查询总记录数
-        //PageHelper.startPage(page,size);
-        Integer offset = (page - 1) * size;
-        List<UserPermission> list = userMapper.queryUserPermission(condition, offset, size);
-        PageInfo<UserPermission> pageInfo = new PageInfo<UserPermission>(list);
-        pageInfo.setTotal(this.countEffectiveUsers());
-        return pageInfo;
+    public Page<UserVO> queryByPage(Map<String, Object> condition, Integer page, Integer size) {
+        Map<String,Object> params = Maps.newHashMap();
+        StringBuilder sql = new StringBuilder();
+        sql.append("select new com.dvt.elementui.biz.vo.auth.UserVO(u.id, u.username, u.nickname, u.createTime, u.updateTime, u.deleteStatus, u.role.id, u.role.roleName) ");
+        sql.append("from ");
+        sql.append("SysUser u where u.deleteStatus = 1 ");
+        if(condition.get("username")!=null && StringUtils.isNotBlank((String)condition.get("username"))){
+            sql.append("     and u.username like concat('%',:username,'%')  ");
+            params.put("username", (String)condition.get("username"));
+        }
+        sql.append(" order by u.id ");
+
+        PageRequest pageReq = PageRequest.of(page-1, size);
+        Page<UserVO> result = this.dynamicQuery.query(UserVO.class, pageReq, sql.toString(), params);
+        result.getContent().forEach(userVO -> {
+            SysRole role = roleDao.findById(userVO.getRoleId()).get();
+            String permissionName = "";
+            for(SysRolePermission rp: role.getRolePermissions()){
+                permissionName += rp.getPermission().getMenuName() +":"+ rp.getPermission().getPermissionName()+",";
+            }
+            userVO.setPermissionName(permissionName.substring(0,permissionName.length()-1));
+        });
+        return result;
     }
 
     @Override
     public List<SysRole> getAllRoles() {
-        return roleMapper.getAllRoles();
+        List<SysRole> roles = roleDao.queryRoles();
+        return roles;
     }
 
     @Override
     public int addUser(SysUser user) {
         SysUser countUser = new SysUser();
         countUser.setUsername(user.getUsername());
-        int exist = userMapper.selectCount(countUser);
+        long exist = userDao.count(Example.of(countUser));
         if(exist>0){
             return 0;
         }
-        user.setCreateTime(new Date());
-        user.setUpdateTime(new Date());
-        return userMapper.insert(user);
+        SysRole role = roleDao.findById(user.getRoleId()).get();
+        user.setRole(role);
+        user.setDeleteStatus(1);
+        return userDao.save(user).getId();
     }
 
     @Override
     public int updateUser(SysUser user) {
-        SysUser oldUser = userMapper.selectByPrimaryKey(user.getId());
+        SysUser oldUser = userDao.findById(user.getId()).get();
         CommonHelper.copyPropertiesIgnoreNull(user, oldUser, true);
-        oldUser.setUpdateTime(new Date());
-        return userMapper.updateByPrimaryKey(oldUser);
+        if(oldUser.getRole().getId()!=user.getRoleId()){
+            SysRole role = roleDao.findById(user.getRoleId()).get();
+            oldUser.setRole(role);
+        }
+        return userDao.save(oldUser).getId();
     }
 
     @Override
     public int deleteUser(Integer id) {
         //return userMapper.deleteByPrimaryKey(id);
         //假删
-        SysUser oldUser = userMapper.selectByPrimaryKey(id);
-        oldUser.setDeleteStatus("2");
-        oldUser.setUpdateTime(new Date());
-        return userMapper.updateByPrimaryKey(oldUser);
+        SysUser oldUser = userDao.findById(id).get();
+        oldUser.setDeleteStatus(2);
+        return userDao.save(oldUser).getId();
     }
 
     @Override
-    public List<UserPermission> listRole(Map<String, Object> condition) {
-        List<UserPermission> list = roleMapper.listRole(condition);
-        return list;
+    public List<RolePermissionVO> listRole(Map<String, Object> condition) {
+        Map<String,Object> params = Maps.newHashMap();
+        StringBuilder sql = new StringBuilder();
+        sql.append("SELECT \n" +
+                "            r.id              roleId,\n" +
+                "            r.role_name       roleName,\n" +
+                "            GROUP_CONCAT(u.id)              userId,\n" +
+                "            GROUP_CONCAT(u.nickname)        nickname,\n" +
+                "            GROUP_CONCAT(p.menu_code)       menuCode,\n" +
+                "            GROUP_CONCAT(p.menu_name)       menuName,\n" +
+                "            GROUP_CONCAT(p.id)              permissionId,\n" +
+                "            GROUP_CONCAT(p.permission_name) permissionName ");
+        sql.append("FROM sys_role r ");
+        sql.append("LEFT JOIN sys_user u ON r.id = u.role_id AND u.delete_status = 1  ");
+        sql.append("LEFT JOIN sys_role_permission rp ON r.id = rp.role_id AND rp.delete_status = 1 ");
+        sql.append("LEFT JOIN sys_permission p ON rp.permission_id = p.id ");
+        sql.append("WHERE r.delete_status = 1 ");
+        if(condition.get("roleName")!=null && StringUtils.isNotBlank((String)condition.get("roleName"))){
+            sql.append("     and r.role_name like concat('%',:roleName,'%')  ");
+            params.put("roleName", (String)condition.get("roleName"));
+        }
+        sql.append(" GROUP BY r.id ORDER BY r.id asc ");
+        List<RolePermissionVO> result = this.dynamicQuery.nativeQuery(RolePermissionVO.class, sql.toString(), params);
+
+        return result;
     }
 
     @Override
-    public List<UserPermission> getAllPermission() {
-        return permissionMapper.listAllPermission();
+    public List<PermissionVO> getAllPermission() {
+        Map<String,Object> params = Maps.newHashMap();
+        StringBuilder sql = new StringBuilder();
+        sql.append("SELECT p.menu_name, GROUP_CONCAT(p.id), GROUP_CONCAT(p.menu_code), \n" +
+                "GROUP_CONCAT(p.permission_code) ,GROUP_CONCAT(p.permission_name) , GROUP_CONCAT(p.required_permission) " +
+                "FROM sys_permission p " +
+                "WHERE 1 = 1 " +
+                "GROUP BY p.menu_name ");
+        List<PermissionVO> result = dynamicQuery.nativeQuery(PermissionVO.class, sql.toString(), params);
+        return result;
     }
 
-    @Transactional(rollbackFor = Exception.class)
     @Override
     public int addRole(RoleVO role) {
         SysRole countRole = new SysRole();
         countRole.setRoleName(role.getRoleName());
-        int exist = roleMapper.selectCount(countRole);
+        int exist = new Long(roleDao.count(Example.of(countRole))).intValue();
         if(exist>0){
             return 0;
         }
-        Date now = new Date();
         CommonHelper.copyPropertiesIgnoreNull(role, countRole);
-        countRole.setCreateTime(now);
-        countRole.setUpdateTime(now);
-        exist = roleMapper.insert(countRole);
-        List<SysRolePermission> rpList = Lists.newArrayList();
-        role.getPermissions().forEach(permId -> {
+        Set<SysRolePermission> rps = Sets.newHashSet();
+        role.getPermissions().forEach(permissionId -> {
             SysRolePermission rolePermission = new SysRolePermission();
-            rolePermission.setRoleId(countRole.getId());
-            rolePermission.setPermissionId(permId);
-            rolePermission.setDeleteStatus("1");
-            rolePermission.setCreateTime(now);
-            rolePermission.setUpdateTime(now);
-            rpList.add(rolePermission);
+            rolePermission.setRole(countRole);
+            rolePermission.setPermission(permissionDao.getOne(permissionId));
+            rolePermission.setDeleteStatus(1);
+            rps.add(rolePermission);
         });
-        rolePermissionMapper.insertList(rpList);
+        countRole.setRolePermissions(rps);
+        countRole.setDeleteStatus(1);
+        exist = roleDao.save(countRole).getId();
         return exist;
     }
 
-    @Transactional(rollbackFor = Exception.class)
     @Override
     public int updateRole(RoleVO role) {
-        Date now = new Date();
-        SysRole oldRole = roleMapper.selectByPrimaryKey(role.getId());
-        rolePermissionMapper.deleteByExample(this.getExample(SysRolePermission.class, ImmutableList.of("role_id=" + role.getId())));
+        SysRole oldRole = roleDao.findById(role.getId()).get();
         CommonHelper.copyPropertiesIgnoreNull(role, oldRole, true);
-        List<SysRolePermission> rpList = Lists.newArrayList();
+        Set<SysRolePermission> rpList = Sets.newHashSet();
+        rolePermissionDao.deleteByRoleId(oldRole.getId());
         role.getPermissions().forEach(permId -> {
             SysRolePermission rolePermission = new SysRolePermission();
-            rolePermission.setRoleId(oldRole.getId());
-            rolePermission.setPermissionId(permId);
-            rolePermission.setDeleteStatus("1");
-            rolePermission.setCreateTime(now);
-            rolePermission.setUpdateTime(now);
+            rolePermission.setRole(oldRole);
+            rolePermission.setPermission(permissionDao.getOne(permId));
+            rolePermission.setDeleteStatus(1);
             rpList.add(rolePermission);
         });
-        rolePermissionMapper.insertList(rpList);
-        oldRole.setUpdateTime(now);
-        return roleMapper.updateByPrimaryKey(oldRole);
+        oldRole.setRolePermissions(rpList);
+        return roleDao.save(oldRole).getId();
     }
 
-    @Transactional(rollbackFor = Exception.class)
     @Override
     public int deleteRole(Integer id) {
-        SysRole role = roleMapper.selectByPrimaryKey(id);
-        List<SysUser> users = userMapper.selectByExample(this.getExample(SysUser.class, ImmutableList.of("role_id=" + id)));
+        SysRole role = roleDao.getOne(id);
+        List<SysUser> users = userDao.queryByRoleId(id);
         if(users!=null && users.size()>0){
             throw new BusinessException("仍有用户使用此角色，无法删除");
         }
-        rolePermissionMapper.deleteByExample(this.getExample(SysRolePermission.class, ImmutableList.of("role_id=" + id)));
-        roleMapper.deleteByPrimaryKey(id);
+//        rolePermissionDao.deleteByRoleId(role.getId());
+        roleDao.deleteById(id);
         return 1;
     }
 
     private Integer countEffectiveUsers(){
         SysUser user = new SysUser();
-        user.setDeleteStatus("1");
-        return userMapper.selectCount(user);
+        user.setDeleteStatus(1);
+        return new Long(userDao.count(Example.of(user))).intValue();
     }
+
 }

@@ -1,13 +1,9 @@
 package com.dvt.elementui.biz.vo.demo;
 
-import com.dvt.elementui.common.converter.JsonDateDeserializer;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 public class DemoQueryForm {
 

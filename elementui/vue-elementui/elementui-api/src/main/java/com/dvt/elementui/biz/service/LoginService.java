@@ -2,11 +2,10 @@ package com.dvt.elementui.biz.service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.dvt.elementui.biz.model.SysUser;
-import com.dvt.elementui.common.bean.UserPermission;
-
-import java.util.Map;
+import com.dvt.elementui.biz.vo.auth.UserPermissionVO;
 
 public interface LoginService {
+
     /**
      * 登录表单提交
      *
@@ -28,7 +27,7 @@ public interface LoginService {
      *
      * @return
      */
-    JSONObject getInfo();
+    UserPermissionVO getInfo();
 
     /**
      * 退出登录
@@ -36,4 +35,5 @@ public interface LoginService {
      * @return
      */
     Boolean logout();
+
 }

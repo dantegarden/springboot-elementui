@@ -1,14 +1,18 @@
 package com.dvt.elementui.biz.model;
 
-import javax.persistence.*;
+import com.dvt.elementui.common.base.BaseEntity;
 
-@Table(name = "sys_permission")
-public class SysPermission {
-    /**
-     * 自定id,主要供前端展示权限列表分类排序使用.
-     */
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Set;
+
+@Entity
+@Table(name="sys_permission")
+public class SysPermission extends BaseEntity {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "ID", unique = true, nullable = false, precision = 12, scale = 0)
     private Integer id;
 
     /**
@@ -39,113 +43,67 @@ public class SysPermission {
      * 是否本菜单必选权限, 1.必选 2非必选 通常是"列表"权限是必选
      */
     @Column(name = "required_permission")
-    private Boolean requiredPermission;
+    private Integer requiredPermission;
 
-    /**
-     * 获取自定id,主要供前端展示权限列表分类排序使用.
-     *
-     * @return id - 自定id,主要供前端展示权限列表分类排序使用.
-     */
-    public Integer getId() {
-        return id;
+    @OneToMany(mappedBy = "permission")
+    private Set<SysRolePermission> rolePermissions;
+
+    public SysPermission() {
     }
 
-    /**
-     * 设置自定id,主要供前端展示权限列表分类排序使用.
-     *
-     * @param id 自定id,主要供前端展示权限列表分类排序使用.
-     */
+    public Integer getId() {
+        return this.id;
+    }
+
     public void setId(Integer id) {
         this.id = id;
     }
 
-    /**
-     * 获取归属菜单,前端判断并展示菜单使用,
-     *
-     * @return menu_code - 归属菜单,前端判断并展示菜单使用,
-     */
     public String getMenuCode() {
-        return menuCode;
+        return this.menuCode;
     }
 
-    /**
-     * 设置归属菜单,前端判断并展示菜单使用,
-     *
-     * @param menuCode 归属菜单,前端判断并展示菜单使用,
-     */
     public void setMenuCode(String menuCode) {
-        this.menuCode = menuCode == null ? null : menuCode.trim();
+        this.menuCode = menuCode;
     }
 
-    /**
-     * 获取菜单的中文释义
-     *
-     * @return menu_name - 菜单的中文释义
-     */
     public String getMenuName() {
-        return menuName;
+        return this.menuName;
     }
 
-    /**
-     * 设置菜单的中文释义
-     *
-     * @param menuName 菜单的中文释义
-     */
     public void setMenuName(String menuName) {
-        this.menuName = menuName == null ? null : menuName.trim();
+        this.menuName = menuName;
     }
 
-    /**
-     * 获取权限的代码/通配符,对应代码中@RequiresPermissions 的value
-     *
-     * @return permission_code - 权限的代码/通配符,对应代码中@RequiresPermissions 的value
-     */
     public String getPermissionCode() {
-        return permissionCode;
+        return this.permissionCode;
     }
 
-    /**
-     * 设置权限的代码/通配符,对应代码中@RequiresPermissions 的value
-     *
-     * @param permissionCode 权限的代码/通配符,对应代码中@RequiresPermissions 的value
-     */
     public void setPermissionCode(String permissionCode) {
-        this.permissionCode = permissionCode == null ? null : permissionCode.trim();
+        this.permissionCode = permissionCode;
     }
 
-    /**
-     * 获取本权限的中文释义
-     *
-     * @return permission_name - 本权限的中文释义
-     */
     public String getPermissionName() {
-        return permissionName;
+        return this.permissionName;
     }
 
-    /**
-     * 设置本权限的中文释义
-     *
-     * @param permissionName 本权限的中文释义
-     */
     public void setPermissionName(String permissionName) {
-        this.permissionName = permissionName == null ? null : permissionName.trim();
+        this.permissionName = permissionName;
     }
 
-    /**
-     * 获取是否本菜单必选权限, 1.必选 2非必选 通常是"列表"权限是必选
-     *
-     * @return required_permission - 是否本菜单必选权限, 1.必选 2非必选 通常是"列表"权限是必选
-     */
-    public Boolean getRequiredPermission() {
-        return requiredPermission;
+    public Integer getRequiredPermission() {
+        return this.requiredPermission;
     }
 
-    /**
-     * 设置是否本菜单必选权限, 1.必选 2非必选 通常是"列表"权限是必选
-     *
-     * @param requiredPermission 是否本菜单必选权限, 1.必选 2非必选 通常是"列表"权限是必选
-     */
-    public void setRequiredPermission(Boolean requiredPermission) {
+    public void setRequiredPermission(Integer requiredPermission) {
         this.requiredPermission = requiredPermission;
+    }
+
+    public Set<SysRolePermission> getRolePermissions() {
+        return this.rolePermissions;
+    }
+
+    public void setRolePermissions(Set<SysRolePermission> rolePermissions) {
+        this.rolePermissions = rolePermissions;
     }
 }

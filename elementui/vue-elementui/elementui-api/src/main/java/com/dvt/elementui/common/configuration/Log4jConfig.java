@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import static javax.servlet.DispatcherType.*;
-import static javax.servlet.DispatcherType.ASYNC;
 
 @Configuration
 public class Log4jConfig {

@@ -11,7 +11,7 @@ spring:
   datasource:
     druid:
       driver-class-name: com.mysql.jdbc.Driver
-      url: jdbc:mysql://localhost:3306/spring_db?useUnicode=true&characterEncoding=utf-8
+      url: jdbc:mysql://localhost:3306/spring_jpa?useUnicode=true&characterEncoding=utf-8
       username: test
       password: 123456
       initial-size: 3
@@ -24,6 +24,21 @@ spring:
       validation-query: SELECT 1
       max-pool-prepared-statement-per-connection-size: 20
       filters: log4j
+
+  jpa:
+    database: MYSQL
+    show-sql: true
+    format-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+        #允许脱离事务的懒加载
+        enable_lazy_load_no_trans: true
+        hbm2ddl:
+          auto: update
+        naming:
+          #驼峰转下划线
+          physical-strategy: org.hibernate.boot.model.naming.SpringPhysicalNamingStrategy
 
 ##日志配置路径
 logging:

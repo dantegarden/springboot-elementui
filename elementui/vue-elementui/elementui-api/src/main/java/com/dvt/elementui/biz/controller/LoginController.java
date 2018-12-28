@@ -1,8 +1,7 @@
 package com.dvt.elementui.biz.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import com.dvt.elementui.biz.service.LoginService;
-import com.dvt.elementui.biz.vo.AuthVO;
+import com.dvt.elementui.biz.vo.auth.AuthVO;
 import com.dvt.elementui.common.bean.Result;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +24,7 @@ public class LoginController {
      * @return
      */
     @PostMapping("/auth")
-    public Result authLogin(@RequestBody AuthVO authVO) { //@RequestBody JSONObject requestJson
-//        String username = requestJson.getString("username");
-//        String password = requestJson.getString("password");
+    public Result authLogin(@RequestBody AuthVO authVO) {
         //TODO 校验username, password非空
         return Result.ok(loginService.authLogin(authVO.getUsername(), authVO.getPassword()));
     }
