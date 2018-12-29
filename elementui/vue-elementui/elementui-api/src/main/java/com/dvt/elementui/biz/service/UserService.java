@@ -1,5 +1,6 @@
 package com.dvt.elementui.biz.service;
 
+import com.dvt.elementui.biz.model.SysOrganization;
 import com.dvt.elementui.biz.model.SysRole;
 import com.dvt.elementui.biz.model.SysUser;
 import com.dvt.elementui.biz.vo.auth.PermissionVO;
@@ -76,4 +77,29 @@ public interface UserService {
      * @return
      */
     int deleteRole(Integer id);
+
+    /**
+     * 机构列表
+     *
+     * @return
+     */
+    List<SysOrganization> listOrganization(Map<String,Object> condition);
+    /**
+     * 创建机构
+     *
+     * @return
+     */
+    int addOrganization(SysOrganization organization);
+    /**
+     * 修改机构
+     *
+     * @return
+     */
+    int updateOrganization(SysOrganization organization);
+    /**
+     * 删除机构
+     *
+     * @return
+     */
+    int deleteOrganization(Integer id);
 }

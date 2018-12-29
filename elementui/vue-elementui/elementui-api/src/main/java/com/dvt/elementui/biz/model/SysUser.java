@@ -46,8 +46,15 @@ public class SysUser extends BaseEntity {
     @JoinColumn(name = "role_id", referencedColumnName = "id")
     private SysRole role;
 
+    @OneToOne
+    @JoinColumn(name = "org_id", referencedColumnName = "id")
+    private SysOrganization organization;
+
     @Transient
     private Integer roleId;
+
+    @Transient
+    private Integer orgId;
 
     public SysUser() {
     }
@@ -112,5 +119,21 @@ public class SysUser extends BaseEntity {
 
     public void setRoleId(Integer roleId) {
         this.roleId = roleId;
+    }
+
+    public SysOrganization getOrganization() {
+        return this.organization;
+    }
+
+    public void setOrganization(SysOrganization organization) {
+        this.organization = organization;
+    }
+
+    public Integer getOrgId() {
+        return this.orgId;
+    }
+
+    public void setOrgId(Integer orgId) {
+        this.orgId = orgId;
     }
 }

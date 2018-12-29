@@ -37,6 +37,14 @@ export default {
   updateRole: params => $post('/user/updateRole', params),
   //删除角色
   deleteRole: params => $post('/user/deleteRole/' + params),
+  //机构列表
+  getOrgList: params => $get('/user/listOrganization', params),
+  //创建机构
+  addOrg: params => $post('/user/addOrganization', params),
+  //修改机构
+  updateOrg: params => $post('/user/updateOrganization', params),
+  //删除机构
+  deleteOrg: params => $post('/user/deleteOrganization/' + params),
 
   /**数据字典**/
   code: params => $post('/code/type', params),

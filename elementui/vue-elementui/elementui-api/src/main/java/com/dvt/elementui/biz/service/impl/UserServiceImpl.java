@@ -1,9 +1,7 @@
 package com.dvt.elementui.biz.service.impl;
 
-import com.dvt.elementui.biz.dao.SysPermissionDao;
-import com.dvt.elementui.biz.dao.SysRoleDao;
-import com.dvt.elementui.biz.dao.SysRolePermissionDao;
-import com.dvt.elementui.biz.dao.SysUserDao;
+import com.dvt.elementui.biz.dao.*;
+import com.dvt.elementui.biz.model.SysOrganization;
 import com.dvt.elementui.biz.model.SysRole;
 import com.dvt.elementui.biz.model.SysRolePermission;
 import com.dvt.elementui.biz.model.SysUser;
@@ -47,12 +45,14 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
     private SysPermissionDao permissionDao;
     @Autowired
     private SysRolePermissionDao rolePermissionDao;
+    @Autowired
+    private SysOrganizationDao organizationDao;
 
     @Override
     public Page<UserVO> queryByPage(Map<String, Object> condition, Integer page, Integer size) {
         Map<String,Object> params = Maps.newHashMap();
         StringBuilder sql = new StringBuilder();
-        sql.append("select new com.dvt.elementui.biz.vo.auth.UserVO(u.id, u.username, u.nickname, u.createTime, u.updateTime, u.deleteStatus, u.role.id, u.role.roleName) ");
+        sql.append("select new com.dvt.elementui.biz.vo.auth.UserVO(u.id, u.username, u.nickname, u.createTime, u.updateTime, u.deleteStatus, u.role.id, u.role.roleName, u.organization.id, u.organization.orgName) ");
         sql.append("from ");
         sql.append("SysUser u where u.deleteStatus = 1 ");
         if(condition.get("username")!=null && StringUtils.isNotBlank((String)condition.get("username"))){
@@ -89,7 +89,9 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
             return 0;
         }
         SysRole role = roleDao.findById(user.getRoleId()).get();
+        SysOrganization organization = organizationDao.findById(user.getOrgId()).get();
         user.setRole(role);
+        user.setOrganization(organization);
         user.setDeleteStatus(1);
         return userDao.save(user).getId();
     }
@@ -101,6 +103,10 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
         if(oldUser.getRole().getId()!=user.getRoleId()){
             SysRole role = roleDao.findById(user.getRoleId()).get();
             oldUser.setRole(role);
+        }
+        if(oldUser.getOrganization().getId()!=user.getOrgId()){
+            SysOrganization organization = organizationDao.findById(user.getOrgId()).get();
+            oldUser.setOrganization(organization);
         }
         return userDao.save(oldUser).getId();
     }
@@ -207,10 +213,28 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
         return 1;
     }
 
-    private Integer countEffectiveUsers(){
-        SysUser user = new SysUser();
-        user.setDeleteStatus(1);
-        return new Long(userDao.count(Example.of(user))).intValue();
+    @Override
+    public List<SysOrganization> listOrganization(Map<String, Object> condition) {
+        return organizationDao.findAll();
+    }
+
+    @Override
+    public int addOrganization(SysOrganization organization) {
+
+        return organizationDao.save(organization).getId();
+    }
+
+    @Override
+    public int updateOrganization(SysOrganization organization) {
+        SysOrganization o = organizationDao.findById(organization.getId()).get();
+        CommonHelper.copyPropertiesIgnoreNull(organization, o, true);
+        return organizationDao.save(o).getId();
+    }
+
+    @Override
+    public int deleteOrganization(Integer id) {
+        organizationDao.deleteById(id);
+        return 1;
     }
 
 }

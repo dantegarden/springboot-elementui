@@ -36,7 +36,10 @@ public class UserVO {
     private String roleName;
     private String permissionName;
 
-    public UserVO(Integer userId, String username, String nickname, Date createTime, Date updateTime, Integer deleteStatus, Integer roleId, String roleName) {
+    private Integer orgId;
+    private String orgName;
+
+    public UserVO(Integer userId, String username, String nickname, Date createTime, Date updateTime, Integer deleteStatus, Integer roleId, String roleName, Integer orgId, String orgName) {
         this.userId = userId;
         this.username = username;
         this.nickname = nickname;
@@ -45,6 +48,8 @@ public class UserVO {
         this.deleteStatus = deleteStatus;
         this.roleId = roleId;
         this.roleName = roleName;
+        this.orgId = orgId;
+        this.orgName = orgName;
     }
 
     public UserVO() {
@@ -122,5 +127,21 @@ public class UserVO {
 
     public void setPermissionName(String permissionName) {
         this.permissionName = permissionName;
+    }
+
+    public Integer getOrgId() {
+        return this.orgId;
+    }
+
+    public void setOrgId(Integer orgId) {
+        this.orgId = orgId;
+    }
+
+    public String getOrgName() {
+        return this.orgName;
+    }
+
+    public void setOrgName(String orgName) {
+        this.orgName = orgName;
     }
 }

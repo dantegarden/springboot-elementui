@@ -64,6 +64,12 @@ export const optionalRoutes = [
         component: _import('user/Role'),
         meta: {title: '权限管理', icon: 'password'},
         menu: 'role'
+      },
+      {
+        path: 'organization',
+        component: _import('user/Organization'),
+        meta: {title: '机构管理', icon: 'password'},
+        menu: 'organization'
       }
     ]
   },
