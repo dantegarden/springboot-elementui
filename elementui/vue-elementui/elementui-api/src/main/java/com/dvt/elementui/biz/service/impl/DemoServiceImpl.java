@@ -119,7 +119,7 @@ public class DemoServiceImpl extends BaseServiceImpl implements DemoService {
                 sql.append(" ) ");
             }
         }
-
+        sql.append(" order by month ");
 //        List<String> items = (List<String>) CollectionUtils.union(queryForm.getRowKeys(), queryForm.getColKeys());
 //        if(CollectionUtils.isNotEmpty(items)){
 //            sql.append(" order by ");
