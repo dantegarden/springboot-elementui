@@ -18,12 +18,8 @@
         </el-form-item>
       </el-form>
     </div>
-    <tree-table :data="data" :evalFunc="func"  :expandAll="expandAll"  border>
-      <el-table-column label="机构名称">
-        <template slot-scope="scope">
-          <span>{{scope.row.orgName}}</span>
-        </template>
-      </el-table-column>
+    <tree-table :data="data" :evalFunc="func"  :expandAll="expandAll"
+                treeNodeColumn="orgName" treeNodeColumnLabel="机构名称"  border>
       <el-table-column label="机构代码">
         <template slot-scope="scope">
           <span>{{scope.row.orgCode}}</span>
@@ -109,7 +105,7 @@
     },
     methods: {
       getList(){
-        api.getOrgList().then(res=>{
+        api.getOrgList({queryCondition: this.queryCondition}).then(res=>{
           if(res.code==200){
             this.data = res.data
           }

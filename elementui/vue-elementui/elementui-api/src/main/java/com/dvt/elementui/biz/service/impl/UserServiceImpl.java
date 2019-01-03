@@ -54,7 +54,10 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
         StringBuilder sql = new StringBuilder();
         sql.append("select new com.dvt.elementui.biz.vo.auth.UserVO(u.id, u.username, u.nickname, u.createTime, u.updateTime, u.deleteStatus, u.role.id, u.role.roleName, u.organization.id, u.organization.orgName) ");
         sql.append("from ");
-        sql.append("SysUser u where u.deleteStatus = 1 ");
+        sql.append("SysUser u ");
+        sql.append("left join u.organization ");
+        sql.append("left join u.role ");
+        sql.append("where u.deleteStatus = 1 ");
         if(condition.get("username")!=null && StringUtils.isNotBlank((String)condition.get("username"))){
             sql.append("     and u.username like concat('%',:username,'%')  ");
             params.put("username", (String)condition.get("username"));
@@ -64,12 +67,14 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
         PageRequest pageReq = PageRequest.of(page-1, size);
         Page<UserVO> result = this.dynamicQuery.query(UserVO.class, pageReq, sql.toString(), params);
         result.getContent().forEach(userVO -> {
-            SysRole role = roleDao.findById(userVO.getRoleId()).get();
-            String permissionName = "";
-            for(SysRolePermission rp: role.getRolePermissions()){
-                permissionName += rp.getPermission().getMenuName() +":"+ rp.getPermission().getPermissionName()+",";
+            if(userVO.getRoleId()!=null){
+                SysRole role = roleDao.findById(userVO.getRoleId()).get();
+                String permissionName = "";
+                for(SysRolePermission rp: role.getRolePermissions()){
+                    permissionName += rp.getPermission().getMenuName() +":"+ rp.getPermission().getPermissionName()+",";
+                }
+                userVO.setPermissionName(permissionName.substring(0,permissionName.length()-1));
             }
-            userVO.setPermissionName(permissionName.substring(0,permissionName.length()-1));
         });
         return result;
     }
@@ -88,10 +93,14 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
         if(exist>0){
             return 0;
         }
-        SysRole role = roleDao.findById(user.getRoleId()).get();
-        SysOrganization organization = organizationDao.findById(user.getOrgId()).get();
-        user.setRole(role);
-        user.setOrganization(organization);
+        if(user.getOrgId()!=0){
+            SysOrganization organization = organizationDao.findById(user.getOrgId()).get();
+            user.setOrganization(organization);
+        }
+        if(user.getRoleId()!=null){
+            SysRole role = roleDao.findById(user.getRoleId()).get();
+            user.setRole(role);
+        }
         user.setDeleteStatus(1);
         return userDao.save(user).getId();
     }
@@ -100,11 +109,11 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
     public int updateUser(SysUser user) {
         SysUser oldUser = userDao.findById(user.getId()).get();
         CommonHelper.copyPropertiesIgnoreNull(user, oldUser, true);
-        if(oldUser.getRole().getId()!=user.getRoleId()){
+        if(user.getRoleId()!=null){
             SysRole role = roleDao.findById(user.getRoleId()).get();
             oldUser.setRole(role);
         }
-        if(oldUser.getOrganization().getId()!=user.getOrgId()){
+        if(user.getOrgId()!=0){
             SysOrganization organization = organizationDao.findById(user.getOrgId()).get();
             oldUser.setOrganization(organization);
         }
@@ -215,7 +224,24 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
     @Override
     public List<SysOrganization> listOrganization(Map<String, Object> condition) {
-        return organizationDao.findAll();
+        Map<String,Object> params = Maps.newHashMap();
+        boolean flag = false;
+        StringBuilder sql = new StringBuilder();
+        sql.append("select o from SysOrganization o where 1=1  ");
+        if(condition.get("orgName")!=null && StringUtils.isNotBlank((String)condition.get("orgName"))){
+            sql.append("     and o.orgName like concat('%',:orgName,'%')  ");
+            params.put("orgName", (String)condition.get("orgName"));
+            flag = true;
+        }
+        if(condition.get("orgCode")!=null && StringUtils.isNotBlank((String)condition.get("orgCode"))){
+            sql.append("     and o.orgCode like concat('%',:orgCode,'%')  ");
+            params.put("orgCode", (String)condition.get("orgCode"));
+            flag = true;
+        }
+        if(!flag){
+            sql.append("and o.parent = null ");
+        }
+        return dynamicQuery.query(SysOrganization.class, sql.toString(), params); //organizationDao.queryRootOrgs();
     }
 
     @Override

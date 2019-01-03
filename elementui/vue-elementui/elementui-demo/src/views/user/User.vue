@@ -26,6 +26,7 @@
           <el-tag type="primary" v-text="scope.row.roleName" v-else></el-tag>
         </template>
       </el-table-column>
+      <el-table-column align="center" label="所属机构" prop="orgName" style="width: 60px;"></el-table-column>
       <el-table-column align="center" label="用户名" prop="username" style="width: 60px;"></el-table-column>
       <el-table-column align="center" label="创建时间" prop="createTime" width="170"></el-table-column>
       <el-table-column align="center" label="最近修改时间" prop="updateTime" width="170"></el-table-column>
@@ -48,7 +49,7 @@
       layout="total, sizes, prev, pager, next, jumper">
     </el-pagination>
 
-    <el-dialog :title="dialogTitles[dialogStatus]" :visible.sync="dialogFormVisible" width="50%">
+    <el-dialog :title="dialogTitles[dialogStatus]" :visible="dialogFormVisible" width="50%">
       <el-form class="small-space" :model="tempUser" label-position="left" label-width="80px"
                style='width: 300px; margin-left:50px;'>
         <el-form-item label="用户名" required >
@@ -70,6 +71,9 @@
             </el-option>
           </el-select>
         </el-form-item>
+        <el-form-item label="所属机构" required>
+          <tree-select v-model="tempUser.orgId" :treeData="organizations" placeholder="请选择机构"></tree-select>
+        </el-form-item>
         <el-form-item label="昵称" required>
           <el-input type="text" v-model="tempUser.nickname"></el-input>
         </el-form-item>
@@ -86,9 +90,11 @@
 <script type="text/ecmascript-6">
   import api from '@/api'
   import {mapGetters} from 'vuex'
+  import TreeSelect from '@/components/TreeSelect'
 
   export default {
     props: [],
+    components:{TreeSelect},
     data() {
       return {
         total: 0, //分页组件--数据总条数
@@ -108,11 +114,13 @@
           create: '新建用户'
         },
         roles: [],//角色列表
+        organizations: [], //机构列表
         tempUser: {
           username: '',
           password: '',
           nickname: '',
           roleId: '',
+          orgId: 0,
           id: ''
         }
       }
@@ -139,12 +147,20 @@
           this.roles = res.data;
         })
       },
+      getOrgTree(){
+        api.getOrgList().then(res=>{
+          if(res.code==200){
+            this.organizations = res.data
+          }
+        })
+      },
       showCreate() {
         //显示新增对话框
         this.tempUser.username = "";
         this.tempUser.password = "";
         this.tempUser.nickname = "";
         this.tempUser.roleId = "";
+        this.tempUser.orgId = 0;
         this.tempUser.id = "";
         this.tempUser.deleteStatus = '1';
         this.dialogStatus = "create"
@@ -155,6 +171,7 @@
         this.tempUser.username = user.username;
         this.tempUser.nickname = user.nickname;
         this.tempUser.roleId = user.roleId;
+        this.tempUser.orgId = user.orgId;
         this.tempUser.id = user.userId;
         this.tempUser.deleteStatus = '1';
         this.tempUser.password = '';
@@ -219,11 +236,10 @@
         this.multipleSelection = val;
       },
     },
-    created(){
+    created: async function(){
+      await this.getAllRoles();
+      await this.getOrgTree();
       this.getList();
-      if (this.hasPerm('user:add') || this.hasPerm('user:update')) {
-        this.getAllRoles();
-      }
     }
   }
 </script>
