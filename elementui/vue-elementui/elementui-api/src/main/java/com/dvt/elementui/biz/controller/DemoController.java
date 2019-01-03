@@ -38,7 +38,7 @@ public class DemoController {
     public Result listOrders(@RequestBody DemoQueryVO vo) {
         Map<String,Object> queryCondition = CommonHelper.javaBean2Map(vo.getQueryCondition());
         Page<DemoOrder> page =demoService.queryByPage(queryCondition, vo.getPage(), vo.getSize());
-        CommonHelper.clearFields(page.getContent(),"goods");
+        CommonHelper.clearFields(page.getContent());
         return Result.ok(new PageData(page));
     }
 

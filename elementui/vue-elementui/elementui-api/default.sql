@@ -20,6 +20,8 @@ flush privileges;
 
 SET FOREIGN_KEY_CHECKS=0;
 
+SET FOREIGN_KEY_CHECKS=0;
+
 -- ----------------------------
 -- Table structure for demo_customer
 -- ----------------------------
@@ -528,7 +530,7 @@ CREATE TABLE `sys_code` (
   `create_time` datetime DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=10009 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=10011 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_code
@@ -542,6 +544,36 @@ INSERT INTO `sys_code` VALUES ('10005', 'S6', '退货', 'OrderStatus', '6', '1',
 INSERT INTO `sys_code` VALUES ('10006', 'S1', '男', 'CustomerSex', '1', '1', '1', null, null);
 INSERT INTO `sys_code` VALUES ('10007', 'S2', '女', 'CustomerSex', '2', '1', '2', null, null);
 INSERT INTO `sys_code` VALUES ('10008', 'S3', '不明', 'CustomerSex', '3', '1', '3', null, null);
+INSERT INTO `sys_code` VALUES ('10009', 'S1', '是', 'DirectlyUnder', '1', '1', '1', null, null);
+INSERT INTO `sys_code` VALUES ('10010', 'S2', '否', 'DirectlyUnder', '0', '1', '1', null, null);
+
+-- ----------------------------
+-- Table structure for sys_organization
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_organization`;
+CREATE TABLE `sys_organization` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `create_time` datetime DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `is_directly_under` int(11) DEFAULT NULL,
+  `org_code` varchar(255) DEFAULT NULL,
+  `org_name` varchar(255) DEFAULT NULL,
+  `parent_org_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK7w94wvw8l6qbkmqcf5l87vw9u` (`parent_org_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of sys_organization
+-- ----------------------------
+INSERT INTO `sys_organization` VALUES ('1', '2018-12-29 16:13:32', '2018-12-29 16:13:35', '1', 'ORG11111', '十五所', null);
+INSERT INTO `sys_organization` VALUES ('3', '2018-12-29 17:32:51', '2018-12-29 17:32:51', '1', 'ORG11333', '运维部', '1');
+INSERT INTO `sys_organization` VALUES ('4', '2018-12-29 17:35:03', '2018-12-29 17:35:03', '1', 'ORG11444', '测试部', '1');
+INSERT INTO `sys_organization` VALUES ('7', '2018-12-29 17:55:28', '2018-12-29 17:55:28', '1', 'ORG00016', '十六所', null);
+INSERT INTO `sys_organization` VALUES ('12', '2018-12-29 18:01:37', '2019-01-03 09:34:20', '1', 'ORG000161', '系统一部', '7');
+INSERT INTO `sys_organization` VALUES ('11', '2018-12-29 18:01:11', '2018-12-29 18:01:11', '0', 'ORG000017', '十七所', null);
+INSERT INTO `sys_organization` VALUES ('13', '2019-01-03 09:33:05', '2019-01-03 09:33:05', '0', 'ORG000018', '十八所', null);
+INSERT INTO `sys_organization` VALUES ('14', '2019-01-03 09:33:36', '2019-01-03 09:33:47', '1', 'ORG0000171', '系统一部', '11');
 
 -- ----------------------------
 -- Table structure for sys_permission
@@ -557,7 +589,7 @@ CREATE TABLE `sys_permission` (
   `create_time` datetime DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=705 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=805 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_permission
@@ -573,6 +605,10 @@ INSERT INTO `sys_permission` VALUES ('701', 'role', '角色权限', 'role:list',
 INSERT INTO `sys_permission` VALUES ('702', 'role', '角色权限', 'role:add', '新增', '2', null, null);
 INSERT INTO `sys_permission` VALUES ('703', 'role', '角色权限', 'role:update', '修改', '2', null, null);
 INSERT INTO `sys_permission` VALUES ('704', 'role', '角色权限', 'role:delete', '删除', '2', null, null);
+INSERT INTO `sys_permission` VALUES ('801', 'organization', '机构管理', 'organization:list', '列表', '1', null, null);
+INSERT INTO `sys_permission` VALUES ('802', 'organization', '机构管理', 'organization:add', '新增', '2', null, null);
+INSERT INTO `sys_permission` VALUES ('803', 'organization', '机构管理', 'organization:update', '修改', '2', null, null);
+INSERT INTO `sys_permission` VALUES ('804', 'organization', '机构管理', 'organization:delete', '删除', '2', null, null);
 
 -- ----------------------------
 -- Table structure for sys_role
@@ -631,6 +667,10 @@ INSERT INTO `sys_role_permission` VALUES ('60', '2018-12-07 11:52:43', '1', '201
 INSERT INTO `sys_role_permission` VALUES ('61', '2018-12-07 11:52:43', '1', '2018-12-07 11:52:43', '704', '1');
 INSERT INTO `sys_role_permission` VALUES ('109', '2018-12-25 14:39:02', '1', '2018-12-25 14:39:02', '601', '3');
 INSERT INTO `sys_role_permission` VALUES ('108', '2018-12-25 14:39:02', '1', '2018-12-25 14:39:02', '702', '3');
+INSERT INTO `sys_role_permission` VALUES ('101', '2018-12-29 15:39:38', '1', '2018-12-29 15:39:43', '801', '1');
+INSERT INTO `sys_role_permission` VALUES ('102', '2018-12-29 15:39:56', '1', '2018-12-29 15:40:00', '802', '1');
+INSERT INTO `sys_role_permission` VALUES ('103', '2018-12-29 15:40:09', '1', '2018-12-29 15:40:12', '803', '1');
+INSERT INTO `sys_role_permission` VALUES ('104', '2018-12-29 15:40:21', '1', '2018-12-29 15:40:23', '804', '1');
 
 -- ----------------------------
 -- Table structure for sys_user
@@ -645,25 +685,29 @@ CREATE TABLE `sys_user` (
   `update_time` datetime DEFAULT NULL,
   `username` varchar(200) DEFAULT NULL,
   `role_id` int(11) DEFAULT NULL,
+  `org_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
+  KEY `FKh83e18gbpcirmt45cl82s05xh` (`org_id`),
   KEY `FK4dm5kxn3potpfgdigehw7pdyu` (`role_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=10021 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=10023 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES ('10003', '2017-10-30 11:52:38', '1', '超级用户', '123456', '2018-12-05 16:52:19', 'admin', '1');
-INSERT INTO `sys_user` VALUES ('10004', '2017-10-30 16:13:02', '1', '莎士比亚', '123456', '2018-12-11 09:50:25', 'user', '2');
-INSERT INTO `sys_user` VALUES ('10005', '2017-11-15 14:02:56', '1', 'abba', '123456', '2017-11-17 23:51:42', 'aaa', '1');
-INSERT INTO `sys_user` VALUES ('10007', '2017-11-22 16:29:41', '1', '就看看列表', '123456', '2017-11-22 16:29:41', 'test', '3');
-INSERT INTO `sys_user` VALUES ('10009', '2018-12-05 16:17:13', '2', '李xx', '123123', '2018-12-05 16:50:12', 'lij', '1');
-INSERT INTO `sys_user` VALUES ('10010', '2018-12-05 16:08:17', '1', '李倞', '321321', '2018-12-21 16:17:26', 'lijing', '1');
-INSERT INTO `sys_user` VALUES ('10011', '2018-12-05 16:50:54', '1', 'test1', '123', '2018-12-05 16:50:54', 'test1', '1');
-INSERT INTO `sys_user` VALUES ('10012', '2018-12-05 16:51:06', '1', 'test2', '123', '2018-12-05 16:51:29', 'test2', '1');
-INSERT INTO `sys_user` VALUES ('10013', '2018-12-05 16:51:22', '1', 'test3', '123', '2018-12-05 16:51:22', 'test3', '1');
-INSERT INTO `sys_user` VALUES ('10014', '2018-12-05 16:51:42', '1', 'test4', '123', '2018-12-05 16:51:42', 'test4', '1');
-INSERT INTO `sys_user` VALUES ('10015', '2018-12-05 16:51:52', '1', 'test5', '123', '2018-12-05 16:51:52', 'test5', '1');
-INSERT INTO `sys_user` VALUES ('10016', '2018-12-05 16:52:01', '1', 'test6', '123', '2018-12-05 16:52:01', 'test6', '1');
-INSERT INTO `sys_user` VALUES ('10018', '2018-12-21 16:16:37', '2', 'lijing22', '123123', '2018-12-21 16:18:07', 'lijing22', '1');
-INSERT INTO `sys_user` VALUES ('10019', '2018-12-25 10:23:02', '1', 'lkk', '123123', '2018-12-25 10:23:02', 'lkk', '2');
-INSERT INTO `sys_user` VALUES ('10020', '2018-12-25 10:24:54', '1', 'lkk2', '123', '2018-12-25 10:24:54', 'lkk2', '2');
+INSERT INTO `sys_user` VALUES ('10003', '2017-10-30 11:52:38', '1', '超级用户', '123456', '2018-12-05 16:52:19', 'admin', '1', '1');
+INSERT INTO `sys_user` VALUES ('10004', '2017-10-30 16:13:02', '1', '莎士比亚', '123456', '2019-01-02 14:47:51', 'user', '2', '7');
+INSERT INTO `sys_user` VALUES ('10005', '2017-11-15 14:02:56', '1', 'abba', '123456', '2019-01-02 15:42:48', 'aaa', '1', '12');
+INSERT INTO `sys_user` VALUES ('10007', '2017-11-22 16:29:41', '1', '就看看列表', '123456', '2019-01-02 15:42:56', 'test', '3', '1');
+INSERT INTO `sys_user` VALUES ('10009', '2018-12-05 16:17:13', '2', '李xx', '123123', '2018-12-05 16:50:12', 'lij', '1', null);
+INSERT INTO `sys_user` VALUES ('10010', '2018-12-05 16:08:17', '1', '李倞', '321321', '2019-01-02 15:43:04', 'lijing', '1', '3');
+INSERT INTO `sys_user` VALUES ('10011', '2018-12-05 16:50:54', '1', 'test1', '123', '2019-01-02 15:43:30', 'test1', '1', '3');
+INSERT INTO `sys_user` VALUES ('10012', '2018-12-05 16:51:06', '1', 'test2', '123', '2019-01-02 15:43:47', 'test2', '1', '3');
+INSERT INTO `sys_user` VALUES ('10013', '2018-12-05 16:51:22', '1', 'test3', '123', '2019-01-02 15:43:35', 'test3', '1', '12');
+INSERT INTO `sys_user` VALUES ('10014', '2018-12-05 16:51:42', '1', 'test4', '123', '2019-01-02 15:43:40', 'test4', '1', '4');
+INSERT INTO `sys_user` VALUES ('10015', '2018-12-05 16:51:52', '1', 'test5', '123', '2019-01-02 15:43:54', 'test5', '1', '11');
+INSERT INTO `sys_user` VALUES ('10016', '2018-12-05 16:52:01', '1', 'test6', '123', '2019-01-02 15:59:49', 'test6', '1', '4');
+INSERT INTO `sys_user` VALUES ('10018', '2018-12-21 16:16:37', '2', 'lijing22', '123123', '2018-12-21 16:18:07', 'lijing22', '1', null);
+INSERT INTO `sys_user` VALUES ('10019', '2018-12-25 10:23:02', '1', 'lkk', '123123', '2019-01-02 16:00:09', 'lkk', '2', '7');
+INSERT INTO `sys_user` VALUES ('10020', '2018-12-25 10:24:54', '1', 'lkk2', '123', '2019-01-02 16:00:15', 'lkk2', '2', '7');
+INSERT INTO `sys_user` VALUES ('10021', '2019-01-02 14:42:09', '1', '新人', '123123', '2019-01-02 14:42:09', '新人', '1', '12');
+INSERT INTO `sys_user` VALUES ('10022', '2019-01-02 17:16:53', '1', '测试', '123123', '2019-01-02 17:16:53', '测试', null, null);
