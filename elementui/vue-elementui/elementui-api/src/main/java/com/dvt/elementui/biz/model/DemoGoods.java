@@ -2,6 +2,8 @@ package com.dvt.elementui.biz.model;
 
 import com.dvt.elementui.common.base.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -42,9 +44,6 @@ public class DemoGoods extends BaseEntity {
     @Column(name = "picture")
     private String picture;
 
-    @JsonBackReference
-    @ManyToMany(mappedBy = "goods", fetch = FetchType.LAZY)
-    private Set<DemoOrder> orders;
 
     public Integer getId() {
         return this.id;
@@ -86,11 +85,5 @@ public class DemoGoods extends BaseEntity {
         this.picture = picture;
     }
 
-    public Set<DemoOrder> getOrders() {
-        return this.orders;
-    }
 
-    public void setOrders(Set<DemoOrder> orders) {
-        this.orders = orders;
-    }
 }

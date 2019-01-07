@@ -1,12 +1,10 @@
 package com.dvt.elementui.biz.controller;
 
-import com.dvt.elementui.biz.model.DemoOrder;
-import com.dvt.elementui.biz.model.DemoPivot;
-import com.dvt.elementui.biz.model.DemoPivotCollection;
-import com.dvt.elementui.biz.model.SysUser;
+import com.dvt.elementui.biz.model.*;
 import com.dvt.elementui.biz.service.DemoService;
 import com.dvt.elementui.biz.vo.demo.DemoQueryVO;
 import com.dvt.elementui.biz.vo.demo.FieldVO;
+import com.dvt.elementui.biz.vo.demo.DemoOrderItemVO;
 import com.dvt.elementui.biz.vo.demo.QueryForm;
 import com.dvt.elementui.common.bean.PageData;
 import com.dvt.elementui.common.bean.Result;
@@ -15,7 +13,9 @@ import com.dvt.elementui.common.utils.JsonUtils;
 import com.dvt.elementui.common.utils.SessionUtils;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -40,6 +40,47 @@ public class DemoController {
         Page<DemoOrder> page =demoService.queryByPage(queryCondition, vo.getPage(), vo.getSize());
         CommonHelper.clearFields(page.getContent());
         return Result.ok(new PageData(page));
+    }
+
+    @RequiresPermissions("demo:add")
+    @PostMapping("/addOrder")
+    public Result createOrder(){
+        DemoOrder newOrder = new DemoOrder();
+        newOrder.setIsEnabled(0);
+        return Result.ok(demoService.saveOrder(newOrder));
+    }
+
+    @GetMapping("/listOrderItems/{id}")
+    public Result listOrderItems(@PathVariable Integer id){
+        List<DemoOrderItem> orderItems = demoService.queryOrderItems(id);
+        return Result.ok(orderItems);
+    }
+
+    @RequiresPermissions(value = {"demo:add", "demo:update"}, logical = Logical.OR)
+    @PostMapping("/saveOrderItem")
+    public Result saveOrderItem(@RequestBody DemoOrderItem oi){
+        Integer id = demoService.saveOrderItem(oi);
+        return Result.ok(id);
+    }
+
+    @GetMapping("/customer/name")
+    public Result getCustomerByName(@RequestParam String name){
+        List<DemoCustomer> customers = Lists.newArrayList();
+        if(StringUtils.isNotBlank(name)){
+            customers = demoService.findCustomersByName(name);
+            CommonHelper.clearFields(customers);
+        }
+        return Result.ok(customers);
+    }
+
+    @GetMapping("/goods/name")
+    public Result getGoodsByName(@RequestParam String name){
+        List<DemoGoods> goods = Lists.newArrayList();
+        if(StringUtils.isNotBlank(name)){
+            goods = demoService.findGoodsByName(name);
+            CommonHelper.clearFields(goods);
+        }
+        return Result.ok(goods);
     }
 
     @GetMapping(value = "/pivot/config")

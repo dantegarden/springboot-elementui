@@ -41,6 +41,12 @@ export const optionalRoutes = [
         menu: 'demo'
       },
       {
+        path: 'order/edit',
+        component: _import('demo/OrderEdit'),
+        meta: {hidden: true},
+        menu: 'demo'
+      },
+      {
         path: 'pivot',
         component: _import('demo/Pivot'),
         meta: {title: '交叉表', icon: 'user'},

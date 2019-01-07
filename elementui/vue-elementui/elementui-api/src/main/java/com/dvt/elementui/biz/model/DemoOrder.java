@@ -56,13 +56,14 @@ public class DemoOrder extends BaseEntity {
     @JoinColumn(name = "customer_id")
     private DemoCustomer customer;
 
-    /**多对多**/
-    @JsonManagedReference
-    @ManyToMany(cascade = CascadeType.REMOVE,fetch = FetchType.LAZY)
-    @JoinTable(name = "demo_order_goods",
-            joinColumns = @JoinColumn(name="order_id",referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "goods_id",referencedColumnName = "id"))
-    private Set<DemoGoods> goods;
+    /**一对多**/
+    @JsonIgnoreProperties(value = {"order", "hibernateLazyInitializer", "handler"})
+    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+    private Set<DemoOrderItem> orderItems;
+
+
+    @Column(name="is_enabled")
+    private Integer isEnabled;
 
     public DemoOrder() {
     }
@@ -123,11 +124,19 @@ public class DemoOrder extends BaseEntity {
         this.customer = customer;
     }
 
-    public Set<DemoGoods> getGoods() {
-        return this.goods;
+    public Set<DemoOrderItem> getOrderItems() {
+        return this.orderItems;
     }
 
-    public void setGoods(Set<DemoGoods> goods) {
-        this.goods = goods;
+    public void setOrderItems(Set<DemoOrderItem> orderItems) {
+        this.orderItems = orderItems;
+    }
+
+    public Integer getIsEnabled() {
+        return this.isEnabled;
+    }
+
+    public void setIsEnabled(Integer isEnabled) {
+        this.isEnabled = isEnabled;
     }
 }

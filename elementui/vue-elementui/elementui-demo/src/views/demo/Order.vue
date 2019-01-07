@@ -55,9 +55,9 @@
           <template slot-scope="scope">
             <el-button-group>
               <el-button type="primary" icon="edit" v-if="hasPerm('demo:update')"
-                         @click="update(scope.$index)">修改</el-button>
+                         @click="update(scope.row.id)">修改</el-button>
               <el-button type="danger" icon="delete" v-if="hasPerm('demo:delete')"
-                         @click="delete(scope.$index)">删除</el-button>
+                         @click="delete(scope.row.id)">删除</el-button>
             </el-button-group>
           </template>
         </el-table-column>
@@ -121,13 +121,13 @@
         this.getOrderList()
       },
       add(){
-
+        this.$router.push({path:"/demo/order/edit", query:{action:'add'}})
       },
-      update($index){
-
+      update(id){
+        this.$router.push({path:"/demo/order/edit", query:{action:'update', id: id}})
       },
-      delete($index){
-
+      delete(id){
+        alert(id)
       },
       deleteSelected(){
 

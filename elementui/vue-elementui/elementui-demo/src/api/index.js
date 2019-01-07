@@ -51,6 +51,12 @@ export default {
 
   /**示例 正常表**/
   getOrderList: params => $post('/demo/listOrders', params),
+  getCustomersByName: params => $get('/demo/customer/name', params),
+  getGoodsByName: params => $get('/demo/goods/name', params),
+  getOrderItemList: params => $get("/demo/listOrderItems/" + params),
+  addOrder: params => $post("/demo/addOrder", params),
+  saveOrder: params => $post("/demo/saveOrder", params),
+  saveOrderItem: params => $post("/demo/saveOrderItem", params),
   /**示例 交叉表**/
   getTableConfig: params => $get('/demo/pivot/config', params),
   getPivotData: params => $post('/demo/pivot/list', params),

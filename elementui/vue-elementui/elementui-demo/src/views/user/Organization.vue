@@ -126,7 +126,7 @@
         this.tempOrganization.orgName = row.orgName;
         this.tempOrganization.orgCode = row.orgCode;
         this.tempOrganization.id = row.id;
-        this.tempOrganization.parent = {id: row.parent.id};
+        this.tempOrganization.parent = row.parent ? {id: row.parent.id}: null;
         this.tempOrganization.children = null;
         this.tempOrganization.isDirectlyUnder = row.isDirectlyUnder;
         this.dialogStatus = "update"

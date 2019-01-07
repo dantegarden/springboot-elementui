@@ -1,12 +1,7 @@
 package com.dvt.elementui.biz.service.impl;
 
-import com.dvt.elementui.biz.dao.DemoGoodsDao;
-import com.dvt.elementui.biz.dao.DemoOrderDao;
-import com.dvt.elementui.biz.dao.DemoPivotCollectionDao;
-import com.dvt.elementui.biz.dao.DemoPivotDao;
-import com.dvt.elementui.biz.model.DemoOrder;
-import com.dvt.elementui.biz.model.DemoPivot;
-import com.dvt.elementui.biz.model.DemoPivotCollection;
+import com.dvt.elementui.biz.dao.*;
+import com.dvt.elementui.biz.model.*;
 import com.dvt.elementui.biz.service.DemoService;
 import com.dvt.elementui.biz.vo.demo.QueryForm;
 import com.dvt.elementui.common.base.BaseServiceImpl;
@@ -30,6 +25,10 @@ public class DemoServiceImpl extends BaseServiceImpl implements DemoService {
     @Autowired
     private DemoOrderDao demoOrderDao;
     @Autowired
+    private DemoOrderItemDao demoOrderItemDao;
+    @Autowired
+    private DemoCustomerDao demoCustomerDao;
+    @Autowired
     private DemoGoodsDao demoGoodsDao;
     @Autowired
     private DemoPivotDao demoPivotDao;
@@ -40,7 +39,7 @@ public class DemoServiceImpl extends BaseServiceImpl implements DemoService {
     public Page<DemoOrder> queryByPage(Map<String, Object> condition, Integer page, Integer size) {
         Map<String,Object> params = Maps.newHashMap();
         StringBuilder sql = new StringBuilder();
-        sql.append("select o from DemoOrder o where 1=1 ");
+        sql.append("select o from DemoOrder o where isEnabled=1  ");
 
         if(condition.get("orderSn")!=null && StringUtils.isNotBlank((String)condition.get("orderSn"))){
             sql.append("     and o.orderSn like concat('%',:orderSn,'%')  ");
@@ -61,6 +60,41 @@ public class DemoServiceImpl extends BaseServiceImpl implements DemoService {
 
         PageRequest pageReq = PageRequest.of(page-1, size);
         return dynamicQuery.query(DemoOrder.class, pageReq, sql.toString(), params);
+    }
+
+    @Override
+    public Integer saveOrder(DemoOrder order) {
+        return this.demoOrderDao.save(order).getId();
+    }
+
+    @Override
+    public List<DemoOrderItem> queryOrderItems(Integer orderId) {
+        return this.demoOrderItemDao.findByOrderById(orderId);
+    }
+
+    @Override
+    public Integer saveOrderItem(DemoOrderItem oi) {
+        return this.demoOrderItemDao.save(oi).getId();
+    }
+
+    @Override
+    public void deleteOrder(Integer id) {
+        this.demoOrderDao.deleteById(id);
+    }
+
+    @Override
+    public void deleteOrderItem(Integer id) {
+        this.demoOrderItemDao.deleteById(id);
+    }
+
+    @Override
+    public List<DemoCustomer> findCustomersByName(String name) {
+        return this.demoCustomerDao.findByNameIsLike("%"+ name + "%");
+    }
+
+    @Override
+    public List<DemoGoods> findGoodsByName(String name) {
+        return this.demoGoodsDao.findByGoodsNameIsLike("%"+ name + "%");
     }
 
     @Override
