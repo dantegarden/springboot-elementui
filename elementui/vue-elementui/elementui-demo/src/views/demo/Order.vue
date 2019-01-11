@@ -32,7 +32,7 @@
           <el-button-group>
             <el-button type="primary" icon="el-icon-refresh" @click="getOrderList"></el-button>
             <el-button type="primary" icon="search" @click="query">查询</el-button>
-            <el-button type="primary" v-if="hasPerm('demo:add')" @click.native="add">新增</el-button>
+            <el-button type="success" v-if="hasPerm('demo:add')" @click.native="add">新增</el-button>
             <el-button type="danger"  v-if="hasPerm('demo:delete')" @click.native="deleteSelected">批量删除</el-button>
           </el-button-group>
         </el-form-item>
@@ -57,7 +57,7 @@
               <el-button type="primary" icon="edit" v-if="hasPerm('demo:update')"
                          @click="update(scope.row.id)">修改</el-button>
               <el-button type="danger" icon="delete" v-if="hasPerm('demo:delete')"
-                         @click="delete(scope.row.id)">删除</el-button>
+                         @click="remove(scope.row.id)">删除</el-button>
             </el-button-group>
           </template>
         </el-table-column>
@@ -126,11 +126,29 @@
       update(id){
         this.$router.push({path:"/demo/order/edit", query:{action:'update', id: id}})
       },
-      delete(id){
-        alert(id)
+      remove(id){
+        this.$confirm('确定删除此订单?', '提示', {
+          confirmButtonText: '确定',
+          showCancelButton: false,
+          type: 'warning'
+        }).then(() => {
+          api.removeOrders([id]).then(res=>{
+            this.getOrderList();
+            this.$message.success("删除成功");
+          })
+        })
       },
       deleteSelected(){
-
+        this.$confirm('确定删除所选订单?', '提示', {
+          confirmButtonText: '确定',
+          showCancelButton: false,
+          type: 'warning'
+        }).then(() => {
+          api.removeOrders(this.multipleSelection.map(m=>m.id)).then(res=>{
+            this.getOrderList();
+            this.$message.success("删除成功");
+          })
+        })
       },
       //改变分页大小
       onSizeChange(val) {

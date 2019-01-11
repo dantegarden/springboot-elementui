@@ -5,6 +5,7 @@ import com.dvt.elementui.biz.model.*;
 import com.dvt.elementui.biz.service.DemoService;
 import com.dvt.elementui.biz.vo.demo.QueryForm;
 import com.dvt.elementui.common.base.BaseServiceImpl;
+import com.dvt.elementui.common.utils.CommonHelper;
 import com.dvt.elementui.common.utils.PivotUtils;
 import com.google.common.collect.Maps;
 import org.apache.commons.lang.StringUtils;
@@ -63,8 +64,23 @@ public class DemoServiceImpl extends BaseServiceImpl implements DemoService {
     }
 
     @Override
-    public Integer saveOrder(DemoOrder order) {
-        return this.demoOrderDao.save(order).getId();
+    public DemoOrder findOrderById(Integer id) {
+        return this.demoOrderDao.findById(id).get();
+    }
+
+    @Override
+    public Integer addOrder() {
+        DemoOrder newOrder = new DemoOrder();
+        newOrder.setIsEnabled(0);
+        return this.demoOrderDao.save(newOrder).getId();
+    }
+
+    @Override
+    public Integer saveOrder(DemoOrder order){
+        DemoOrder oldOrder = this.demoOrderDao.findById(order.getId()).get();
+        CommonHelper.copyPropertiesIgnoreNull(order, oldOrder);
+        oldOrder.setIsEnabled(1);
+        return this.demoOrderDao.save(oldOrder).getId();
     }
 
     @Override

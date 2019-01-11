@@ -42,12 +42,22 @@ public class DemoController {
         return Result.ok(new PageData(page));
     }
 
+    @GetMapping("/getOrder/{id}")
+    public Result getOrder(@PathVariable Integer id){
+        return Result.ok(this.demoService.findOrderById(id));
+    }
+
     @RequiresPermissions("demo:add")
     @PostMapping("/addOrder")
     public Result createOrder(){
-        DemoOrder newOrder = new DemoOrder();
-        newOrder.setIsEnabled(0);
-        return Result.ok(demoService.saveOrder(newOrder));
+        return Result.ok(demoService.addOrder());
+    }
+
+    @RequiresPermissions(value = {"demo:add", "demo:update"}, logical = Logical.OR)
+    @PostMapping("/saveOrder")
+    public Result saveOrder(@RequestBody DemoOrder o){
+        Integer id = demoService.saveOrder(o);
+        return Result.ok(id);
     }
 
     @GetMapping("/listOrderItems/{id}")
@@ -61,6 +71,22 @@ public class DemoController {
     public Result saveOrderItem(@RequestBody DemoOrderItem oi){
         Integer id = demoService.saveOrderItem(oi);
         return Result.ok(id);
+    }
+
+    @RequiresPermissions(value = {"demo:add", "demo:update"}, logical = Logical.OR)
+    @GetMapping("/removeOrderItem/{id}")
+    public Result removeOrderItem(@PathVariable Integer id){
+        demoService.deleteOrderItem(id);
+        return Result.ok(id);
+    }
+
+    @RequiresPermissions("demo:delete")
+    @PostMapping("/removeOrders")
+    public Result removeOrder(@RequestBody List<Integer> ids){
+        for (int i=0;i<ids.size();i++){
+            demoService.deleteOrder(ids.get(i));
+        }
+        return Result.ok(Boolean.TRUE);
     }
 
     @GetMapping("/customer/name")

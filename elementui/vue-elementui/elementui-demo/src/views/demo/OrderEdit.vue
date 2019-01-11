@@ -6,16 +6,13 @@
             <el-form-item label="订单号">
               <el-input v-model="formdata.orderSn" placeholder="请输入订单号"></el-input>
             </el-form-item>
-            <el-form-item label="订单名称">
-              <el-input v-model="formdata.orderName" placeholder="请输入订单名称"></el-input>
-            </el-form-item>
             <el-form-item label="订单状态">
               <el-select v-model="formdata.orderStatus" filterable placeholder="请选择订单状态" >
                 <el-option
                   v-for="item in dataDict['OrderStatus']"
                   :key="item.value"
                   :label="item.label"
-                  :value="item.value">
+                  :value="parseInt(item.value)">
                 </el-option>
               </el-select>
             </el-form-item>
@@ -23,6 +20,7 @@
               <el-date-picker
                 v-model="formdata.orderTime"
                 type="datetime"
+                value-format="yyyy-MM-dd HH:mm:ss"
                 placeholder="选择下单时间" >
               </el-date-picker>
             </el-form-item>
@@ -43,11 +41,19 @@
                 </el-option>
               </el-select>
             </el-form-item>
+            <el-form-item label="备注">
+              <el-input
+                type="textarea"
+                :rows="2"
+                placeholder="请输入内容"
+                v-model="formdata.note">
+              </el-input>
+            </el-form-item>
           </el-col>
           <el-col :span="24">
             <el-form-item label="订单项">
               <el-table
-                :data="formdata.orderItems"
+                :data="orderItems"
                 border
                 height="250">
                 <el-table-column
@@ -93,7 +99,7 @@
             </el-form-item>
 
             <el-form-item>
-              <el-button type="primary" @click="onSubmit">创建</el-button>
+              <el-button type="primary" @click="onSubmit">{{mode=="add"?'创建':'修改'}}</el-button>
               <el-button @click="onCancel">取消</el-button>
             </el-form-item>
           </el-col>
@@ -159,12 +165,13 @@
         dataDict: [],
         formdata:{
           orderSn: '',
-          orderName: '',
           orderStatus: '',
           orderTime: '',
           customer: {id:''},
-          orderItems: []
+          note:'',
+          orderPrice: ''
         },
+        orderItems: [],
         customers: [],
         c_loading: false,
         goods: [],
@@ -190,16 +197,37 @@
       initForm(){
         if(this.mode=='update'){
           //返显的逻辑
+          api.getOrder(this.id).then(res=>{
+            if(res.code==200){
+              this.formdata.orderSn = res.data.orderSn
+              this.formdata.orderStatus = res.data.orderStatus
+              this.formdata.orderTime = res.data.orderTime
+              this.formdata.note = res.data.note
+              this.formdata.orderPrice = res.data.orderPrice
+              this.customers = [res.data.customer]
+              this.formdata.customer = {id: res.data.customer.id}
+            }
+          })
         }
         this.getOrderItems();
       },
       getOrderItems(){
         api.getOrderItemList(this.id).then(res=>{
-          this.formdata.orderItems =  res.data
+          this.orderItems =  res.data
+          this.recalculateOrderPrice(); //重新结算orderPrice
         })
       },
       onSubmit(e){
-
+        api.saveOrder({id: this.id, ...this.formdata}).then(res=>{
+          this.$message.success({
+            message: "保存成功",
+            type: 'success',
+            duration: 1 * 1000,
+            onClose: () => {
+              this.$back()
+            }
+          });
+        })
       },
       onCancel(e){
         this.$back()
@@ -211,13 +239,22 @@
         this.tempOrderItem.number = b_type?1:row.number;
         this.tempOrderItem.retailPrice = b_type?0:row.retailPrice;
         this.tempOrderItem.totalPrice = b_type?0:row.totalPrice;
-        this.tempOrderItem.originPrice = ''
+        this.tempOrderItem.originPrice = b_type?0:row.goods.price;
         this.tempOrderItem.id = b_type?"":row.id;
         this.dialogStatus =  b_type?"create":"update"
         this.dialogFormVisible = true
       },
       removeOrderItem(index, row){
-
+        this.$confirm('确定删除此订单项?', '提示', {
+          confirmButtonText: '确定',
+          showCancelButton: false,
+          type: 'warning'
+        }).then(() => {
+          api.removeOrderItem(row.id).then(res=>{
+            this.getOrderItems();
+            this.$message.success("删除成功");
+          })
+        })
       },
       createOrderItem(){
         api.saveOrderItem(this.tempOrderItem).then(res=>{
@@ -226,7 +263,10 @@
         })
       },
       updateOrderItem(){
-
+        api.saveOrderItem(this.tempOrderItem).then(res=>{
+          this.getOrderItems();
+          this.dialogFormVisible = false
+        })
       },
       remoteCustomers(query){ //动态加载可选项
         if (query !== '') {
@@ -260,6 +300,13 @@
           this.tempOrderItem.originPrice = selectedGoods.price
         }
       },
+      recalculateOrderPrice(){
+        var orderPrice = 0
+        this.orderItems.forEach(item => {
+          orderPrice += item.totalPrice
+        })
+        this.formdata.orderPrice = orderPrice
+      },
       onRetailPriceChange(e){
         this.tempOrderItem.totalPrice = this.tempOrderItem.number * this.tempOrderItem.retailPrice
       }
@@ -269,6 +316,7 @@
       this.mode = this.$route.query.action
       if(this.$route.query.id){
         this.id = this.$route.query.id
+        this.initForm(); //更新返显的逻辑
       }else{
         api.addOrder().then(res=>{
           this.id = res.data

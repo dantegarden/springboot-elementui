@@ -54,9 +54,12 @@ export default {
   getCustomersByName: params => $get('/demo/customer/name', params),
   getGoodsByName: params => $get('/demo/goods/name', params),
   getOrderItemList: params => $get("/demo/listOrderItems/" + params),
+  getOrder: params => $get("/demo/getOrder/" + params),
   addOrder: params => $post("/demo/addOrder", params),
   saveOrder: params => $post("/demo/saveOrder", params),
   saveOrderItem: params => $post("/demo/saveOrderItem", params),
+  removeOrders: params => $post('/demo/removeOrders', params),
+  removeOrderItem: params => $get('/demo/removeOrderItem/' + params),
   /**示例 交叉表**/
   getTableConfig: params => $get('/demo/pivot/config', params),
   getPivotData: params => $post('/demo/pivot/list', params),

@@ -15,7 +15,7 @@ public class DemoOrderItem extends BaseEntity {
     private Integer id;
 
     /**多对一**/
-    @JsonIgnoreProperties(value = {"ordersItems", "hibernateLazyInitializer", "handler"})
+    @JsonIgnoreProperties(value = {"orderItems", "hibernateLazyInitializer", "handler"})
     @ManyToOne
     @JoinColumn(name = "order_id")
     private DemoOrder order;
@@ -23,6 +23,7 @@ public class DemoOrderItem extends BaseEntity {
     /**
      * 单向多对一
      * **/
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "goods_id")
     private DemoGoods goods;
