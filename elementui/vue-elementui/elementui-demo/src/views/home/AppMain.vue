@@ -8,9 +8,6 @@
     <transition :name="fade" mode="out-in">
       <router-view v-if="!$route.meta.cache"></router-view>
     </transition>
-    <!--<transition name="fade" mode="out-in">-->
-      <!--<router-view ></router-view>-->
-    <!--</transition>-->
   </section>
 </template>
 

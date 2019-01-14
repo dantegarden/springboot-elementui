@@ -8,10 +8,8 @@ import App from './App'
 import router from './router'
 import store from './store'
 
-//element-ui
-import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css';
-Vue.use(ElementUI);
+
+
 
 //axios
 import AxiosPlugin from './libs/AxiosPlugin'

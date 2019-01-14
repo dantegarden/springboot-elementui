@@ -1,12 +1,12 @@
 <template>
   <div>
     <el-row>
-        <el-form ref="form" :model="formdata" label-width="80px">
+        <el-form ref="form" :model="formdata" :rules="rules" label-width="80px">
           <el-col :span="16">
-            <el-form-item label="订单号">
+            <el-form-item label="订单号" prop="orderSn">
               <el-input v-model="formdata.orderSn" placeholder="请输入订单号"></el-input>
             </el-form-item>
-            <el-form-item label="订单状态">
+            <el-form-item label="订单状态" prop="orderStatus">
               <el-select v-model="formdata.orderStatus" filterable placeholder="请选择订单状态" >
                 <el-option
                   v-for="item in dataDict['OrderStatus']"
@@ -16,7 +16,7 @@
                 </el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="下单日期">
+            <el-form-item label="下单日期" prop="orderTime">
               <el-date-picker
                 v-model="formdata.orderTime"
                 type="datetime"
@@ -24,7 +24,7 @@
                 placeholder="选择下单时间" >
               </el-date-picker>
             </el-form-item>
-            <el-form-item label="客户">
+            <el-form-item label="客户" prop="customer.id">
               <el-select
                 v-model="formdata.customer.id"
                 filterable
@@ -41,7 +41,7 @@
                 </el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="备注">
+            <el-form-item label="备注" prop="note">
               <el-input
                 type="textarea"
                 :rows="2"
@@ -101,6 +101,7 @@
             <el-form-item>
               <el-button type="primary" @click="onSubmit">{{mode=="add"?'创建':'修改'}}</el-button>
               <el-button @click="onCancel">取消</el-button>
+              <el-button @click="onReset">重置</el-button>
             </el-form-item>
           </el-col>
         </el-form>
@@ -108,9 +109,9 @@
     </el-row>
 
     <el-dialog :title="dialogTitles[dialogStatus]" :visible="dialogFormVisible" width="50%">
-      <el-form class="small-space" :model="tempOrderItem" label-position="left" label-width="80px"
+      <el-form ref="dialogForm" class="small-space" :model="tempOrderItem" label-position="left" label-width="80px"
                style='width: 300px; margin-left:50px;'>
-        <el-form-item label="商品" required >
+        <el-form-item label="商品" prop="goods.id" verify >
           <el-select
             v-model="tempOrderItem.goods.id"
             filterable
@@ -128,23 +129,23 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="原单价">
+        <el-form-item label="原单价" prop="originPrice">
           <el-input :value="tempOrderItem.originPrice" placeholder="请选择商品" readonly></el-input>
         </el-form-item>
-        <el-form-item label="现单价">
-          <el-input v-model="tempOrderItem.retailPrice" type="number" placeholder="请输入现单价" @change="onRetailPriceChange"></el-input>
+        <el-form-item label="现单价" prop="retailPrice" verify number :gt="0">
+          <el-input v-model.number="tempOrderItem.retailPrice"  placeholder="请输入现单价" @change="onRetailPriceChange"></el-input>
         </el-form-item>
-        <el-form-item label="数量">
+        <el-form-item label="数量" prop="number" verify int :gt="0">
           <el-input-number v-model="tempOrderItem.number" :min="1" :max="999" @change="onRetailPriceChange"></el-input-number>
         </el-form-item>
-        <el-form-item label="总价">
-          <el-input v-model="tempOrderItem.totalPrice" type="number" placeholder="请输入总价"></el-input>
+        <el-form-item label="总价" prop="totalPrice" verify number :gt="0">
+          <el-input v-model.number="tempOrderItem.totalPrice"  placeholder="请输入总价"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button v-if="dialogStatus=='create'" type="success" @click="createOrderItem">创 建</el-button>
-        <el-button v-else type="primary" @click="updateOrderItem">修 改</el-button>
+        <el-button v-if="dialogStatus=='create'" type="success" @click="saveOrderItem">创 建</el-button>
+        <el-button v-else type="primary" @click="saveOrderItem">修 改</el-button>
       </div>
     </el-dialog>
 
@@ -170,6 +171,12 @@
           customer: {id:''},
           note:'',
           orderPrice: ''
+        },
+        rules: {
+          orderSn: [{required:true, message:'必填', trigger:'blur'}],
+          orderStatus: [{type:'number', required:true, message:'必选', trigger:'change'}],
+          orderTime: [{required:true, message:'必填', trigger:'blur'}],
+          "customer.id": [{type:'number', required:true, message:'必选', trigger:'change'}]
         },
         orderItems: [],
         customers: [],
@@ -218,19 +225,30 @@
         })
       },
       onSubmit(e){
-        api.saveOrder({id: this.id, ...this.formdata}).then(res=>{
-          this.$message.success({
-            message: "保存成功",
-            type: 'success',
-            duration: 1 * 1000,
-            onClose: () => {
-              this.$back()
-            }
-          });
+        this.$refs.form.validate((valid) => {
+          if (valid) {
+            api.saveOrder({id: this.id, ...this.formdata}).then(res=>{
+              this.$message.success({
+                message: "保存成功",
+                type: 'success',
+                duration: 1 * 1000,
+                onClose: () => {
+                  this.$back()
+                }
+              });
+            })
+          }else{
+            return false;
+          }
         })
       },
       onCancel(e){
         this.$back()
+      },
+      onReset(e){ //重置表单
+        this.$nextTick(()=>{
+          this.$refs.form.resetFields();
+        })
       },
       showOrderItemDialog(type, row){
         let b_type = type==="add"
@@ -243,6 +261,9 @@
         this.tempOrderItem.id = b_type?"":row.id;
         this.dialogStatus =  b_type?"create":"update"
         this.dialogFormVisible = true
+        this.$nextTick(()=>{
+          this.$refs.dialogForm.clearValidate();
+        })
       },
       removeOrderItem(index, row){
         this.$confirm('确定删除此订单项?', '提示', {
@@ -256,16 +277,16 @@
           })
         })
       },
-      createOrderItem(){
-        api.saveOrderItem(this.tempOrderItem).then(res=>{
-          this.getOrderItems();
-          this.dialogFormVisible = false
-        })
-      },
-      updateOrderItem(){
-        api.saveOrderItem(this.tempOrderItem).then(res=>{
-          this.getOrderItems();
-          this.dialogFormVisible = false
+      saveOrderItem(){
+        this.$refs.dialogForm.validate((valid) => {
+          if (valid) {
+            api.saveOrderItem(this.tempOrderItem).then(res=>{
+              this.getOrderItems();
+              this.dialogFormVisible = false
+            })
+          }else{
+            return false;
+          }
         })
       },
       remoteCustomers(query){ //动态加载可选项
