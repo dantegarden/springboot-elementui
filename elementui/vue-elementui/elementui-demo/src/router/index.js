@@ -37,7 +37,7 @@ export const optionalRoutes = [
       {
         path: '',
         component: _import('demo/Order'),
-        meta: {title: '订单管理', icon: 'user'},
+        meta: {title: '订单管理', icon: 'user', cache: true},
         menu: 'demo'
       },
       {
