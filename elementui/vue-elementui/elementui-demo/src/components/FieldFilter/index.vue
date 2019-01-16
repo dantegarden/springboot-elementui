@@ -3,6 +3,7 @@
             <div ref="cbox" class="checkBox1" @mouseleave="cboxMouseLeave">
                 <img src="/static/images/search_icon.png?imageView2/1/w/80/h/80" width="16" class="user-avatar"/>
                 <input type="text" v-if="fieldFilter.length==0" :placeholder="placeholder"  @click="toggleSlide"/>
+                
                 <div class="add1"  v-else @click="toggleSlide">
                         <span v-for="(item,index) in fieldFilter">
                             {{item.label}}

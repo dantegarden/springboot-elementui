@@ -1,20 +1,20 @@
 <template>
   <div class="app-container">
     <div class="filter-container mainBox">
-      <field-filter class="filter" :field-selections="keyMap.rows" v-model="queryCondition.fieldFilter"
+      <!--<field-filter class="filter" :field-selections="keyMap.rows" v-model="queryCondition.fieldFilter"-->
+                    <!--@onUseFieldFilter="onUseFieldFilter"-->
+                    <!--@afterUseFilter="afterUseFilter"-->
+                    <!--@onDeleteFilter="onDeleteFilter"></field-filter>-->
+      <pivot-filter class="cbox1 filter" :field-selections="keyMap.rows" v-model="queryCondition.fieldFilter"
                     @onUseFieldFilter="onUseFieldFilter"
                     @afterUseFilter="afterUseFilter"
-                    @onDeleteFilter="onDeleteFilter"></field-filter>
-      <table-header-filter class="filter" :field-selections="keyMap.rows" v-model="queryCondition.rowKeys"
-                           placeholder="请选择表头项"
-                           @onSelectKey="onSelectKey1"
-                           @afterSelectKey="afterSelectKey"
-                           @onDeleteKey="onDeleteKey"></table-header-filter>
-      <table-header-filter class="filter" :field-selections="keyMap.cols" v-model="queryCondition.colKeys"
-                           placeholder="请选择列头项"
-                           @onSelectKey="onSelectKey2"
-                           @afterSelectKey="afterSelectKey"
-                           @onDeleteKey="onDeleteKey"></table-header-filter>
+                    @onDeleteFilter="onDeleteFilter"></pivot-filter>
+      <table-header-selector class="cbox1 filter" :options="keyMap.rows"  :disabled-options="queryCondition.colKeys"
+                             v-model="queryCondition.rowKeys"  placeholder="请选择行头项"
+                             @onDeleteKey="onDeleteKey" @afterSelectKey="afterSelectKey"></table-header-selector>
+      <table-header-selector class="cbox1 filter" :options="keyMap.cols"  :disabled-options="queryCondition.rowKeys"
+                             v-model="queryCondition.colKeys"  placeholder="请选择列头项"
+                             @onDeleteKey="onDeleteKey" @afterSelectKey="afterSelectKey"></table-header-selector>
 
       <button class="blueBtn" @click="query()">搜索</button>
       <div class="collect">
@@ -51,14 +51,15 @@
   import api from '@/api'
   import PivotTable from '@/components/PivotTable'
   import FieldFilter from '@/components/FieldFilter'
-  import TableHeaderFilter from '@/components/TableHeaderFilter'
+  import TableHeaderSelector from '@/components/TableHeaderSelector'
+  import PivotFilter from '@/components/PivotFilter'
 
   export default {
     props: [],
     components: {
       PivotTable,
-      TableHeaderFilter,
-      FieldFilter
+      TableHeaderSelector,
+      PivotFilter
     },
     data() {
       return {

@@ -2,26 +2,13 @@ package com.dvt.elementui.biz.test;
 
 import com.dvt.elementui.biz.dao.DemoCustomerDao;
 import com.dvt.elementui.biz.dao.DemoPivotDao;
-import com.dvt.elementui.biz.model.DemoCustomer;
-import com.dvt.elementui.biz.model.DemoGoods;
-import com.dvt.elementui.biz.model.DemoOrder;
-import com.dvt.elementui.biz.model.DemoPivot;
-import com.dvt.elementui.biz.service.DemoService;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Maps;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.io.UnsupportedEncodingException;
 import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.Set;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -56,7 +43,7 @@ public class EnvironmentTest {
 
     @Test
     public void test(){
-//        Page<DemoPivot> pages = demoPivotDao.pageByArea("华北", PageRequest.of(0,10));
+        //        Page<DemoPivot> pages = demoPivotDao.pageByArea("华北", PageRequest.of(0,10));
 //        System.out.println(pages.getContent().size());
     }
 //    public void test(){
