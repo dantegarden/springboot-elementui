@@ -3,6 +3,7 @@ package com.dvt.elementui.biz.model;
 import com.dvt.elementui.common.base.BaseEntity;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name="demo_pivot")
@@ -27,6 +28,9 @@ public class DemoPivot extends BaseEntity {
 
     @Column(name = "subject")
     private String subject;
+
+    @Column(name = "rate")
+    private Double rate;
 
     @Column(name = "value")
     private String value;
@@ -88,5 +92,13 @@ public class DemoPivot extends BaseEntity {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public Double getRate() {
+        return this.rate;
+    }
+
+    public void setRate(Double rate) {
+        this.rate = rate;
     }
 }

@@ -79,6 +79,14 @@ public class PivotUtils {
             sql.append(MessageFormat.format(" {0} {1} = ''{2}'' ", type, key,value));
         }else if("!=".equals(relation)){
             sql.append(MessageFormat.format(" {0} {1} != ''{2}'' ", type, key,value));
+        }else if(">".equals(relation)){
+            sql.append(MessageFormat.format(" {0} {1} > ''{2}'' ", type, key,value));
+        }else if("<".equals(relation)){
+            sql.append(MessageFormat.format(" {0} {1} < ''{2}'' ", type, key,value));
+        }else if(">=".equals(relation)){
+            sql.append(MessageFormat.format(" {0} {1} >= ''{2}'' ", type, key,value));
+        }else if("<=".equals(relation)){
+            sql.append(MessageFormat.format(" {0} {1} <= ''{2}'' ", type, key,value));
         }else if("like".equals(relation)){
             sql.append(MessageFormat.format(" {0} {1} like ''%{2}%'' ", type, key,value));
         }else if("not like".equals(relation)){
@@ -87,6 +95,10 @@ public class PivotUtils {
             sql.append(MessageFormat.format(" {0} {1} like ''%{2}'' ", type, key,value));
         }else if("endwith".equals(relation)){
             sql.append(MessageFormat.format(" {0} {1} like ''{2}%'' ", type, key,value));
+        }else if("null".equals(relation)){
+            sql.append(MessageFormat.format(" {0} {1} is null ", type, key,value));
+        }else if("not null".equals(relation)){
+            sql.append(MessageFormat.format(" {0} {1} is not null ", type, key,value));
         }
     }
 }

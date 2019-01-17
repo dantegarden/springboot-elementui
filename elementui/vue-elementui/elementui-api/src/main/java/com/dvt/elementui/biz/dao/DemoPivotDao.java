@@ -8,6 +8,7 @@ import com.slyak.spring.jpa.TemplateQuery;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -17,7 +18,7 @@ public interface DemoPivotDao extends BaseRepository<DemoPivot,Integer> {
     Long countArea(@Param("area") String area);
 
     @TemplateQuery
-    List<TestVO> getDtos(@Param("month") String month);
+    List<TestVO> getDtos(@Param("month") Date month);
 
     @TemplateQuery
     List<DemoPivot> findByQueryObj(DemoQueryObject queryObject);

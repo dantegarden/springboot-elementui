@@ -7,11 +7,13 @@ public class FieldFilterVO {
     private String label;
     private String relation;
     private List<List<String>> query;
+    private List<List<Object>> structure;
 
-    public FieldFilterVO(String label, String relation, List<List<String>> query) {
+    public FieldFilterVO(String label, String relation, List<List<String>> query, List<List<Object>> structure) {
         this.label = label;
         this.relation = relation;
         this.query = query;
+        this.structure = structure;
     }
 
     public FieldFilterVO() {
@@ -39,5 +41,13 @@ public class FieldFilterVO {
 
     public void setQuery(List<List<String>> query) {
         this.query = query;
+    }
+
+    public List<List<Object>> getStructure() {
+        return this.structure;
+    }
+
+    public void setStructure(List<List<Object>> structure) {
+        this.structure = structure;
     }
 }

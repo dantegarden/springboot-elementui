@@ -24,7 +24,9 @@ public class DemoPivotCollection extends BaseEntity {
     @JoinColumn(name = "user_id")
     private SysUser user;
 
-    @Column(name = "collection_json")
+    @Lob
+    //@Basic(fetch = FetchType.LAZY)
+    @Column(name = "collection_json", columnDefinition="TEXT")
     private String collectionJson;
 
     @Transient

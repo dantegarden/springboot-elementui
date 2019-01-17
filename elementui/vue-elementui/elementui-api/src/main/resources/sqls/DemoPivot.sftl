@@ -1,0 +1,24 @@
+--countArea
+SELECT count(*) FROM demo_pivot WHERE 1 = 1
+<#if area??>
+  AND area LIKE :area
+</#if>
+
+--getDtos
+SELECT id, area as myArea, province as myProvince FROM demo_pivot WHERE 1=1
+<#if month??>
+  AND month LIKE :month
+</#if>
+
+--findByQueryObj
+SELECT * FROM demo_pivot WHERE 1=1
+<#if area??>
+ AND area LIKE :area
+</#if>
+<#if province??>
+ AND province LIKE :province
+</#if>
+<#if month??>
+ AND month LIKE :month
+</#if>
+

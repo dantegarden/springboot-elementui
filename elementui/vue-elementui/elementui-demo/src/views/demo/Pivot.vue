@@ -1,10 +1,6 @@
 <template>
   <div class="app-container">
     <div class="filter-container mainBox">
-      <!--<field-filter class="filter" :field-selections="keyMap.rows" v-model="queryCondition.fieldFilter"-->
-                    <!--@onUseFieldFilter="onUseFieldFilter"-->
-                    <!--@afterUseFilter="afterUseFilter"-->
-                    <!--@onDeleteFilter="onDeleteFilter"></field-filter>-->
       <pivot-filter class="cbox1 filter" :field-selections="keyMap.rows" v-model="queryCondition.fieldFilter"
                     @onUseFieldFilter="onUseFieldFilter"
                     @afterUseFilter="afterUseFilter"
@@ -94,13 +90,22 @@
       },
       getRawData: async function(){
         let res = await api.getPivotData(this.queryCondition)
+        //翻译字典
+        let dataDict = await this.$dataDict(['DemoMajor'])
+        res.data.forEach(i => {
+          let dd = dataDict['DemoMajor'].find(d => i.major==d.value)
+          i.major = dd?dd.label:i.major
+        })
         this.rawData = res.data
       },
       getTableConfig: async function(){
         let res = await api.getTableConfig()
-        this.keyMap = res.data
-        this.rows = res.data.rows.map(f => f.label)
-        this.cols = res.data.cols.map(f => f.label)
+        this.keyMap = {
+          rows: res.data.fields,
+          cols: res.data.fields
+        }
+        this.rows = res.data.fields.map(f => f.label)
+        this.cols = this.rows
         this.collectionFieldFilter = res.data.collectionFieldFilter
       },
       onUseFieldFilter(event){
@@ -113,14 +118,6 @@
       onDeleteFilter(index){
         this.query()
         this.cleanCollectionInUse()
-      },
-      onSelectKey1(event){
-        if(this.queryCondition.colKeys.includes(event.current.label)){
-          event.$vm.lock=true //中断选择事件
-        }
-      },
-      onSelectKey2(event){
-        if(this.queryCondition.rowKeys.includes(event.current.label)) event.$vm.lock=true
       },
       afterSelectKey(kv){
         this.query()

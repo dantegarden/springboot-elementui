@@ -114,16 +114,18 @@ public class DemoController {
         //表头
         List<FieldVO> keys = Lists.newArrayList();
         keys.add(new FieldVO("month","月份"));
-        keys.add(new FieldVO("major","大类"));
+        keys.add(new FieldVO("major","大类", "DemoMajor"));
         keys.add(new FieldVO("subject","小类"));
         //表旁
         keys.add(new FieldVO("area","区域"));
         keys.add(new FieldVO("province","省份"));
+        keys.add(new FieldVO("rate","汇率", FieldVO.FieldTypeEnum.NUMBER));
+        keys.add(new FieldVO("update_time","更新时间", FieldVO.FieldTypeEnum.DATE));
 
         List<DemoPivotCollection> collectionItems = demoService.findCollectionsByUserId(SessionUtils.getCurrentUserId());
         collectionItems.forEach(dp->{dp.setQueryCondition(JsonUtils.toBean(QueryForm.class, dp.getCollectionJson()));});
 
-        Map<String, List> config = ImmutableMap.of("rows", keys, "cols", keys, "collectionFieldFilter", collectionItems);
+        Map<String, List> config = ImmutableMap.of("fields", keys,  "collectionFieldFilter", collectionItems);
         return Result.ok(config);
     }
 
