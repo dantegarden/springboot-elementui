@@ -7,7 +7,7 @@
          :style="{ 'max-width': inputWidth - 32 + 'px', width: '100%' }"
          v-if="fieldFilter.length>0">
       <span>
-        <el-tag v-for="(item,index) in fieldFilter"
+        <el-tag v-for="(item,index) in fieldFilter" :key="index"
                 :closable="!selectDisabled"
                 :size="collapseTagSize"
                 type="info"
