@@ -11,8 +11,9 @@ import java.util.List;
 public class ApiWhiteData {
 	private static List<String> whiteApis = new ArrayList<String>();
 	static {
-		whiteApis.add("/file/upload");
-		whiteApis.add("/code/**");
+		whiteApis.add("/ws/**"); //webservice
+		whiteApis.add("/file/upload"); //上传
+		whiteApis.add("/code/**"); //字典
 	}
 	public static List<String> getWhiteApis() {
 		return whiteApis;

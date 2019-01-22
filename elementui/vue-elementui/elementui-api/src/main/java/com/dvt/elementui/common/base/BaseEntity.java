@@ -1,5 +1,6 @@
 package com.dvt.elementui.common.base;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -19,6 +20,7 @@ import java.util.Date;
  * 实体基类 提供一些通用的重写hashCode, equals和toString方法
  *
  */
+@JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})
 @EntityListeners(AuditingEntityListener.class)
 @MappedSuperclass
 public abstract class BaseEntity implements Serializable {

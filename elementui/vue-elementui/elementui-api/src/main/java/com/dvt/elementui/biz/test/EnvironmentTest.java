@@ -2,13 +2,24 @@ package com.dvt.elementui.biz.test;
 
 import com.dvt.elementui.biz.dao.DemoCustomerDao;
 import com.dvt.elementui.biz.dao.DemoPivotDao;
+import com.dvt.elementui.biz.dao.SysUserDao;
+import com.dvt.elementui.biz.model.DemoPivot;
+import com.dvt.elementui.biz.model.SysUser;
+import com.dvt.elementui.biz.service.TestMyWebService;
+import com.dvt.elementui.common.bean.TypedResult;
+import com.dvt.elementui.common.properties.WebServiceProperties;
+import com.dvt.elementui.common.utils.JsonUtils;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
+import java.util.Map;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -36,16 +47,27 @@ public class EnvironmentTest {
 //        return;
 //    }
 
+//    @Autowired
+//    DemoPivotDao demoPivotDao;
+//    @Autowired
+//    DemoCustomerDao demoCustomerDao;
+
     @Autowired
-    DemoPivotDao demoPivotDao;
-    @Autowired
-    DemoCustomerDao demoCustomerDao;
+    TestMyWebService testMyWebService;
 
     @Test
     public void test(){
-        //        Page<DemoPivot> pages = demoPivotDao.pageByArea("华北", PageRequest.of(0,10));
-//        System.out.println(pages.getContent().size());
+        TypedResult<SysUser> result = testMyWebService.getUser(10010);
+        SysUser me = result.getData();
+        System.out.println(me);
     }
+
+//    @Test
+//    public void test(){
+//        Page<DemoPivot> pages = demoPivotDao.pageByArea("华北", PageRequest.of(0,10));
+//        System.out.println(pages.getContent().size());
+//    }
+
 //    public void test(){
 //        Map<String,List<String>> areas = Maps.newHashMap();
 //        areas.put("华北", ImmutableList.of("北京","天津","河北"));

@@ -1,6 +1,7 @@
 package com.dvt.elementui.biz.model;
 
 import com.dvt.elementui.common.base.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -32,6 +33,7 @@ public class SysRole extends BaseEntity {
     @Column(name = "delete_status")
     private Integer deleteStatus;
 
+    @JsonIgnoreProperties(value = {"role", "hibernateLazyInitializer", "handler"})
     @OneToMany(mappedBy = "role", fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     private Set<SysRolePermission> rolePermissions;
 

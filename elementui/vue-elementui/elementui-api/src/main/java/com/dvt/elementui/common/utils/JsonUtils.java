@@ -3,6 +3,7 @@ package com.dvt.elementui.common.utils;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.log4j.Logger;
+import org.springframework.context.annotation.DependsOn;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -15,11 +16,12 @@ import java.util.Map;
  * Json 工具类
  *
  */
+@DependsOn("springContextUtils")
 public class JsonUtils {
 
 	private static final Logger LOGGER = Logger.getLogger(JsonUtils.class);
 
-	private static ObjectMapper mapper = new ObjectMapper();
+	private static ObjectMapper mapper = (ObjectMapper) SpringContextUtils.getBean("jacksonObjectMapper");
 	
 	public static String toString(Object obj){
 		return toJson(obj);
@@ -31,6 +33,7 @@ public class JsonUtils {
 			mapper.writeValue(writer, obj);
 			return writer.toString();
 		}catch(Exception e){
+			e.printStackTrace();
 			throw new RuntimeException("序列化对象【"+obj+"】时出错", e);
 		}
 	}
@@ -39,6 +42,7 @@ public class JsonUtils {
 		try {
 			return mapper.readValue(jsonString, entityClass);
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new RuntimeException("JSON【"+jsonString+"】转对象时出错", e);
 		}
 	}
@@ -63,6 +67,7 @@ public class JsonUtils {
 			LOGGER.info("无法将null转换成对象，将返回无数据的HashMap");
 			return new HashMap<String, T>();
 		} catch (IOException e) {
+			e.printStackTrace();
 			throw new RuntimeException("JSON【"+jsonString+"】转对象时出错", e);
 		}
 	}
@@ -96,6 +101,7 @@ public class JsonUtils {
 				map.put("success", true);
 				return "{\"success\":true,"+toString(obj)+",\"message\":\""+message+"\"}";
 			}catch(Exception e){
+				e.printStackTrace();
 				throw new RuntimeException("序列化对象【"+obj+"】时出错", e);
 			}
 		}
@@ -113,6 +119,7 @@ public class JsonUtils {
 				obj = parseIfException(obj);
 				return "{\"success\":false,\"data\":"+toString(obj)+",\"message\":\""+message+"\"}";
 			}catch(Exception e){
+				e.printStackTrace();
 				throw new RuntimeException("序列化对象【"+obj+"】时出错", e);
 			}
 		}

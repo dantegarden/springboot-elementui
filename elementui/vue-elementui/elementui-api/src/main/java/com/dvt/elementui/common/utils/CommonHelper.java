@@ -152,7 +152,7 @@ public class CommonHelper {
             Annotation oneToManyAnno = field.getAnnotation(OneToMany.class);
             Annotation manyToManyAnno = field.getAnnotation(ManyToMany.class);
             Annotation manyToOneAnno = field.getAnnotation(ManyToOne.class);
-            Annotation OneToOneAnno = field.getAnnotation(OneToOne.class);
+            Annotation oneToOneAnno = field.getAnnotation(OneToOne.class);
             if(oneToManyAnno!=null || manyToManyAnno!=null){
                 for(Method m : clazz.getMethods()){
                     if(m.getName().equalsIgnoreCase("set" + field.getName())){
@@ -168,7 +168,7 @@ public class CommonHelper {
                         });
                     }
                 }
-            }else if(manyToOneAnno!=null || OneToOneAnno!=null){
+            }else if(manyToOneAnno!=null || oneToOneAnno!=null){
                 for(Method m : clazz.getMethods()){
                     if(m.getName().equalsIgnoreCase("get" + field.getName())){
                         System.out.println(m.getName());
@@ -179,9 +179,14 @@ public class CommonHelper {
                                 Object one = m.invoke(el);
                                 one = HibernateUtils.deproxy(one);
                                 clearFields(one);
+                                Method setM = clazz.getDeclaredMethod("set" + StringUtils.capitalize(field.getName()));
+                                setM.invoke(el, one);
+
                             } catch (IllegalAccessException e) {
                                 e.printStackTrace();
                             } catch (InvocationTargetException e) {
+                                e.printStackTrace();
+                            } catch (NoSuchMethodException e) {
                                 e.printStackTrace();
                             }
                         });
@@ -201,7 +206,7 @@ public class CommonHelper {
                 Annotation oneToManyAnno = field.getAnnotation(OneToMany.class);
                 Annotation manyToManyAnno = field.getAnnotation(ManyToMany.class);
                 Annotation manyToOneAnno = field.getAnnotation(ManyToOne.class);
-                Annotation OneToOneAnno = field.getAnnotation(OneToOne.class);
+                Annotation oneToOneAnno = field.getAnnotation(OneToOne.class);
                 if(oneToManyAnno!=null || manyToManyAnno!=null){
                     Method m = clazz.getMethod("set" + StringUtils.capitalize(field.getName())); //首字母大写
                     list.forEach(el -> {
@@ -213,16 +218,20 @@ public class CommonHelper {
                             e.printStackTrace();
                         }
                     });
-                }else if(manyToOneAnno!=null || OneToOneAnno!=null){
+                }else if(manyToOneAnno!=null || oneToOneAnno!=null){
                     Method m = clazz.getMethod("get" + StringUtils.capitalize(field.getName())); //首字母大写
                     list.forEach(el -> {
                         try {
                             Object one = m.invoke(el);
                             one = HibernateUtils.deproxy(one);
                             clearFields(one);
+                            Method setM = clazz.getDeclaredMethod("set" + StringUtils.capitalize(field.getName()));
+                            setM.invoke(el, one);
                         } catch (IllegalAccessException e) {
                             e.printStackTrace();
                         } catch (InvocationTargetException e) {
+                            e.printStackTrace();
+                        } catch (NoSuchMethodException e) {
                             e.printStackTrace();
                         }
                     });

@@ -3,12 +3,15 @@ package com.dvt.elementui.common.utils;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.stereotype.Component;
 
+import javax.swing.*;
 import java.util.Map;
 
 /**
  * Spring上下文工具类
  */
+@Component
 public class SpringContextUtils implements ApplicationContextAware {
     private static ApplicationContext context = null;
 
@@ -18,7 +21,7 @@ public class SpringContextUtils implements ApplicationContextAware {
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        context = applicationContext;
+        SpringContextUtils.context = applicationContext;
     }
 
     /**
@@ -28,7 +31,7 @@ public class SpringContextUtils implements ApplicationContextAware {
      * @return bean对象
      */
     public static Object getBean(String beanName) {
-        return context.getBean(beanName);
+        return SpringContextUtils.context.getBean(beanName);
     }
 
     /**
@@ -38,7 +41,7 @@ public class SpringContextUtils implements ApplicationContextAware {
      * @param clazz    返回的bean类型,若类型不匹配,将抛出异常
      */
     public static <T> T getBean(String beanName, Class<T> clazz) {
-        return context.getBean(beanName, clazz);
+        return SpringContextUtils.context.getBean(beanName, clazz);
     }
 
     /**
@@ -49,12 +52,13 @@ public class SpringContextUtils implements ApplicationContextAware {
      */
     public static <T> T getBean(Class<T> clazz) {
         T t = null;
-        Map<String, T> map = context.getBeansOfType(clazz);
+        Map<String, T> map = SpringContextUtils.context.getBeansOfType(clazz);
         for (Map.Entry<String, T> entry : map.entrySet()) {
             t = entry.getValue();
         }
         return t;
     }
+
 
     /**
      * 是否包含bean
@@ -63,7 +67,7 @@ public class SpringContextUtils implements ApplicationContextAware {
      * @return boolean，是否包含指定名字的bean
      */
     public static boolean containsBean(String beanName) {
-        return context.containsBean(beanName);
+        return SpringContextUtils.context.containsBean(beanName);
     }
 
     /**
@@ -73,7 +77,7 @@ public class SpringContextUtils implements ApplicationContextAware {
      * @return boolean， 是否是单例
      */
     public static boolean isSingleton(String beanName) {
-        return context.isSingleton(beanName);
+        return SpringContextUtils.context.isSingleton(beanName);
     }
 
     /**
@@ -83,6 +87,6 @@ public class SpringContextUtils implements ApplicationContextAware {
      * @return bean的类型
      */
     public static Class getType(String beanName) {
-        return context.getType(beanName);
+        return SpringContextUtils.context.getType(beanName);
     }
 }

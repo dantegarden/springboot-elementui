@@ -4,6 +4,7 @@ import com.dvt.elementui.common.base.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlTransient;
 import java.util.List;
 
 @Entity

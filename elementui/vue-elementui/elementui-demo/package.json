@@ -19,7 +19,6 @@
     "babel-polyfill": "^6.26.0",
     "echarts": "^4.2.0-rc.2",
     "element-ui": "^2.4.11",
-    "elementui_treegrid": "0.0.3",
     "jquery": "2.1.4",
     "vue": "^2.5.2",
     "vue-router": "3.0.1",

@@ -57,7 +57,7 @@ public class DemoOrder extends BaseEntity {
     private DemoCustomer customer;
 
     /**一对多**/
-    @JsonIgnoreProperties(value = {"order", "hibernateLazyInitializer", "handler"})
+    @JsonIgnoreProperties(value = {"permission", "hibernateLazyInitializer", "handler"})
     @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     private Set<DemoOrderItem> orderItems;
 

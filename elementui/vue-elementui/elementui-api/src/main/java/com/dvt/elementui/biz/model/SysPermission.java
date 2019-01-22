@@ -1,6 +1,7 @@
 package com.dvt.elementui.biz.model;
 
 import com.dvt.elementui.common.base.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -45,6 +46,7 @@ public class SysPermission extends BaseEntity {
     @Column(name = "required_permission")
     private Integer requiredPermission;
 
+    @JsonIgnoreProperties(value = {"rolePermissions", "hibernateLazyInitializer", "handler"})
     @OneToMany(mappedBy = "permission")
     private Set<SysRolePermission> rolePermissions;
 

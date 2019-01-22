@@ -1,6 +1,7 @@
 package com.dvt.elementui.biz.model;
 
 import com.dvt.elementui.common.base.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -21,6 +22,7 @@ public class SysRolePermission extends BaseEntity {
     /**
      * 角色id
      */
+    @JsonIgnoreProperties(value = {"rolePermissions", "hibernateLazyInitializer", "handler"})
     @ManyToOne
     @JoinColumn(name = "role_id")
     private SysRole role;
@@ -28,6 +30,7 @@ public class SysRolePermission extends BaseEntity {
     /**
      * 权限id
      */
+    @JsonIgnoreProperties(value = {"rolePermissions", "hibernateLazyInitializer", "handler"})
     @ManyToOne
     @JoinColumn(name = "permission_id")
     private SysPermission permission;

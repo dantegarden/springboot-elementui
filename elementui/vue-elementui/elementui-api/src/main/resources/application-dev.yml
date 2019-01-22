@@ -47,3 +47,13 @@ logging:
 ## swagger配置
 swagger:
   enable: false
+
+##webservices
+webservices:
+  config:
+    - name: myWebService
+      wsdlUrl: http://localhost:8088/ws/user?wsdl
+      connectionTimeout: 30000
+      receiveTimeout: 15000
+#    - name: ip-search
+#      wsdlUrl: http://www.webxml.com.cn/WebServices/IpAddressSearchWebService.asmx?wsdl
