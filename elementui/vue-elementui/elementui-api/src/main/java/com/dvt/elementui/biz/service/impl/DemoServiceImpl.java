@@ -64,6 +64,31 @@ public class DemoServiceImpl extends BaseServiceImpl implements DemoService {
     }
 
     @Override
+    public List<DemoOrder> query(Map<String, Object> condition) {
+        Map<String,Object> params = Maps.newHashMap();
+        StringBuilder sql = new StringBuilder();
+        sql.append("select o from DemoOrder o where isEnabled=1  ");
+
+        if(condition.get("orderSn")!=null && StringUtils.isNotBlank((String)condition.get("orderSn"))){
+            sql.append("     and o.orderSn like concat('%',:orderSn,'%')  ");
+            params.put("orderSn", (String)condition.get("orderSn"));
+        }
+        if(condition.get("orderStatus")!=null && StringUtils.isNotBlank((String)condition.get("orderStatus"))){
+            sql.append("     and o.orderStatus = :orderStatus ");
+            params.put("orderStatus", Integer.parseInt((String)condition.get("orderStatus")));
+        }
+        if(condition.get("orderTime")!=null){
+            sql.append("     and o.orderTime >= :orderTime1 ");
+            sql.append("     and o.orderTime <= :orderTime2 ");
+            List<Date> dates = (List<Date>)condition.get("orderTime");
+            params.put("orderTime1", dates.get(0));
+            params.put("orderTime2", dates.get(1));
+        }
+        sql.append(" order by orderTime desc ");
+        return dynamicQuery.query(DemoOrder.class, sql.toString(), params);
+    }
+
+    @Override
     public DemoOrder findOrderById(Integer id) {
         return this.demoOrderDao.findById(id).get();
     }

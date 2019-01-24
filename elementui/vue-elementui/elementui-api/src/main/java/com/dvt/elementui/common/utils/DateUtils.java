@@ -117,6 +117,15 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
         return result.getTime();
     }
 
+    /**
+     * 获取今天的日期字符串, 不包括时间. 如yyyy-MM-dd
+     *
+     * @return yyyy-MM-dd
+     */
+    public static String todayDateStr(){
+        Date today = todayDate();
+        return format(today);
+    }
 
     /**
      * 根据开始日期和结束日期, 计算日期差.

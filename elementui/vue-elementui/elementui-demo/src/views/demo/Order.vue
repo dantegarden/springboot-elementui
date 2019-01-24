@@ -34,6 +34,23 @@
             <el-button type="primary" icon="search" @click="query">查询</el-button>
             <el-button type="success" v-if="hasPerm('demo:add')" @click.native="add">新增</el-button>
             <el-button type="danger"  v-if="hasPerm('demo:delete')" @click.native="deleteSelected">批量删除</el-button>
+            <el-tooltip class="el-tooltip" effect="dark" content="下载数据" placement="bottom">
+              <el-button icon="el-icon-download" @click="exportExcel"></el-button>
+            </el-tooltip>
+            <el-upload ref="uploader" v-if="hasPerm('demo:add')" name="uploadFile" style="float:left"
+              :action="uploadUrl"
+              :with-credentials="true"
+              :limit="1"
+              :show-file-list="false"
+              :auto-upload="true"
+              :beforeUpload="beforeUpload"
+              :onError="onUploadError"
+              :onSuccess="onUploadSuccess"
+              :on-exceed="onExceed" >
+              <el-tooltip class="el-tooltip" effect="dark" content="导入数据" placement="bottom">
+                <el-button icon="el-icon-upload2"></el-button>
+              </el-tooltip>
+            </el-upload>
           </el-button-group>
         </el-form-item>
       </el-form>
@@ -102,6 +119,7 @@
           orderStatus: ''
         },
 
+        uploadUrl: api.importOrders
 
       }
     },
@@ -149,6 +167,32 @@
             this.$message.success("删除成功");
           })
         })
+      },
+      //导出excel
+      exportExcel(e){
+        api.exportOrderList({queryCondition: this.queryCondition})
+      },
+      beforeUpload (file) {
+        if(file.type!=="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"){
+          this.$message.error('只支持xlsx格式的文件！')
+          return false;
+        }
+      },
+      //导入excel 超出文件数量限制
+      onExceed (files, fileList) {
+        this.$message.error('提示：只能导入单个文件！')
+      },
+      onUploadSuccess (res, file, fileList) {
+        // this.fileIds = response.fileIds
+        if(res.status){
+          this.getOrderList();
+          this.$message.success('导入成功！')
+        }else{
+          this.$message.error('导入失败！')
+        }
+      },
+      onUploadError (response, file, fileList) {
+        this.$message.error('服务器或网络异常，导入失败！')
       },
       //改变分页大小
       onSizeChange(val) {

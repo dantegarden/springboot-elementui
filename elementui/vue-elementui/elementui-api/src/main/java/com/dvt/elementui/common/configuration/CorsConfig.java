@@ -17,6 +17,7 @@ public class CorsConfig  {
         corsConfiguration.addAllowedMethod("*"); // 允许任何方法（post、get等）
         //暴露的头信息
         corsConfiguration.addExposedHeader(HttpHeaders.SET_COOKIE);
+        corsConfiguration.addExposedHeader(HttpHeaders.CONTENT_DISPOSITION); //下载文件名
         corsConfiguration.setAllowCredentials(true);
         return corsConfiguration;
     }

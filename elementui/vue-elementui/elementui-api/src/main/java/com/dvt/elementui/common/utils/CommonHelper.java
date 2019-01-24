@@ -179,7 +179,7 @@ public class CommonHelper {
                                 Object one = m.invoke(el);
                                 one = HibernateUtils.deproxy(one);
                                 clearFields(one);
-                                Method setM = clazz.getDeclaredMethod("set" + StringUtils.capitalize(field.getName()));
+                                Method setM = clazz.getDeclaredMethod("set" + StringUtils.capitalize(field.getName()),one.getClass());
                                 setM.invoke(el, one);
 
                             } catch (IllegalAccessException e) {

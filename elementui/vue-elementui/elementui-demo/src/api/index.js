@@ -5,8 +5,11 @@ const BASE_PATH = process.env.API_URL
 
 const $get = (url, params) => $http(BASE_PATH + url, params)
 const $post = (url, params) => $http(BASE_PATH + url, params, 'POST')
+const $download = (url, params) => $http(BASE_PATH + url, params, 'POST', 'blob')
 
 export default {
+
+  baseUrl : BASE_PATH,
 
   /**登录登出**/
   //用户登录
@@ -51,6 +54,7 @@ export default {
 
   /**示例 正常表**/
   getOrderList: params => $post('/demo/listOrders', params),
+  exportOrderList: params => $download('/demo/exportOrders', params),
   getCustomersByName: params => $get('/demo/customer/name', params),
   getGoodsByName: params => $get('/demo/goods/name', params),
   getOrderItemList: params => $get("/demo/listOrderItems/" + params),
@@ -67,5 +71,5 @@ export default {
   delCollection: params => $get('/demo/pivot/collect/del/' + params),
 
   // 文件上传地址
-  uploadFile : `${BASE_PATH}/file/upload`,
+  importOrders: `${BASE_PATH}/demo/upload`
 }

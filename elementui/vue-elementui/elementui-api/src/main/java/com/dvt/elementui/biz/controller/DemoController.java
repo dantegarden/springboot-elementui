@@ -6,13 +6,15 @@ import com.dvt.elementui.biz.vo.demo.DemoQueryVO;
 import com.dvt.elementui.biz.vo.demo.FieldVO;
 import com.dvt.elementui.biz.vo.demo.DemoOrderItemVO;
 import com.dvt.elementui.biz.vo.demo.QueryForm;
+import com.dvt.elementui.common.bean.ExcelData;
 import com.dvt.elementui.common.bean.PageData;
 import com.dvt.elementui.common.bean.Result;
-import com.dvt.elementui.common.utils.CommonHelper;
-import com.dvt.elementui.common.utils.JsonUtils;
-import com.dvt.elementui.common.utils.SessionUtils;
+import com.dvt.elementui.common.datadict.DataDict;
+import com.dvt.elementui.common.utils.*;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.shiro.authz.annotation.Logical;
@@ -20,7 +22,13 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -33,6 +41,9 @@ public class DemoController {
     @Autowired
     private DemoService demoService;
 
+    @Autowired
+    private DataDict dataDict;
+
     @RequiresPermissions("demo:list")
     @PostMapping("/listOrders")
     public Result listOrders(@RequestBody DemoQueryVO vo) {
@@ -40,6 +51,34 @@ public class DemoController {
         Page<DemoOrder> page =demoService.queryByPage(queryCondition, vo.getPage(), vo.getSize());
         CommonHelper.clearFields(page.getContent());
         return Result.ok(new PageData(page));
+    }
+
+    @RequiresPermissions("demo:list")
+    @PostMapping("/exportOrders")
+    public void exportOrders(@RequestBody DemoQueryVO vo, HttpServletResponse response) throws Exception {
+        Map<String,Object> queryCondition = CommonHelper.javaBean2Map(vo.getQueryCondition());
+        List<DemoOrder> list = demoService.query(queryCondition);
+        ExcelData data = new ExcelData();
+        data.setName("订单表"); //sheetName
+        data.setTitles(ImmutableList.of("订单号", "客户", "收货地址", "订单总价", "订单状态", "下单时间")); //表头
+        List<List<Object>> rows = Lists.newArrayList();
+        for(DemoOrder o: list){
+            rows.add(ImmutableList.of(
+                    o.getOrderSn(),
+                    o.getCustomer().getName(),
+                    o.getCustomer().getAddress(),
+                    o.getOrderPrice(),
+                    dataDict.getCodeName("OrderStatus", o.getOrderStatus()+""),
+                    DateUtils.format(o.getOrderTime())
+            ));
+        }
+        data.setRows(rows);
+        //生成本地
+        /*File f = new File("c:/test.xlsx");
+        FileOutputStream out = new FileOutputStream(f);
+        ExportExcelUtils.exportExcel(data, out);
+        out.close();*/
+        ExportExcelUtils.exportExcel(response,"订单表.xlsx", data);
     }
 
     @GetMapping("/getOrder/{id}")
@@ -108,6 +147,31 @@ public class DemoController {
         }
         return Result.ok(goods);
     }
+
+    @RequiresPermissions("demo:add")
+    @RequestMapping("/upload")
+    public Result importOrders(@RequestParam("uploadFile") MultipartFile[] uploadFile) throws IOException {
+        String baseUploadFilePath = Thread.currentThread().getContextClassLoader().getResource("").toString().replaceAll("file:/", "");
+
+        if(uploadFile != null && uploadFile.length>0){
+            for(MultipartFile item : uploadFile){
+                LOGGER.info("接收上传文件：" + item.getOriginalFilename());
+                String fileName = new Date().getTime()+".xlsx";
+                String filePath = baseUploadFilePath + "upload/" + DateUtils.todayDateStr();//自定义上传路径
+                File file = new File(filePath,fileName);
+
+                if(!file.exists()){
+                    FileUtils.forceMkdir(file.getParentFile());
+                    file.createNewFile();
+                }
+                item.transferTo(file);//上传文件
+            }
+        }
+
+        return Result.ok(null);
+    }
+
+    /*****************交叉表示例********************/
 
     @GetMapping(value = "/pivot/config")
     public Result getTableConfig() {

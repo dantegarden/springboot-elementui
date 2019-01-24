@@ -11,6 +11,8 @@ public interface DemoService {
 
     public Page<DemoOrder> queryByPage(Map<String, Object> condition, Integer page, Integer size);
 
+    public List<DemoOrder> query(Map<String, Object> condition);
+
     public DemoOrder findOrderById(Integer id);
 
     public Integer addOrder();
