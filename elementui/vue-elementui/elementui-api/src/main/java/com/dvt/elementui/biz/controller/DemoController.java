@@ -151,6 +151,7 @@ public class DemoController {
     @RequiresPermissions("demo:add")
     @RequestMapping("/upload")
     public Result importOrders(@RequestParam("uploadFile") MultipartFile[] uploadFile) throws IOException {
+
         String baseUploadFilePath = Thread.currentThread().getContextClassLoader().getResource("").toString().replaceAll("file:/", "");
 
         if(uploadFile != null && uploadFile.length>0){

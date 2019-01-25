@@ -243,6 +243,9 @@
         }
         //数组赋值重新渲染页面
         this.$set(this.currentFieldFilter.structure, iindex, formStructure)
+        //清空已存在的值
+        formItems[2] = "";
+        this.$set(this.currentFieldFilter.query, iindex, formItems)
       },
       useFieldFilter(){
         let currentFieldFilter = this.currentFieldFilter
