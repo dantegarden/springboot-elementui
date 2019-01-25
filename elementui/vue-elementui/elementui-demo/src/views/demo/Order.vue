@@ -40,13 +40,11 @@
             <el-upload ref="uploader" v-if="hasPerm('demo:add')" name="uploadFile" style="float:left"
               :action="uploadUrl"
               :with-credentials="true"
-              :limit="1"
               :show-file-list="false"
               :auto-upload="true"
               :beforeUpload="beforeUpload"
               :onError="onUploadError"
-              :onSuccess="onUploadSuccess"
-              :on-exceed="onExceed" >
+              :onSuccess="onUploadSuccess">
               <el-tooltip class="el-tooltip" effect="dark" content="导入数据" placement="bottom">
                 <el-button icon="el-icon-upload2"></el-button>
               </el-tooltip>
@@ -173,14 +171,12 @@
         api.exportOrderList({queryCondition: this.queryCondition})
       },
       beforeUpload (file) {
-        if(file.type!=="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"){
-          this.$message.error('只支持xlsx格式的文件！')
+        console.log(file)
+        let allowTypes = ["application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"]
+        if(!allowTypes.includes(file.type)){
+          this.$message.error('只支持xls/xlsx格式的文件！')
           return false;
         }
-      },
-      //导入excel 超出文件数量限制
-      onExceed (files, fileList) {
-        this.$message.error('提示：只能导入单个文件！')
       },
       onUploadSuccess (res, file, fileList) {
         // this.fileIds = response.fileIds
@@ -190,6 +186,7 @@
         }else{
           this.$message.error('导入失败！')
         }
+        this.$refs.uploader.clearFiles();
       },
       onUploadError (response, file, fileList) {
         this.$message.error('服务器或网络异常，导入失败！')

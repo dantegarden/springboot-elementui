@@ -86,6 +86,13 @@
               <el-date-picker
                 v-if="currentFieldFilter.structure[iindex][0]==='DATE'" size="small" :appendToBody="false"
                 v-model="item[2]"
+                type="date"
+                value-format="yyyy-MM-dd"
+                placeholder="请选择日期" >
+              </el-date-picker>
+              <el-date-picker
+                v-if="currentFieldFilter.structure[iindex][0]==='DATETIME'" size="small" :appendToBody="false"
+                v-model="item[2]"
                 type="datetime"
                 value-format="yyyy-MM-dd HH:mm:ss"
                 placeholder="请选择时间" >

@@ -48,6 +48,15 @@ public class FieldVO {
                     RelationVO.of("不晚于","<="),
                     RelationVO.of("已设置","not null"),
                     RelationVO.of("未设置","null")),
+            FieldVO.FieldTypeEnum.DATETIME, ImmutableList.of(
+                    RelationVO.of("等于","="),
+                    RelationVO.of("不等于","!="),
+                    RelationVO.of("晚于",">"),
+                    RelationVO.of("早于","<"),
+                    RelationVO.of("不早于",">="),
+                    RelationVO.of("不晚于","<="),
+                    RelationVO.of("已设置","not null"),
+                    RelationVO.of("未设置","null")),
             FieldVO.FieldTypeEnum.SELECTION, ImmutableList.of(
                     RelationVO.of("是","="),
                     RelationVO.of("不是","!="),
@@ -66,6 +75,7 @@ public class FieldVO {
         STRING("String"),
         NUMBER("Number"),
         DATE("Date"),
+        DATETIME("DateTime"),
         SELECTION("Selection");
 
         private String value;

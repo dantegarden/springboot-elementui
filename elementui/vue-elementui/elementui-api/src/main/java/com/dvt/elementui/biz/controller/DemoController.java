@@ -1,5 +1,6 @@
 package com.dvt.elementui.biz.controller;
 
+import com.dvt.elementui.biz.easyexcel.demo.ImportOrderModel;
 import com.dvt.elementui.biz.model.*;
 import com.dvt.elementui.biz.service.DemoService;
 import com.dvt.elementui.biz.vo.demo.DemoQueryVO;
@@ -10,6 +11,7 @@ import com.dvt.elementui.common.bean.ExcelData;
 import com.dvt.elementui.common.bean.PageData;
 import com.dvt.elementui.common.bean.Result;
 import com.dvt.elementui.common.datadict.DataDict;
+import com.dvt.elementui.common.easyexcel.EasyExcelUtils;
 import com.dvt.elementui.common.utils.*;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
@@ -157,6 +159,9 @@ public class DemoController {
         if(uploadFile != null && uploadFile.length>0){
             for(MultipartFile item : uploadFile){
                 LOGGER.info("接收上传文件：" + item.getOriginalFilename());
+
+                //保存到本地
+                /*
                 String fileName = new Date().getTime()+".xlsx";
                 String filePath = baseUploadFilePath + "upload/" + DateUtils.todayDateStr();//自定义上传路径
                 File file = new File(filePath,fileName);
@@ -166,6 +171,10 @@ public class DemoController {
                     file.createNewFile();
                 }
                 item.transferTo(file);//上传文件
+                */
+                List<ImportOrderModel> uploadList = EasyExcelUtils.readExcel(item, ImportOrderModel.class,1);
+                System.out.println(uploadList.size());
+                //TODO 后续业务操作
             }
         }
 
@@ -185,7 +194,8 @@ public class DemoController {
         keys.add(new FieldVO("area","区域"));
         keys.add(new FieldVO("province","省份"));
         keys.add(new FieldVO("rate","汇率", FieldVO.FieldTypeEnum.NUMBER));
-        keys.add(new FieldVO("update_time","更新时间", FieldVO.FieldTypeEnum.DATE));
+        keys.add(new FieldVO("create_time","创建日期", FieldVO.FieldTypeEnum.DATE));
+        keys.add(new FieldVO("update_time","更新时间", FieldVO.FieldTypeEnum.DATETIME));
 
         List<DemoPivotCollection> collectionItems = demoService.findCollectionsByUserId(SessionUtils.getCurrentUserId());
         collectionItems.forEach(dp->{dp.setQueryCondition(JsonUtils.toBean(QueryForm.class, dp.getCollectionJson()));});
