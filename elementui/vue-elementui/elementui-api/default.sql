@@ -1,3 +1,11 @@
+
+create user 'test'@'%' identified by '123456';
+create database spring_db DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
+grant all privileges on `spring_db`.* to 'test'@'%' identified by '123456';
+flush privileges;
+
+SET FOREIGN_KEY_CHECKS=0;
+
 /*
 Navicat MySQL Data Transfer
 
@@ -10,17 +18,9 @@ Target Server Type    : MYSQL
 Target Server Version : 50621
 File Encoding         : 65001
 
-Date: 2018-12-28 18:13:18
+Date: 2019-01-28 11:50:16
 */
 
-create user 'test'@'%' identified by '123456';
-create database spring_db DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
-grant all privileges on `spring_db`.* to 'test'@'%' identified by '123456';
-flush privileges;
-
-SET FOREIGN_KEY_CHECKS=0;
-
-SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
 -- Table structure for demo_customer
@@ -198,114 +198,164 @@ CREATE TABLE `demo_order` (
   `order_time` datetime DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
   `customer_id` int(11) DEFAULT NULL,
+  `is_enabled` int(11) DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `FKms5b3xpnxmublhhepnduc5d7` (`customer_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=10075 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=10177 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of demo_order
 -- ----------------------------
-INSERT INTO `demo_order` VALUES ('10000', '2018-12-07 14:48:17', '黑色 64G', '3799', 'OSN1111111', '1', '2018-12-07 14:48:17', null, '10000');
-INSERT INTO `demo_order` VALUES ('10001', '2018-12-07 14:48:17', '官方标配 星空蓝', '5999', 'OSN2222222', '2', '2018-12-06 14:48:17', null, '10001');
-INSERT INTO `demo_order` VALUES ('10002', '2018-12-10 18:13:40', '黑色 64G', '3799', 'OSN80510312', '4', '2018-12-10 18:13:40', null, '10004');
-INSERT INTO `demo_order` VALUES ('10003', '2018-12-10 18:13:40', '黑色 64G', '3799', 'OSN93633374', '4', '2018-12-10 18:13:40', null, '10017');
-INSERT INTO `demo_order` VALUES ('10004', '2018-12-10 18:13:41', '黑色 64G', '3799', 'OSN27653729', '3', '2018-12-10 18:13:41', null, '10024');
-INSERT INTO `demo_order` VALUES ('10005', '2018-12-10 18:13:41', '黑色 64G', '3799', 'OSN47728401', '3', '2018-12-10 18:13:41', null, '10061');
-INSERT INTO `demo_order` VALUES ('10006', '2018-12-10 18:13:41', '黑色 64G', '3799', 'OSN92402286', '2', '2018-12-10 18:13:41', null, '10059');
-INSERT INTO `demo_order` VALUES ('10007', '2018-12-10 18:13:41', '黑色 64G', '3799', 'OSN34195869', '3', '2018-12-10 18:13:41', null, '10113');
-INSERT INTO `demo_order` VALUES ('10008', '2018-12-10 18:13:41', '黑色 64G', '3799', 'OSN04429246', '4', '2018-12-10 18:13:41', null, '10039');
-INSERT INTO `demo_order` VALUES ('10009', '2018-12-10 18:13:41', '黑色 64G', '3799', 'OSN11928400', '2', '2018-12-10 18:13:41', null, '10080');
-INSERT INTO `demo_order` VALUES ('10010', '2018-12-10 18:13:41', '黑色 64G', '3799', 'OSN16000741', '2', '2018-12-10 18:13:41', null, '10101');
-INSERT INTO `demo_order` VALUES ('10011', '2018-12-10 18:13:41', '黑色 64G', '3799', 'OSN49661065', '1', '2018-12-10 18:13:41', null, '10091');
-INSERT INTO `demo_order` VALUES ('10012', '2018-12-10 18:13:41', '黑色 64G', '3799', 'OSN08237282', '1', '2018-12-10 18:13:41', null, '10038');
-INSERT INTO `demo_order` VALUES ('10013', '2018-12-10 18:13:41', '黑色 64G', '3799', 'OSN34181899', '1', '2018-12-10 18:13:41', null, '10024');
-INSERT INTO `demo_order` VALUES ('10014', '2018-12-10 18:13:41', '黑色 64G', '3799', 'OSN07883860', '1', '2018-12-10 18:13:41', null, '10098');
-INSERT INTO `demo_order` VALUES ('10015', '2018-12-10 18:13:41', '黑色 64G', '3799', 'OSN42685896', '1', '2018-12-10 18:13:41', null, '10042');
-INSERT INTO `demo_order` VALUES ('10016', '2018-12-10 18:13:41', '黑色 64G', '3799', 'OSN21001570', '4', '2018-12-10 18:13:41', null, '10037');
-INSERT INTO `demo_order` VALUES ('10017', '2018-12-10 18:13:41', '黑色 64G', '3799', 'OSN26407456', '2', '2018-12-10 18:13:41', null, '10066');
-INSERT INTO `demo_order` VALUES ('10018', '2018-12-10 18:13:41', '黑色 64G', '3799', 'OSN32759571', '3', '2018-12-10 18:13:41', null, '10088');
-INSERT INTO `demo_order` VALUES ('10019', '2018-12-10 18:13:41', '黑色 64G', '3799', 'OSN04137251', '1', '2018-12-10 18:13:41', null, '10078');
-INSERT INTO `demo_order` VALUES ('10020', '2018-12-10 18:13:41', '黑色 64G', '3799', 'OSN97092584', '4', '2018-12-10 18:13:41', null, '10006');
-INSERT INTO `demo_order` VALUES ('10021', '2018-12-10 18:13:41', '黑色 64G', '3799', 'OSN58239265', '2', '2018-12-10 18:13:41', null, '10064');
-INSERT INTO `demo_order` VALUES ('10022', '2018-12-10 18:13:41', '黑色 64G', '3799', 'OSN90287547', '3', '2018-12-10 18:13:41', null, '10006');
-INSERT INTO `demo_order` VALUES ('10023', '2018-12-10 18:13:41', '黑色 64G', '3799', 'OSN01933580', '4', '2018-12-10 18:13:41', null, '10094');
-INSERT INTO `demo_order` VALUES ('10024', '2018-12-10 18:13:41', '黑色 64G', '3799', 'OSN08735679', '3', '2018-12-10 18:13:41', null, '10101');
-INSERT INTO `demo_order` VALUES ('10025', '2018-12-10 18:13:41', '黑色 64G', '3799', 'OSN19145770', '4', '2018-12-10 18:13:41', null, '10010');
-INSERT INTO `demo_order` VALUES ('10026', '2018-12-10 18:13:42', '黑色 64G', '3799', 'OSN67849827', '2', '2018-12-10 18:13:42', null, '10079');
-INSERT INTO `demo_order` VALUES ('10027', '2018-12-10 18:13:42', '黑色 64G', '3799', 'OSN91840949', '1', '2018-12-10 18:13:42', null, '10037');
-INSERT INTO `demo_order` VALUES ('10028', '2018-12-10 18:13:42', '黑色 64G', '3799', 'OSN43712435', '1', '2018-12-10 18:13:42', null, '10014');
-INSERT INTO `demo_order` VALUES ('10029', '2018-12-10 18:13:42', '黑色 64G', '3799', 'OSN47514024', '2', '2018-12-10 18:13:42', null, '10087');
-INSERT INTO `demo_order` VALUES ('10030', '2018-12-10 18:13:42', '黑色 64G', '3799', 'OSN41755729', '1', '2018-12-10 18:13:42', null, '10100');
-INSERT INTO `demo_order` VALUES ('10031', '2018-12-10 18:13:42', '黑色 64G', '3799', 'OSN70178658', '1', '2018-12-10 18:13:42', null, '10038');
-INSERT INTO `demo_order` VALUES ('10032', '2018-12-10 18:13:42', '黑色 64G', '3799', 'OSN96374397', '2', '2018-12-10 18:13:42', null, '10109');
-INSERT INTO `demo_order` VALUES ('10033', '2018-12-10 18:13:42', '黑色 64G', '3799', 'OSN33832915', '3', '2018-12-10 18:13:42', null, '10107');
-INSERT INTO `demo_order` VALUES ('10034', '2018-12-10 18:13:42', '黑色 64G', '3799', 'OSN57231147', '1', '2018-12-10 18:13:42', null, '10050');
-INSERT INTO `demo_order` VALUES ('10035', '2018-12-10 18:13:42', '黑色 64G', '3799', 'OSN41621112', '1', '2018-12-10 18:13:42', null, '10030');
-INSERT INTO `demo_order` VALUES ('10036', '2018-12-10 18:13:42', '黑色 64G', '3799', 'OSN94666884', '1', '2018-12-10 18:13:42', null, '10087');
-INSERT INTO `demo_order` VALUES ('10037', '2018-12-10 18:13:42', '黑色 64G', '3799', 'OSN06969429', '1', '2018-12-10 18:13:42', null, '10037');
-INSERT INTO `demo_order` VALUES ('10038', '2018-12-10 18:13:42', '黑色 64G', '3799', 'OSN17959200', '2', '2018-12-10 18:13:42', null, '10026');
-INSERT INTO `demo_order` VALUES ('10039', '2018-12-10 18:13:42', '黑色 64G', '3799', 'OSN15796843', '2', '2018-12-10 18:13:42', null, '10028');
-INSERT INTO `demo_order` VALUES ('10040', '2018-12-10 18:13:42', '黑色 64G', '3799', 'OSN53289620', '1', '2018-12-10 18:13:42', null, '10006');
-INSERT INTO `demo_order` VALUES ('10041', '2018-12-10 18:13:42', '黑色 64G', '3799', 'OSN43064911', '3', '2018-12-10 18:13:42', null, '10028');
-INSERT INTO `demo_order` VALUES ('10042', '2018-12-10 18:13:42', '黑色 64G', '3799', 'OSN78460900', '1', '2018-12-10 18:13:42', null, '10087');
-INSERT INTO `demo_order` VALUES ('10043', '2018-12-10 18:13:42', '黑色 64G', '3799', 'OSN74566189', '1', '2018-12-10 18:13:42', null, '10031');
-INSERT INTO `demo_order` VALUES ('10044', '2018-12-10 18:13:42', '黑色 64G', '3799', 'OSN00253407', '2', '2018-12-10 18:13:42', null, '10066');
-INSERT INTO `demo_order` VALUES ('10045', '2018-12-10 18:13:42', '黑色 64G', '3799', 'OSN54699711', '1', '2018-12-10 18:13:42', null, '10030');
-INSERT INTO `demo_order` VALUES ('10046', '2018-12-10 18:13:42', '黑色 64G', '3799', 'OSN07949408', '4', '2018-12-10 18:13:42', null, '10105');
-INSERT INTO `demo_order` VALUES ('10047', '2018-12-10 18:13:42', '黑色 64G', '3799', 'OSN79874981', '1', '2018-12-10 18:13:42', null, '10037');
-INSERT INTO `demo_order` VALUES ('10048', '2018-12-10 18:13:42', '黑色 64G', '3799', 'OSN14370894', '3', '2018-12-10 18:13:42', null, '10099');
-INSERT INTO `demo_order` VALUES ('10049', '2018-12-10 18:13:43', '黑色 64G', '3799', 'OSN64922542', '3', '2018-12-10 18:13:43', null, '10094');
-INSERT INTO `demo_order` VALUES ('10050', '2018-12-10 18:13:43', '黑色 64G', '3799', 'OSN01313588', '2', '2018-12-10 18:13:43', null, '10080');
-INSERT INTO `demo_order` VALUES ('10051', '2018-12-10 18:13:43', '黑色 64G', '3799', 'OSN45980780', '2', '2018-12-10 18:13:43', null, '10092');
-INSERT INTO `demo_order` VALUES ('10052', '2018-12-10 18:13:43', '黑色 64G', '3799', 'OSN37873548', '3', '2018-12-10 18:13:43', null, '10037');
-INSERT INTO `demo_order` VALUES ('10053', '2018-12-10 18:13:43', '黑色 64G', '3799', 'OSN49609706', '3', '2018-12-10 18:13:43', null, '10065');
-INSERT INTO `demo_order` VALUES ('10054', '2018-12-10 18:13:43', '黑色 64G', '3799', 'OSN56832515', '3', '2018-12-10 18:13:43', null, '10060');
-INSERT INTO `demo_order` VALUES ('10055', '2018-12-10 18:13:43', '黑色 64G', '3799', 'OSN31253021', '2', '2018-12-10 18:13:43', null, '10119');
-INSERT INTO `demo_order` VALUES ('10056', '2018-12-10 18:13:43', '黑色 64G', '3799', 'OSN57095288', '3', '2018-12-10 18:13:43', null, '10091');
-INSERT INTO `demo_order` VALUES ('10057', '2018-12-10 18:13:43', '黑色 64G', '3799', 'OSN92614265', '2', '2018-12-10 18:13:43', null, '10029');
-INSERT INTO `demo_order` VALUES ('10058', '2018-12-10 18:13:43', '黑色 64G', '3799', 'OSN00202906', '2', '2018-12-10 18:13:43', null, '10065');
-INSERT INTO `demo_order` VALUES ('10059', '2018-12-10 18:13:43', '黑色 64G', '3799', 'OSN21334261', '3', '2018-12-10 18:13:43', null, '10119');
-INSERT INTO `demo_order` VALUES ('10060', '2018-12-10 18:13:43', '黑色 64G', '3799', 'OSN83283978', '1', '2018-12-10 18:13:43', null, '10012');
-INSERT INTO `demo_order` VALUES ('10061', '2018-12-10 18:13:43', '黑色 64G', '3799', 'OSN36656961', '1', '2018-12-10 18:13:43', null, '10086');
-INSERT INTO `demo_order` VALUES ('10062', '2018-12-10 18:13:43', '黑色 64G', '3799', 'OSN45929462', '1', '2018-12-10 18:13:43', null, '10055');
-INSERT INTO `demo_order` VALUES ('10063', '2018-12-10 18:13:43', '黑色 64G', '3799', 'OSN68941207', '4', '2018-12-10 18:13:43', null, '10091');
-INSERT INTO `demo_order` VALUES ('10064', '2018-12-10 18:13:43', '黑色 64G', '3799', 'OSN09113662', '1', '2018-12-10 18:13:43', null, '10059');
-INSERT INTO `demo_order` VALUES ('10065', '2018-12-10 18:13:43', '黑色 64G', '3799', 'OSN04513909', '3', '2018-12-10 18:13:43', null, '10117');
-INSERT INTO `demo_order` VALUES ('10066', '2018-12-10 18:13:43', '黑色 64G', '3799', 'OSN21040669', '2', '2018-12-10 18:13:43', null, '10023');
-INSERT INTO `demo_order` VALUES ('10067', '2018-12-10 18:13:43', '黑色 64G', '3799', 'OSN76171779', '4', '2018-12-10 18:13:43', null, '10069');
-INSERT INTO `demo_order` VALUES ('10068', '2018-12-10 18:13:43', '黑色 64G', '3799', 'OSN84774767', '2', '2018-12-10 18:13:43', null, '10017');
-INSERT INTO `demo_order` VALUES ('10069', '2018-12-10 18:13:43', '黑色 64G', '3799', 'OSN42741676', '2', '2018-12-10 18:13:43', null, '10054');
-INSERT INTO `demo_order` VALUES ('10070', '2018-12-10 18:13:43', '黑色 64G', '3799', 'OSN70641881', '3', '2018-12-10 18:13:43', null, '10098');
-INSERT INTO `demo_order` VALUES ('10071', '2018-12-10 18:13:43', '黑色 64G', '3799', 'OSN11636750', '1', '2018-12-10 18:13:43', null, '10011');
-INSERT INTO `demo_order` VALUES ('10072', '2018-12-10 18:13:44', '黑色 64G', '3799', 'OSN35927250', '2', '2018-12-10 18:13:44', null, '10046');
-INSERT INTO `demo_order` VALUES ('10073', '2018-12-10 18:13:44', '黑色 64G', '3799', 'OSN00415777', '1', '2018-12-10 18:13:44', null, '10013');
-INSERT INTO `demo_order` VALUES ('10074', '2018-12-10 18:13:44', '黑色 64G', '3799', 'OSN58408076', '1', '2018-12-10 18:13:44', null, '10051');
+INSERT INTO `demo_order` VALUES ('10000', '2018-12-07 14:48:17', '黑色 64G', '3799', 'OSN1111111', '1', '2018-12-07 14:48:17', null, '10000', '1');
+INSERT INTO `demo_order` VALUES ('10001', '2018-12-07 14:48:17', '官方标配 星空蓝', '5999', 'OSN2222222', '2', '2018-12-06 14:48:17', null, '10001', '1');
+INSERT INTO `demo_order` VALUES ('10002', '2018-12-10 18:13:40', '黑色 64G', '3799', 'OSN80510312', '4', '2018-12-10 18:13:40', null, '10004', '1');
+INSERT INTO `demo_order` VALUES ('10003', '2018-12-10 18:13:40', '黑色 64G', '3799', 'OSN93633374', '4', '2018-12-10 18:13:40', null, '10017', '1');
+INSERT INTO `demo_order` VALUES ('10004', '2018-12-10 18:13:41', '黑色 64G', '3799', 'OSN27653729', '3', '2018-12-10 18:13:41', null, '10024', '1');
+INSERT INTO `demo_order` VALUES ('10005', '2018-12-10 18:13:41', '黑色 64G', '3799', 'OSN47728401', '3', '2018-12-10 18:13:41', null, '10061', '1');
+INSERT INTO `demo_order` VALUES ('10006', '2018-12-10 18:13:41', '黑色 64G', '3799', 'OSN92402286', '2', '2018-12-10 18:13:41', null, '10059', '1');
+INSERT INTO `demo_order` VALUES ('10007', '2018-12-10 18:13:41', '黑色 64G', '3799', 'OSN34195869', '3', '2018-12-10 18:13:41', null, '10113', '1');
+INSERT INTO `demo_order` VALUES ('10008', '2018-12-10 18:13:41', '黑色 64G', '3799', 'OSN04429246', '4', '2018-12-10 18:13:41', null, '10039', '1');
+INSERT INTO `demo_order` VALUES ('10009', '2018-12-10 18:13:41', '黑色 64G', '3799', 'OSN11928400', '2', '2018-12-10 18:13:41', null, '10080', '1');
+INSERT INTO `demo_order` VALUES ('10010', '2018-12-10 18:13:41', '黑色 64G', '3799', 'OSN16000741', '2', '2018-12-10 18:13:41', null, '10101', '1');
+INSERT INTO `demo_order` VALUES ('10011', '2018-12-10 18:13:41', '黑色 64G', '3799', 'OSN49661065', '1', '2018-12-10 18:13:41', null, '10091', '1');
+INSERT INTO `demo_order` VALUES ('10012', '2018-12-10 18:13:41', '黑色 64G', '3799', 'OSN08237282', '1', '2018-12-10 18:13:41', null, '10038', '1');
+INSERT INTO `demo_order` VALUES ('10013', '2018-12-10 18:13:41', '黑色 64G', '3799', 'OSN34181899', '1', '2018-12-10 18:13:41', null, '10024', '1');
+INSERT INTO `demo_order` VALUES ('10014', '2018-12-10 18:13:41', '黑色 64G', '3799', 'OSN07883860', '1', '2018-12-10 18:13:41', null, '10098', '1');
+INSERT INTO `demo_order` VALUES ('10015', '2018-12-10 18:13:41', '黑色 64G', '3799', 'OSN42685896', '1', '2018-12-10 18:13:41', null, '10042', '1');
+INSERT INTO `demo_order` VALUES ('10016', '2018-12-10 18:13:41', '黑色 64G', '3799', 'OSN21001570', '4', '2018-12-10 18:13:41', null, '10037', '1');
+INSERT INTO `demo_order` VALUES ('10017', '2018-12-10 18:13:41', '黑色 64G', '3799', 'OSN26407456', '2', '2018-12-10 18:13:41', null, '10066', '1');
+INSERT INTO `demo_order` VALUES ('10018', '2018-12-10 18:13:41', '黑色 64G', '3799', 'OSN32759571', '3', '2018-12-10 18:13:41', null, '10088', '1');
+INSERT INTO `demo_order` VALUES ('10019', '2018-12-10 18:13:41', '黑色 64G', '3799', 'OSN04137251', '1', '2018-12-10 18:13:41', null, '10078', '1');
+INSERT INTO `demo_order` VALUES ('10020', '2018-12-10 18:13:41', '黑色 64G', '3799', 'OSN97092584', '4', '2018-12-10 18:13:41', null, '10006', '1');
+INSERT INTO `demo_order` VALUES ('10021', '2018-12-10 18:13:41', '黑色 64G', '3799', 'OSN58239265', '2', '2018-12-10 18:13:41', null, '10064', '1');
+INSERT INTO `demo_order` VALUES ('10022', '2018-12-10 18:13:41', '黑色 64G', '3799', 'OSN90287547', '3', '2018-12-10 18:13:41', null, '10006', '1');
+INSERT INTO `demo_order` VALUES ('10023', '2018-12-10 18:13:41', '黑色 64G', '3799', 'OSN01933580', '4', '2018-12-10 18:13:41', null, '10094', '1');
+INSERT INTO `demo_order` VALUES ('10024', '2018-12-10 18:13:41', '黑色 64G', '3799', 'OSN08735679', '3', '2018-12-10 18:13:41', null, '10101', '1');
+INSERT INTO `demo_order` VALUES ('10025', '2018-12-10 18:13:41', '黑色 64G', '3799', 'OSN19145770', '4', '2018-12-10 18:13:41', null, '10010', '1');
+INSERT INTO `demo_order` VALUES ('10026', '2018-12-10 18:13:42', '黑色 64G', '3799', 'OSN67849827', '2', '2018-12-10 18:13:42', null, '10079', '1');
+INSERT INTO `demo_order` VALUES ('10027', '2018-12-10 18:13:42', '黑色 64G', '3799', 'OSN91840949', '1', '2018-12-10 18:13:42', null, '10037', '1');
+INSERT INTO `demo_order` VALUES ('10028', '2018-12-10 18:13:42', '黑色 64G', '3799', 'OSN43712435', '1', '2018-12-10 18:13:42', null, '10014', '1');
+INSERT INTO `demo_order` VALUES ('10029', '2018-12-10 18:13:42', '黑色 64G', '3799', 'OSN47514024', '2', '2018-12-10 18:13:42', null, '10087', '1');
+INSERT INTO `demo_order` VALUES ('10030', '2018-12-10 18:13:42', '黑色 64G', '3799', 'OSN41755729', '1', '2018-12-10 18:13:42', null, '10100', '1');
+INSERT INTO `demo_order` VALUES ('10031', '2018-12-10 18:13:42', '黑色 64G', '3799', 'OSN70178658', '1', '2018-12-10 18:13:42', null, '10038', '1');
+INSERT INTO `demo_order` VALUES ('10032', '2018-12-10 18:13:42', '黑色 64G', '3799', 'OSN96374397', '2', '2018-12-10 18:13:42', null, '10109', '1');
+INSERT INTO `demo_order` VALUES ('10033', '2018-12-10 18:13:42', '黑色 64G', '3799', 'OSN33832915', '3', '2018-12-10 18:13:42', null, '10107', '1');
+INSERT INTO `demo_order` VALUES ('10034', '2018-12-10 18:13:42', '黑色 64G', '3799', 'OSN57231147', '1', '2018-12-10 18:13:42', null, '10050', '1');
+INSERT INTO `demo_order` VALUES ('10035', '2018-12-10 18:13:42', '黑色 64G', '3799', 'OSN41621112', '1', '2018-12-10 18:13:42', null, '10030', '1');
+INSERT INTO `demo_order` VALUES ('10036', '2018-12-10 18:13:42', '黑色 64G', '3799', 'OSN94666884', '1', '2018-12-10 18:13:42', null, '10087', '1');
+INSERT INTO `demo_order` VALUES ('10037', '2018-12-10 18:13:42', '黑色 64G', '3799', 'OSN06969429', '1', '2018-12-10 18:13:42', null, '10037', '1');
+INSERT INTO `demo_order` VALUES ('10038', '2018-12-10 18:13:42', '黑色 64G', '3799', 'OSN17959200', '2', '2018-12-10 18:13:42', null, '10026', '1');
+INSERT INTO `demo_order` VALUES ('10039', '2018-12-10 18:13:42', '黑色 64G', '3799', 'OSN15796843', '2', '2018-12-10 18:13:42', null, '10028', '1');
+INSERT INTO `demo_order` VALUES ('10040', '2018-12-10 18:13:42', '黑色 64G', '3799', 'OSN53289620', '1', '2018-12-10 18:13:42', null, '10006', '1');
+INSERT INTO `demo_order` VALUES ('10041', '2018-12-10 18:13:42', '黑色 64G', '3799', 'OSN43064911', '3', '2018-12-10 18:13:42', null, '10028', '1');
+INSERT INTO `demo_order` VALUES ('10042', '2018-12-10 18:13:42', '黑色 64G', '3799', 'OSN78460900', '1', '2018-12-10 18:13:42', null, '10087', '1');
+INSERT INTO `demo_order` VALUES ('10043', '2018-12-10 18:13:42', '黑色 64G', '3799', 'OSN74566189', '1', '2018-12-10 18:13:42', null, '10031', '1');
+INSERT INTO `demo_order` VALUES ('10044', '2018-12-10 18:13:42', '黑色 64G', '3799', 'OSN00253407', '2', '2018-12-10 18:13:42', null, '10066', '1');
+INSERT INTO `demo_order` VALUES ('10045', '2018-12-10 18:13:42', '黑色 64G', '3799', 'OSN54699711', '1', '2018-12-10 18:13:42', null, '10030', '1');
+INSERT INTO `demo_order` VALUES ('10046', '2018-12-10 18:13:42', '黑色 64G', '3799', 'OSN07949408', '4', '2018-12-10 18:13:42', null, '10105', '1');
+INSERT INTO `demo_order` VALUES ('10047', '2018-12-10 18:13:42', '黑色 64G', '3799', 'OSN79874981', '1', '2018-12-10 18:13:42', null, '10037', '1');
+INSERT INTO `demo_order` VALUES ('10048', '2018-12-10 18:13:42', '黑色 64G', '3799', 'OSN14370894', '3', '2018-12-10 18:13:42', null, '10099', '1');
+INSERT INTO `demo_order` VALUES ('10049', '2018-12-10 18:13:43', '黑色 64G', '3799', 'OSN64922542', '3', '2018-12-10 18:13:43', null, '10094', '1');
+INSERT INTO `demo_order` VALUES ('10053', '2018-12-10 18:13:43', '黑色 64G', '3799', 'OSN49609706', '3', '2018-12-10 18:13:43', null, '10065', '1');
+INSERT INTO `demo_order` VALUES ('10054', '2018-12-10 18:13:43', '黑色 64G', '3799', 'OSN56832515', '3', '2018-12-10 18:13:43', null, '10060', '1');
+INSERT INTO `demo_order` VALUES ('10055', '2018-12-10 18:13:43', '黑色 64G', '3799', 'OSN31253021', '2', '2018-12-10 18:13:43', null, '10119', '1');
+INSERT INTO `demo_order` VALUES ('10056', '2018-12-10 18:13:43', '黑色 64G', '3799', 'OSN57095288', '3', '2018-12-10 18:13:43', null, '10091', '1');
+INSERT INTO `demo_order` VALUES ('10057', '2018-12-10 18:13:43', '黑色 64G', '3799', 'OSN92614265', '2', '2018-12-10 18:13:43', null, '10029', '1');
+INSERT INTO `demo_order` VALUES ('10058', '2018-12-10 18:13:43', '黑色 64G', '3799', 'OSN00202906', '2', '2018-12-10 18:13:43', null, '10065', '1');
+INSERT INTO `demo_order` VALUES ('10059', '2018-12-10 18:13:43', '黑色 64G', '3799', 'OSN21334261', '3', '2018-12-10 18:13:43', null, '10119', '1');
+INSERT INTO `demo_order` VALUES ('10060', '2018-12-10 18:13:43', '黑色 64G', '3799', 'OSN83283978', '1', '2018-12-10 18:13:43', null, '10012', '1');
+INSERT INTO `demo_order` VALUES ('10061', '2018-12-10 18:13:43', '黑色 64G', '3799', 'OSN36656961', '1', '2018-12-10 18:13:43', null, '10086', '1');
+INSERT INTO `demo_order` VALUES ('10062', '2018-12-10 18:13:43', '黑色 64G', '3799', 'OSN45929462', '1', '2018-12-10 18:13:43', null, '10055', '1');
+INSERT INTO `demo_order` VALUES ('10063', '2018-12-10 18:13:43', '黑色 64G', '3799', 'OSN68941207', '4', '2018-12-10 18:13:43', null, '10091', '1');
+INSERT INTO `demo_order` VALUES ('10064', '2018-12-10 18:13:43', '黑色 64G', '3799', 'OSN09113662', '1', '2018-12-10 18:13:43', null, '10059', '1');
+INSERT INTO `demo_order` VALUES ('10065', '2018-12-10 18:13:43', '黑色 64G', '3799', 'OSN04513909', '3', '2018-12-10 18:13:43', null, '10117', '1');
+INSERT INTO `demo_order` VALUES ('10066', '2018-12-10 18:13:43', '黑色 64G', '3799', 'OSN21040669', '2', '2018-12-10 18:13:43', null, '10023', '1');
+INSERT INTO `demo_order` VALUES ('10067', '2018-12-10 18:13:43', '黑色 64G', '3799', 'OSN76171779', '4', '2018-12-10 18:13:43', null, '10069', '1');
+INSERT INTO `demo_order` VALUES ('10068', '2018-12-10 18:13:43', '黑色 64G', '3799', 'OSN84774767', '2', '2018-12-10 18:13:43', null, '10017', '1');
+INSERT INTO `demo_order` VALUES ('10069', '2018-12-10 18:13:43', '黑色 64G', '3799', 'OSN42741676', '2', '2018-12-10 18:13:43', null, '10054', '1');
+INSERT INTO `demo_order` VALUES ('10070', '2018-12-10 18:13:43', '黑色 64G', '3799', 'OSN70641881', '3', '2018-12-10 18:13:43', null, '10098', '1');
+INSERT INTO `demo_order` VALUES ('10071', '2018-12-10 18:13:43', '黑色 64G', '3799', 'OSN11636750', '1', '2018-12-10 18:13:43', null, '10011', '1');
+INSERT INTO `demo_order` VALUES ('10073', '2018-12-10 18:13:44', '黑色 64G', '3799', 'OSN00415777', '1', '2018-12-10 18:13:44', null, '10013', '1');
+INSERT INTO `demo_order` VALUES ('10074', '2018-12-10 18:13:44', '黑色 64G', '3799', 'OSN58408076', '1', '2018-12-10 18:13:44', null, '10051', '1');
+INSERT INTO `demo_order` VALUES ('10143', '2019-01-11 17:13:56', null, null, null, null, null, '2019-01-11 17:13:56', null, '0');
+INSERT INTO `demo_order` VALUES ('10142', '2019-01-11 17:00:27', '我的小米不贴膜', '6764', 'ORD232', '3', '2019-01-11 00:00:00', '2019-01-11 17:44:20', '10000', '1');
+INSERT INTO `demo_order` VALUES ('10144', '2019-01-14 09:52:57', null, null, null, null, null, '2019-01-14 09:52:57', null, '0');
+INSERT INTO `demo_order` VALUES ('10145', '2019-01-14 10:04:03', null, null, null, null, null, '2019-01-14 10:04:03', null, '0');
+INSERT INTO `demo_order` VALUES ('10146', '2019-01-14 10:04:11', null, null, null, null, null, '2019-01-14 10:04:11', null, '0');
+INSERT INTO `demo_order` VALUES ('10147', '2019-01-14 10:06:45', null, null, null, null, null, '2019-01-14 10:06:45', null, '0');
+INSERT INTO `demo_order` VALUES ('10148', '2019-01-14 10:06:51', null, null, null, null, null, '2019-01-14 10:06:51', null, '0');
+INSERT INTO `demo_order` VALUES ('10149', '2019-01-14 10:10:12', null, null, null, null, null, '2019-01-14 10:10:12', null, '0');
+INSERT INTO `demo_order` VALUES ('10150', '2019-01-14 10:13:14', null, null, null, null, null, '2019-01-14 10:13:14', null, '0');
+INSERT INTO `demo_order` VALUES ('10151', '2019-01-14 10:13:19', null, null, null, null, null, '2019-01-14 10:13:19', null, '0');
+INSERT INTO `demo_order` VALUES ('10152', '2019-01-14 10:13:25', null, null, null, null, null, '2019-01-14 10:13:25', null, '0');
+INSERT INTO `demo_order` VALUES ('10153', '2019-01-14 10:15:42', null, null, null, null, null, '2019-01-14 10:15:42', null, '0');
+INSERT INTO `demo_order` VALUES ('10154', '2019-01-14 14:26:27', null, null, null, null, null, '2019-01-14 14:26:27', null, '0');
+INSERT INTO `demo_order` VALUES ('10155', '2019-01-14 14:27:54', null, null, null, null, null, '2019-01-14 14:27:54', null, '0');
+INSERT INTO `demo_order` VALUES ('10156', '2019-01-14 14:28:02', null, null, null, null, null, '2019-01-14 14:28:02', null, '0');
+INSERT INTO `demo_order` VALUES ('10157', '2019-01-14 14:32:24', null, null, null, null, null, '2019-01-14 14:32:24', null, '0');
+INSERT INTO `demo_order` VALUES ('10158', '2019-01-14 14:32:28', null, null, null, null, null, '2019-01-14 14:32:28', null, '0');
+INSERT INTO `demo_order` VALUES ('10159', '2019-01-14 14:32:34', null, null, null, null, null, '2019-01-14 14:32:34', null, '0');
+INSERT INTO `demo_order` VALUES ('10160', '2019-01-14 14:34:23', null, null, null, null, null, '2019-01-14 14:34:23', null, '0');
+INSERT INTO `demo_order` VALUES ('10161', '2019-01-14 14:35:50', null, null, null, null, null, '2019-01-14 14:35:50', null, '0');
+INSERT INTO `demo_order` VALUES ('10162', '2019-01-14 14:41:40', null, null, null, null, null, '2019-01-14 14:41:40', null, '0');
+INSERT INTO `demo_order` VALUES ('10163', '2019-01-14 14:58:59', null, null, null, null, null, '2019-01-14 14:58:59', null, '0');
+INSERT INTO `demo_order` VALUES ('10164', '2019-01-14 15:00:19', null, null, null, null, null, '2019-01-14 15:00:19', null, '0');
+INSERT INTO `demo_order` VALUES ('10165', '2019-01-14 15:00:27', null, null, null, null, null, '2019-01-14 15:00:27', null, '0');
+INSERT INTO `demo_order` VALUES ('10166', '2019-01-14 15:03:11', null, null, null, null, null, '2019-01-14 15:03:11', null, '0');
+INSERT INTO `demo_order` VALUES ('10167', '2019-01-14 15:04:05', null, null, null, null, null, '2019-01-14 15:04:05', null, '0');
+INSERT INTO `demo_order` VALUES ('10168', '2019-01-14 15:04:31', null, null, null, null, null, '2019-01-14 15:04:31', null, '0');
+INSERT INTO `demo_order` VALUES ('10169', '2019-01-14 15:07:09', null, null, null, null, null, '2019-01-14 15:07:09', null, '0');
+INSERT INTO `demo_order` VALUES ('10170', '2019-01-14 15:12:10', null, null, null, null, null, '2019-01-14 15:12:10', null, '0');
+INSERT INTO `demo_order` VALUES ('10171', '2019-01-14 15:15:11', null, null, null, null, null, '2019-01-14 15:15:11', null, '0');
+INSERT INTO `demo_order` VALUES ('10172', '2019-01-14 15:15:23', null, null, null, null, null, '2019-01-14 15:15:23', null, '0');
+INSERT INTO `demo_order` VALUES ('10173', '2019-01-14 15:16:21', null, null, null, null, null, '2019-01-14 15:16:21', null, '0');
+INSERT INTO `demo_order` VALUES ('10174', '2019-01-14 15:17:24', null, null, null, null, null, '2019-01-14 15:17:24', null, '0');
+INSERT INTO `demo_order` VALUES ('10175', '2019-01-14 15:24:35', null, null, null, null, null, '2019-01-14 15:24:35', null, '0');
+INSERT INTO `demo_order` VALUES ('10176', '2019-01-15 15:52:12', null, null, null, null, null, '2019-01-15 15:52:12', null, '0');
 
 -- ----------------------------
--- Table structure for demo_order_goods
+-- Table structure for demo_order_item
 -- ----------------------------
-DROP TABLE IF EXISTS `demo_order_goods`;
-CREATE TABLE `demo_order_goods` (
-  `order_id` int(11) NOT NULL,
-  `goods_id` int(11) NOT NULL,
-  PRIMARY KEY (`order_id`,`goods_id`),
-  KEY `FK1f0on3kmpfaqmv2jhlv05inem` (`goods_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+DROP TABLE IF EXISTS `demo_order_item`;
+CREATE TABLE `demo_order_item` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `create_time` datetime DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `number` int(11) DEFAULT NULL,
+  `retail_price` double DEFAULT NULL,
+  `total_price` double DEFAULT NULL,
+  `goods_id` int(11) DEFAULT NULL,
+  `order_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKmjre4nw5n1kjjctkxu590660i` (`goods_id`),
+  KEY `FKhnnor68du3ty9u3x2hjskcmvo` (`order_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of demo_order_goods
+-- Records of demo_order_item
 -- ----------------------------
-INSERT INTO `demo_order_goods` VALUES ('10000', '10000');
-INSERT INTO `demo_order_goods` VALUES ('10001', '10001');
-INSERT INTO `demo_order_goods` VALUES ('10001', '10002');
-INSERT INTO `demo_order_goods` VALUES ('10002', '10001');
-INSERT INTO `demo_order_goods` VALUES ('10003', '10002');
-INSERT INTO `demo_order_goods` VALUES ('10004', '10002');
-INSERT INTO `demo_order_goods` VALUES ('10005', '10000');
-INSERT INTO `demo_order_goods` VALUES ('10072', '10000');
-INSERT INTO `demo_order_goods` VALUES ('10072', '10001');
-INSERT INTO `demo_order_goods` VALUES ('10073', '10000');
-INSERT INTO `demo_order_goods` VALUES ('10073', '10001');
+INSERT INTO `demo_order_item` VALUES ('1', '2019-01-07 15:49:24', '2019-01-07 15:49:24', '1', '3788', '3788', '10000', '10120');
+INSERT INTO `demo_order_item` VALUES ('2', '2019-01-07 15:50:50', '2019-01-07 15:50:50', '2', '5888', '11776', '10001', '10123');
+INSERT INTO `demo_order_item` VALUES ('3', '2019-01-11 11:10:26', '2019-01-11 11:10:26', '2', '3333', '6666', '10000', '10125');
+INSERT INTO `demo_order_item` VALUES ('4', '2019-01-11 11:12:51', '2019-01-11 11:12:51', '1', '3444', '3444', '10000', '10125');
+INSERT INTO `demo_order_item` VALUES ('5', '2019-01-11 11:19:07', '2019-01-11 11:19:07', '1', '3555', '3555', '10000', '10126');
+INSERT INTO `demo_order_item` VALUES ('6', '2019-01-11 11:46:44', '2019-01-11 11:46:44', '1', '3888', '3888', '10000', '10127');
+INSERT INTO `demo_order_item` VALUES ('7', '2019-01-11 11:47:32', '2019-01-11 11:47:32', '1', '5888', '5888', '10001', '10127');
+INSERT INTO `demo_order_item` VALUES ('8', null, '2019-01-11 14:51:17', '1', '3891', '3891', '10000', '10130');
+INSERT INTO `demo_order_item` VALUES ('9', '2019-01-11 15:33:14', '2019-01-11 15:33:14', '1', '12333', '12333', '10000', '10131');
+INSERT INTO `demo_order_item` VALUES ('10', '2019-01-11 15:34:14', '2019-01-11 15:34:14', '2', '1233', '2466', '10000', '10132');
+INSERT INTO `demo_order_item` VALUES ('12', '2019-01-11 15:38:55', '2019-01-11 15:38:55', '1', '12321', '12321', '10000', '10133');
+INSERT INTO `demo_order_item` VALUES ('13', '2019-01-11 15:47:23', '2019-01-11 15:47:23', '1', '1232', '1232', '10000', null);
+INSERT INTO `demo_order_item` VALUES ('14', '2019-01-11 15:47:25', '2019-01-11 15:47:25', '1', '1232', '1232', '10000', null);
+INSERT INTO `demo_order_item` VALUES ('15', '2019-01-11 15:49:24', '2019-01-11 15:49:24', '1', '3799', '3799', '10000', null);
+INSERT INTO `demo_order_item` VALUES ('16', '2019-01-11 15:57:39', '2019-01-11 15:57:39', '1', '3555', '3555', '10000', '10134');
+INSERT INTO `demo_order_item` VALUES ('17', '2019-01-11 16:30:30', '2019-01-11 16:30:30', '1', '1222', '1222', '10000', '10135');
+INSERT INTO `demo_order_item` VALUES ('18', '2019-01-11 16:36:31', '2019-01-11 16:36:31', '1', '3333', '3333', '10000', '10136');
+INSERT INTO `demo_order_item` VALUES ('19', '2019-01-11 16:58:25', '2019-01-11 16:58:25', '1', '3666', '3666', '10000', '10139');
+INSERT INTO `demo_order_item` VALUES ('21', '2019-01-11 17:12:52', '2019-01-11 17:12:52', '2', '3382', '6764', '10000', '10142');
+INSERT INTO `demo_order_item` VALUES ('23', '2019-01-14 15:19:00', '2019-01-14 15:19:00', '1', '5666', '5666', '10001', '10071');
+INSERT INTO `demo_order_item` VALUES ('25', '2019-01-14 15:25:02', '2019-01-14 15:25:02', '1', '222', '222', '10000', '10073');
+INSERT INTO `demo_order_item` VALUES ('26', '2019-01-14 15:25:53', '2019-01-14 15:25:53', '1', '5444', '5444', '10001', '10073');
 
 -- ----------------------------
 -- Table structure for demo_pivot
@@ -321,166 +371,167 @@ CREATE TABLE `demo_pivot` (
   `value` varchar(255) DEFAULT NULL,
   `create_time` datetime DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
+  `rate` double DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=155 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of demo_pivot
 -- ----------------------------
-INSERT INTO `demo_pivot` VALUES ('1', '东北', '成本', '1月', '黑龙江', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('2', '东北', '成本', '2月', '黑龙江', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('3', '东北', '成本', '3月', '黑龙江', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('4', '东北', '成本', '4月', '黑龙江', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('5', '东北', '成本', '5月', '黑龙江', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('6', '东北', '成本', '6月', '黑龙江', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('7', '东北', '成本', '7月', '黑龙江', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('8', '东北', '成本', '8月', '黑龙江', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('9', '东北', '成本', '9月', '黑龙江', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('10', '东北', '成本', '10月', '黑龙江', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('11', '东北', '成本', '1月', '黑龙江', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('12', '东北', '收入', '1月', '黑龙江', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('13', '东北', '成本', '2月', '黑龙江', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('14', '东北', '收入', '2月', '黑龙江', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('15', '东北', '成本', '3月', '黑龙江', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('16', '东北', '收入', '3月', '黑龙江', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('17', '东北', '成本', '4月', '黑龙江', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('18', '东北', '收入', '4月', '黑龙江', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('19', '东北', '成本', '5月', '黑龙江', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('20', '东北', '收入', '5月', '黑龙江', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('21', '东北', '成本', '6月', '黑龙江', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('22', '东北', '收入', '6月', '黑龙江', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('23', '东北', '成本', '7月', '黑龙江', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('24', '东北', '收入', '7月', '黑龙江', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('25', '东北', '成本', '8月', '黑龙江', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('26', '东北', '收入', '8月', '黑龙江', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('27', '东北', '成本', '9月', '黑龙江', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('28', '东北', '收入', '9月', '黑龙江', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('29', '东北', '成本', '10月', '黑龙江', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('30', '东北', '收入', '10月', '黑龙江', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('31', '东北', '成本', '11月', '黑龙江', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('32', '东北', '收入', '11月', '黑龙江', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('33', '东北', '成本', '12月', '黑龙江', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('34', '东北', '收入', '12月', '黑龙江', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('35', '东北', '成本', '1月', '吉林', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('36', '东北', '收入', '1月', '吉林', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('37', '东北', '成本', '2月', '吉林', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('38', '东北', '收入', '2月', '吉林', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('39', '东北', '成本', '3月', '吉林', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('40', '东北', '收入', '3月', '吉林', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('41', '东北', '成本', '4月', '吉林', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('42', '东北', '收入', '4月', '吉林', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('43', '东北', '成本', '5月', '吉林', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('44', '东北', '收入', '5月', '吉林', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('45', '东北', '成本', '6月', '吉林', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('46', '东北', '收入', '6月', '吉林', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('47', '东北', '成本', '7月', '吉林', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('48', '东北', '收入', '7月', '吉林', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('49', '东北', '成本', '8月', '吉林', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('50', '东北', '收入', '8月', '吉林', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('51', '东北', '成本', '9月', '吉林', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('52', '东北', '收入', '9月', '吉林', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('53', '东北', '成本', '10月', '吉林', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('54', '东北', '收入', '10月', '吉林', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('55', '东北', '成本', '11月', '吉林', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('56', '东北', '收入', '11月', '吉林', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('57', '东北', '成本', '12月', '吉林', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('58', '东北', '收入', '12月', '吉林', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('59', '东北', '成本', '1月', '辽宁', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('60', '东北', '收入', '1月', '辽宁', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('61', '东北', '成本', '2月', '辽宁', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('62', '东北', '收入', '2月', '辽宁', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('63', '东北', '成本', '3月', '辽宁', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('64', '东北', '收入', '3月', '辽宁', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('65', '东北', '成本', '4月', '辽宁', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('66', '东北', '收入', '4月', '辽宁', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('67', '东北', '成本', '5月', '辽宁', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('68', '东北', '收入', '5月', '辽宁', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('69', '东北', '成本', '6月', '辽宁', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('70', '东北', '收入', '6月', '辽宁', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('71', '东北', '成本', '7月', '辽宁', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('72', '东北', '收入', '7月', '辽宁', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('73', '东北', '成本', '8月', '辽宁', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('74', '东北', '收入', '8月', '辽宁', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('75', '东北', '成本', '9月', '辽宁', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('76', '东北', '收入', '9月', '辽宁', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('77', '东北', '成本', '10月', '辽宁', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('78', '东北', '收入', '10月', '辽宁', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('79', '东北', '成本', '11月', '辽宁', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('80', '东北', '收入', '11月', '辽宁', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('81', '东北', '成本', '12月', '辽宁', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('82', '东北', '收入', '12月', '辽宁', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('83', '华北', '成本', '1月', '北京', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('84', '华北', '收入', '1月', '北京', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('85', '华北', '成本', '2月', '北京', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('86', '华北', '收入', '2月', '北京', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('87', '华北', '成本', '3月', '北京', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('88', '华北', '收入', '3月', '北京', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('89', '华北', '成本', '4月', '北京', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('90', '华北', '收入', '4月', '北京', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('91', '华北', '成本', '5月', '北京', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('92', '华北', '收入', '5月', '北京', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('93', '华北', '成本', '6月', '北京', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('94', '华北', '收入', '6月', '北京', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('95', '华北', '成本', '7月', '北京', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('96', '华北', '收入', '7月', '北京', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('97', '华北', '成本', '8月', '北京', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('98', '华北', '收入', '8月', '北京', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('99', '华北', '成本', '9月', '北京', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('100', '华北', '收入', '9月', '北京', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('101', '华北', '成本', '10月', '北京', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('102', '华北', '收入', '10月', '北京', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('103', '华北', '成本', '11月', '北京', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('104', '华北', '收入', '11月', '北京', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('105', '华北', '成本', '12月', '北京', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('106', '华北', '收入', '12月', '北京', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('107', '华北', '成本', '1月', '天津', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('108', '华北', '收入', '1月', '天津', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('109', '华北', '成本', '2月', '天津', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('110', '华北', '收入', '2月', '天津', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('111', '华北', '成本', '3月', '天津', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('112', '华北', '收入', '3月', '天津', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('113', '华北', '成本', '4月', '天津', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('114', '华北', '收入', '4月', '天津', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('115', '华北', '成本', '5月', '天津', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('116', '华北', '收入', '5月', '天津', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('117', '华北', '成本', '6月', '天津', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('118', '华北', '收入', '6月', '天津', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('119', '华北', '成本', '7月', '天津', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('120', '华北', '收入', '7月', '天津', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('121', '华北', '成本', '8月', '天津', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('122', '华北', '收入', '8月', '天津', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('123', '华北', '成本', '9月', '天津', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('124', '华北', '收入', '9月', '天津', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('125', '华北', '成本', '10月', '天津', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('126', '华北', '收入', '10月', '天津', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('127', '华北', '成本', '11月', '天津', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('128', '华北', '收入', '11月', '天津', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('129', '华北', '成本', '12月', '天津', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('130', '华北', '收入', '12月', '天津', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('131', '华北', '成本', '1月', '河北', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('132', '华北', '收入', '1月', '河北', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('133', '华北', '成本', '2月', '河北', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('134', '华北', '收入', '2月', '河北', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('135', '华北', '成本', '3月', '河北', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('136', '华北', '收入', '3月', '河北', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('137', '华北', '成本', '4月', '河北', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('138', '华北', '收入', '4月', '河北', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('139', '华北', '成本', '5月', '河北', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('140', '华北', '收入', '5月', '河北', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('141', '华北', '成本', '6月', '河北', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('142', '华北', '收入', '6月', '河北', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('143', '华北', '成本', '7月', '河北', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('144', '华北', '收入', '7月', '河北', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('145', '华北', '成本', '8月', '河北', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('146', '华北', '收入', '8月', '河北', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('147', '华北', '成本', '9月', '河北', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('148', '华北', '收入', '9月', '河北', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('149', '华北', '成本', '10月', '河北', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('150', '华北', '收入', '10月', '河北', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('151', '华北', '成本', '11月', '河北', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('152', '华北', '收入', '11月', '河北', null, '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('153', '华北', '成本', '12月', '河北', '人工费', '110', null, null);
-INSERT INTO `demo_pivot` VALUES ('154', '华北', '收入', '12月', '河北', null, '110', null, null);
+INSERT INTO `demo_pivot` VALUES ('1', '东北', '1', '1月', '黑龙江', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('2', '东北', '1', '1月', '黑龙江', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('3', '东北', '1', '1月', '黑龙江', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('4', '东北', '1', '1月', '黑龙江', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('5', '东北', '1', '1月', '黑龙江', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('6', '东北', '1', '1月', '黑龙江', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('7', '东北', '1', '1月', '黑龙江', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('8', '东北', '1', '1月', '黑龙江', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('9', '东北', '1', '1月', '黑龙江', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('10', '东北', '1', '1月', '黑龙江', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('11', '东北', '1', '1月', '黑龙江', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('12', '东北', '2', '1月', '黑龙江', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('13', '东北', '1', '2月', '黑龙江', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('14', '东北', '2', '2月', '黑龙江', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('15', '东北', '1', '2月', '黑龙江', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('16', '东北', '2', '2月', '黑龙江', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('17', '东北', '1', '2月', '黑龙江', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('18', '东北', '2', '2月', '黑龙江', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('19', '东北', '1', '2月', '黑龙江', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('20', '东北', '2', '2月', '黑龙江', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('21', '东北', '1', '2月', '黑龙江', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('22', '东北', '2', '2月', '黑龙江', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('23', '东北', '1', '2月', '黑龙江', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('24', '东北', '2', '2月', '黑龙江', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('25', '东北', '1', '3月', '黑龙江', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('26', '东北', '2', '3月', '黑龙江', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('27', '东北', '1', '3月', '黑龙江', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('28', '东北', '2', '3月', '黑龙江', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('29', '东北', '1', '3月', '黑龙江', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('30', '东北', '2', '3月', '黑龙江', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('31', '东北', '1', '3月', '黑龙江', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('32', '东北', '2', '3月', '黑龙江', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('33', '东北', '1', '3月', '黑龙江', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('34', '东北', '2', '3月', '黑龙江', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('35', '东北', '1', '3月', '吉林', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('36', '东北', '2', '3月', '吉林', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('37', '东北', '1', '4月', '吉林', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('38', '东北', '2', '4月', '吉林', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('39', '东北', '1', '4月', '吉林', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('40', '东北', '2', '4月', '吉林', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('41', '东北', '1', '4月', '吉林', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('42', '东北', '2', '4月', '吉林', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('43', '东北', '1', '4月', '吉林', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('44', '东北', '2', '4月', '吉林', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('45', '东北', '1', '4月', '吉林', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('46', '东北', '2', '4月', '吉林', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('47', '东北', '1', '4月', '吉林', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('48', '东北', '2', '4月', '吉林', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('49', '东北', '1', '5月', '吉林', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('50', '东北', '2', '5月', '吉林', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('51', '东北', '1', '5月', '吉林', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('52', '东北', '2', '5月', '吉林', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('53', '东北', '1', '5月', '吉林', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('54', '东北', '2', '5月', '吉林', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('55', '东北', '1', '5月', '吉林', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('56', '东北', '2', '5月', '吉林', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('57', '东北', '1', '5月', '吉林', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('58', '东北', '2', '5月', '吉林', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('59', '东北', '1', '5月', '辽宁', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('60', '东北', '2', '5月', '辽宁', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('61', '东北', '1', '6月', '辽宁', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('62', '东北', '2', '6月', '辽宁', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('63', '东北', '1', '6月', '辽宁', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('64', '东北', '2', '6月', '辽宁', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('65', '东北', '1', '6月', '辽宁', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('66', '东北', '2', '6月', '辽宁', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('67', '东北', '1', '6月', '辽宁', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('68', '东北', '2', '6月', '辽宁', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('69', '东北', '1', '6月', '辽宁', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('70', '东北', '2', '6月', '辽宁', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('71', '东北', '1', '6月', '辽宁', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('72', '东北', '2', '6月', '辽宁', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('73', '东北', '1', '7月', '辽宁', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('74', '东北', '2', '7月', '辽宁', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.75');
+INSERT INTO `demo_pivot` VALUES ('75', '东北', '1', '7月', '辽宁', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', null);
+INSERT INTO `demo_pivot` VALUES ('76', '东北', '2', '7月', '辽宁', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('77', '东北', '1', '7月', '辽宁', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('78', '东北', '2', '7月', '辽宁', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('79', '东北', '1', '7月', '辽宁', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('80', '东北', '2', '7月', '辽宁', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('81', '东北', '1', '7月', '辽宁', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('82', '东北', '2', '7月', '辽宁', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('83', '华北', '1', '7月', '北京', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('84', '华北', '2', '7月', '北京', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('85', '华北', '1', '8月', '北京', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('86', '华北', '2', '8月', '北京', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('87', '华北', '1', '8月', '北京', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('88', '华北', '2', '8月', '北京', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('89', '华北', '1', '8月', '北京', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('90', '华北', '2', '8月', '北京', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('91', '华北', '1', '8月', '北京', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('92', '华北', '2', '8月', '北京', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('93', '华北', '1', '8月', '北京', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('94', '华北', '2', '8月', '北京', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('95', '华北', '1', '8月', '北京', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('96', '华北', '2', '8月', '北京', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('97', '华北', '1', '9月', '北京', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('98', '华北', '2', '9月', '北京', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('99', '华北', '1', '9月', '北京', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('100', '华北', '2', '9月', '北京', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('101', '华北', '1', '9月', '北京', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('102', '华北', '2', '9月', '北京', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('103', '华北', '1', '9月', '北京', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('104', '华北', '2', '9月', '北京', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('105', '华北', '1', '9月', '北京', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('106', '华北', '2', '9月', '北京', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('107', '华北', '1', '9月', '天津', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('108', '华北', '2', '9月', '天津', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('109', '华北', '1', '10月', '天津', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('110', '华北', '2', '10月', '天津', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('111', '华北', '1', '10月', '天津', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('112', '华北', '2', '10月', '天津', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('113', '华北', '1', '10月', '天津', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('114', '华北', '2', '10月', '天津', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('115', '华北', '1', '10月', '天津', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('116', '华北', '2', '10月', '天津', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('117', '华北', '1', '10月', '天津', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('118', '华北', '2', '10月', '天津', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('119', '华北', '1', '10月', '天津', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('120', '华北', '2', '10月', '天津', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('121', '华北', '1', '11月', '天津', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('122', '华北', '2', '11月', '天津', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('123', '华北', '1', '11月', '天津', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('124', '华北', '2', '11月', '天津', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('125', '华北', '1', '11月', '天津', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('126', '华北', '2', '11月', '天津', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('127', '华北', '1', '11月', '天津', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('128', '华北', '2', '11月', '天津', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('129', '华北', '1', '11月', '天津', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('130', '华北', '2', '11月', '天津', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('131', '华北', '1', '11月', '河北', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('132', '华北', '2', '11月', '河北', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('133', '华北', '1', '12月', '河北', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('134', '华北', '2', '12月', '河北', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('135', '华北', '1', '12月', '河北', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('136', '华北', '2', '12月', '河北', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('137', '华北', '1', '12月', '河北', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('138', '华北', '2', '12月', '河北', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('139', '华北', '1', '12月', '河北', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('140', '华北', '2', '12月', '河北', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('141', '华北', '1', '12月', '河北', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('142', '华北', '2', '12月', '河北', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('143', '华北', '1', '12月', '河北', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('144', '华北', '2', '12月', '河北', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('145', '华北', '1', '12月', '河北', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('146', '华北', '2', '12月', '河北', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('147', '华北', '1', '12月', '河北', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('148', '华北', '2', '12月', '河北', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('149', '华北', '1', '12月', '河北', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('150', '华北', '2', '12月', '河北', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('151', '华北', '1', '12月', '河北', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('152', '华北', '2', '12月', '河北', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('153', '华北', '1', '12月', '河北', '人工费', '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
+INSERT INTO `demo_pivot` VALUES ('154', '华北', '2', '12月', '河北', null, '110', '2018-12-01 00:00:00', '2019-01-17 14:11:14', '1.25');
 
 -- ----------------------------
 -- Table structure for demo_pivot_collection
@@ -490,17 +541,17 @@ CREATE TABLE `demo_pivot_collection` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `create_time` datetime DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
-  `collection_json` varchar(255) DEFAULT NULL,
+  `collection_json` text,
   `user_id` int(11) DEFAULT NULL,
   `collection_name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FKrotwm3ruqdjmcsto5a2styqh1` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of demo_pivot_collection
 -- ----------------------------
-INSERT INTO `demo_pivot_collection` VALUES ('3', '2018-12-28 17:09:39', '2018-12-28 17:09:39', '{\"rowKeys\":[\"区域\",\"省份\"],\"colKeys\":[\"月份\",\"大类\",\"小类\"],\"fieldFilter\":[{\"label\":\"月份 包含 12月; \",\"relation\":\"and\",\"query\":[[\"month\",\"like\",\"12月\"]]},{\"label\":\"省份 包含 北京; 或省份 包含 黑龙江; \",\"relation\":\"or\",\"query\":[[\"province\",\"like\",\"北京\"],[\"province\",\"like\",\"黑龙江\"]]}]}', '10003', '测试2');
+INSERT INTO `demo_pivot_collection` VALUES ('4', '2019-01-17 17:25:06', '2019-01-17 17:25:06', '{\"rowKeys\":[\"区域\",\"省份\"],\"colKeys\":[\"月份\",\"大类\",\"小类\"],\"fieldFilter\":[{\"label\":\"月份 包含 1月; 或月份 包含 2月; \",\"relation\":\"or\",\"query\":[[\"month\",\"like\",\"1月\"],[\"month\",\"like\",\"2月\"]],\"structure\":[[\"STRING\",[{\"label\":\"包含\",\"value\":\"like\"},{\"label\":\"不包含\",\"value\":\"not like\"},{\"label\":\"等于\",\"value\":\"=\"},{\"label\":\"不等于\",\"value\":\"!=\"},{\"label\":\"找开头是\",\"value\":\"startwith\"},{\"label\":\"找结尾是\",\"value\":\"endwith\"},{\"label\":\"已设置\",\"value\":\"not null\"},{\"label\":\"未设置\",\"value\":\"null\"}]],[\"STRING\",[{\"label\":\"包含\",\"value\":\"like\"},{\"label\":\"不包含\",\"value\":\"not like\"},{\"label\":\"等于\",\"value\":\"=\"},{\"label\":\"不等于\",\"value\":\"!=\"},{\"label\":\"找开头是\",\"value\":\"startwith\"},{\"label\":\"找结尾是\",\"value\":\"endwith\"},{\"label\":\"已设置\",\"value\":\"not null\"},{\"label\":\"未设置\",\"value\":\"null\"}]]]},{\"label\":\"更新时间 早于 2019-01-31 00:00:00; \",\"relation\":\"and\",\"query\":[[\"update_time\",\"<\",\"2019-01-31 00:00:00\"]],\"structure\":[[\"DATE\",[{\"label\":\"等于\",\"value\":\"=\"},{\"label\":\"不等于\",\"value\":\"!=\"},{\"label\":\"晚于\",\"value\":\">\"},{\"label\":\"早于\",\"value\":\"<\"},{\"label\":\"不早于\",\"value\":\">=\"},{\"label\":\"不晚于\",\"value\":\"<=\"},{\"label\":\"已设置\",\"value\":\"not null\"},{\"label\":\"未设置\",\"value\":\"null\"}]]]},{\"label\":\"大类 是 成本; \",\"relation\":\"and\",\"query\":[[\"major\",\"=\",\"1\"]],\"structure\":[[\"SELECTION\",[{\"label\":\"是\",\"value\":\"=\"},{\"label\":\"不是\",\"value\":\"!=\"},{\"label\":\"已设置\",\"value\":\"not null\"},{\"label\":\"未设置\",\"value\":\"null\"}],{\"DemoMajor\":[{\"label\":\"成本\",\"value\":\"1\"},{\"label\":\"收入\",\"value\":\"2\"}]},\"DemoMajor\"]]}]}', '10003', '测试3');
 
 -- ----------------------------
 -- Table structure for hibernate_sequence
@@ -530,7 +581,7 @@ CREATE TABLE `sys_code` (
   `create_time` datetime DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=10011 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=10013 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_code
@@ -546,6 +597,8 @@ INSERT INTO `sys_code` VALUES ('10007', 'S2', '女', 'CustomerSex', '2', '1', '2
 INSERT INTO `sys_code` VALUES ('10008', 'S3', '不明', 'CustomerSex', '3', '1', '3', null, null);
 INSERT INTO `sys_code` VALUES ('10009', 'S1', '是', 'DirectlyUnder', '1', '1', '1', null, null);
 INSERT INTO `sys_code` VALUES ('10010', 'S2', '否', 'DirectlyUnder', '0', '1', '1', null, null);
+INSERT INTO `sys_code` VALUES ('10011', 'S1', '成本', 'DemoMajor', '1', '1', '1', null, null);
+INSERT INTO `sys_code` VALUES ('10012', 'S2', '收入', 'DemoMajor', '2', '1', '1', null, null);
 
 -- ----------------------------
 -- Table structure for sys_organization
@@ -561,7 +614,7 @@ CREATE TABLE `sys_organization` (
   `parent_org_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK7w94wvw8l6qbkmqcf5l87vw9u` (`parent_org_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_organization
@@ -574,6 +627,9 @@ INSERT INTO `sys_organization` VALUES ('12', '2018-12-29 18:01:37', '2019-01-03 
 INSERT INTO `sys_organization` VALUES ('11', '2018-12-29 18:01:11', '2018-12-29 18:01:11', '0', 'ORG000017', '十七所', null);
 INSERT INTO `sys_organization` VALUES ('13', '2019-01-03 09:33:05', '2019-01-03 09:33:05', '0', 'ORG000018', '十八所', null);
 INSERT INTO `sys_organization` VALUES ('14', '2019-01-03 09:33:36', '2019-01-03 09:33:47', '1', 'ORG0000171', '系统一部', '11');
+INSERT INTO `sys_organization` VALUES ('15', '2019-01-04 10:24:06', '2019-01-04 10:24:16', '1', 'ORG001235', '行政部', '1');
+INSERT INTO `sys_organization` VALUES ('16', '2019-01-07 10:01:40', '2019-01-07 10:01:40', '1', 'ORG129000', '十九所', null);
+INSERT INTO `sys_organization` VALUES ('17', '2019-01-17 11:27:41', '2019-01-17 11:27:41', '0', 'ORD1213', '运维部', '12');
 
 -- ----------------------------
 -- Table structure for sys_permission
