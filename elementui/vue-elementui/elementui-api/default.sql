@@ -1,7 +1,7 @@
 
 create user 'test'@'%' identified by '123456';
-create database spring_db DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
-grant all privileges on `spring_db`.* to 'test'@'%' identified by '123456';
+create database spring_jpa DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
+grant all privileges on `spring_jpa`.* to 'test'@'%' identified by '123456';
 flush privileges;
 
 SET FOREIGN_KEY_CHECKS=0;
