@@ -34,7 +34,7 @@
 
 		<starter.jpa.spring.version>1.5.13.RELEASE</starter.jpa.spring.version>
 		<starter.druid.version>1.1.9</starter.druid.version>
-		<mysql.connector.version>5.1.47</mysql.connector.version>
+		<mysql.connector.version>8.0.16</mysql.connector.version>
 		<jpa.extra.version>3.0.0.RELEASE</jpa.extra.version>
 
 		<commons.lang3.version>3.6</commons.lang3.version>
